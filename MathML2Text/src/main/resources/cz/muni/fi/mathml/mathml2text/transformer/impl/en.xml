@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="plus">plus</entry>
+    <entry key="minus">minus</entry>
+    <entry key="times">times</entry>
+    <entry key="divide">divided by</entry>
+    <entry key="fraction">fraction</entry>
+</properties>
