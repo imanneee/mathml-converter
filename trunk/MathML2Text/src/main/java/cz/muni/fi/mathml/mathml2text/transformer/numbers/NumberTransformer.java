@@ -197,6 +197,29 @@ public final class NumberTransformer {
         return builder.toString();
     }
     
+    public String transformOrdinalNumber(final String numberAsString) {
+        double number = 0.0;
+        try {
+            number = Double.parseDouble(numberAsString);
+            this.getLogger().debug("Transforming ordinal number " + number);
+        } catch (NumberFormatException nfe) {
+            this.getLogger().error(String.format("Number [%1$s] cannot be transformed.", numberAsString));
+        }
+        long integralPart = (long) Math.floor(number);
+        long decimalPart = 0;
+        String decimal = String.valueOf(number).split("\\.")[1];
+        try {
+            decimalPart = Long.valueOf(decimal);
+        } catch (NumberFormatException nfe) {
+            this.getLogger().error("ERROR");
+        }
+
+        if (decimalPart != 0) {
+            return this.transformNumber(numberAsString);
+        }
+        return this.translateOrdinalNumber(integralPart);
+    }
+    
     /**
      * Transforms all ordinal numbers from input. If there is none returns
      * unchanged parameter

@@ -20,7 +20,7 @@ public enum Operation {
     /**
      * Multiplication operator.
      */
-    MULTIPLY("times", "&times;"),
+    MULTIPLY("times", "&times;", "*", "times"),
     /**
      * Division operator.
      */

@@ -38,11 +38,11 @@ public final class XmlParserStAX {
     public XmlParserStAX() {
         this.xmlInputFactory = (WstxInputFactory) XMLInputFactory.newInstance();
 //        this.xmlInputFactory.setProperty("javax.xml.stream.isValidating", false);
-//        this.xmlInputFactory.setProperty("javax.xml.stream.supportDTD", false);
+        this.xmlInputFactory.setProperty("javax.xml.stream.isReplacingEntityReferences", false);
         this.xmlInputFactory.getConfig().doSupportDTDs(false);
         this.xmlInputFactory.getConfig().doCacheDTDs(true);
-//        this.xmlInputFactory.getConfig().doSupportDTDPP(false);
-        
+        this.xmlInputFactory.getConfig().doReplaceEntityRefs(false);
+        //        this.xmlInputFactory.getConfig().doSupportDTDPP(false);
     }
     
     /**
@@ -115,6 +115,11 @@ public final class XmlParserStAX {
                         currentNode = new MathMLNode();
                         // set its name
                         currentNode.setType(currentElement);
+                        for (int index = 0; index < reader.getAttributeCount(); ++index) {
+                            currentNode.getAttributes().add(
+                                    new XmlAttribute(reader.getAttributeLocalName(index), 
+                                                     reader.getAttributeValue(index)));
+                        }
                         // if parent node was set, set it to current node
                         if (parentNode != null) {
                             currentNode.setParent(parentNode);
@@ -160,7 +165,14 @@ public final class XmlParserStAX {
                             currentNode.setValue(value);
                         }
                         break;
-                    }    
+                    }  
+                    case ENTITY_REFERENCE: {
+                        final String value = reader.getLocalName();
+                        if (currentElement != null && StringUtils.isNotBlank(value)) {
+                            currentNode.setValue(value);
+                        }
+                        break;
+                    }   
                     default:
                         break;
                 }

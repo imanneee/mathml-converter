@@ -1,8 +1,11 @@
 package cz.muni.fi.mathml.mathml2text.transformer.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.annotation.Nonnull;
 import cz.muni.fi.mathml.MathMLElement;
 
 /**
@@ -27,6 +30,9 @@ public final class MathMLNode {
      * Parent node.
      */
     private MathMLNode parent;
+    
+    @Nonnull
+    private Set<XmlAttribute> attributes = new HashSet<XmlAttribute>();
 
     public MathMLNode getParent() {
         return parent;
@@ -44,6 +50,7 @@ public final class MathMLNode {
         this.type = type;
     }
 
+    @Nonnull
     public List<MathMLNode> getChildren() {
         return children;
     }
@@ -56,12 +63,24 @@ public final class MathMLNode {
         this.value = value;
     }
 
+    public Set<XmlAttribute> getAttributes() {
+        return attributes;
+    }
+
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(this.type.getElementName());
+        for (final XmlAttribute attr : this.attributes) {
+            builder.append("\t");
+            builder.append(attr.toString());
+        }
+        if (!this.attributes.isEmpty()) {
+            builder.append("\n");
+        }
         if (this.value != null) {
             builder.append("\t");
+            builder.append("value=");
             builder.append(this.value);
         } else {
             for (final MathMLNode node : this.children) {

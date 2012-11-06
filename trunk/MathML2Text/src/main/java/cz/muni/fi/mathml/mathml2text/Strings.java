@@ -8,4 +8,6 @@ public final class Strings {
 
     public static final String SPACE = " ";
     
+    public static final String EMPTY = "";
+    
 }
