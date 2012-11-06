@@ -6,4 +6,14 @@
     <entry key="times">times</entry>
     <entry key="divide">divided by</entry>
     <entry key="fraction">fraction</entry>
+    <entry key="end_fraction">end of fraction</entry>
+    <entry key="divided_by">divided by</entry>
+    <entry key="binomial_coefficient">binomial coefficient</entry>
+    <entry key="end_binomial_coefficient">end of binomial coefficient</entry>
+    <entry key="choose">choose</entry>
+    <entry key="open_braces">open braces</entry>
+    <entry key="close_braces">close braces</entry>
+    <entry key="square_root">square root of</entry>
+    <entry key="root">root of</entry>
+    <entry key=""></entry>
 </properties>

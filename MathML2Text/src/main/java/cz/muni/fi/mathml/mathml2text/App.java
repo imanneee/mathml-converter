@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 
+import cz.muni.fi.mathml.mathml2text.transformer.impl.MathMLConverter;
 import cz.muni.fi.mathml.mathml2text.transformer.impl.MathMLNode;
 import cz.muni.fi.mathml.mathml2text.transformer.impl.MathMLTransformerDOM;
 import cz.muni.fi.mathml.mathml2text.transformer.impl.MathMLTransformerStAX;
@@ -51,10 +52,16 @@ public class App {
 //        transformer.parse(Lists.<File>newArrayList(new File("d:\\Projects\\ex2.xml")), Locale.ENGLISH);
         
         final XmlParserStAX parser = new XmlParserStAX();
-        final List<MathMLNode> nodeList = parser.parse(Lists.<File>newArrayList(new File("d:\\Projects\\math.0001002-newdtd.xhtml")));
 //        final List<MathMLNode> nodeList = parser.parse(Lists.<File>newArrayList(new File("d:\\Projects\\math.0001002.xhtml")));
         
-        System.out.println(nodeList);
+        final List<MathMLNode> nodeList = parser.parse(Lists.<File>newArrayList(new File("d:\\Projects\\ex3.xml")));
+        final MathMLConverter converter = new MathMLConverter();
+        final List<String> convert = converter.convert(nodeList, Locale.ENGLISH);
+        for (final String s : convert) {
+            System.out.println(s);
+        }
+        
+//        System.out.println(nodeList);
         System.out.println(nodeList.size());
         
         final Instant end = Instant.now();
