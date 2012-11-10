@@ -28,6 +28,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
+ * @deprecated 
  * Prepares input file(s) for transformation.
  * Most notably searches input file for any occurence of {@code math} element, 
  * then takes this whole element and creates separate file. Also prepends XML declaration

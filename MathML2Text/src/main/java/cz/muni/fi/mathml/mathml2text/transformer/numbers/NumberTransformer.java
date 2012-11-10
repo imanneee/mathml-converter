@@ -19,6 +19,8 @@ import cz.muni.fi.mathml.mathml2text.Strings;
  * Transforms all numbers (arabic numerals) in input data to their written form.
  * Takes into consideration inflection, e.g. in square roots, powers, etc.
  * 
+ * @todo clean unneeded methods, fix ordinal number transformation
+ * 
  * @author Maros Kucbel Sep 13, 2012, 9:54:59 PM
  */
 public final class NumberTransformer {

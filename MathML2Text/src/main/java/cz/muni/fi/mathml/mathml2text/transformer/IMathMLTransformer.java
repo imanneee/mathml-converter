@@ -16,6 +16,8 @@ import javax.xml.transform.TransformerException;
 public interface IMathMLTransformer {
 
     /**
+     * @deprecated This method is used only for backward compatibility.
+     * Use {@link IMathMLTransformer#transform(java.util.Collection, java.util.Locale) }.
      * Transforms MathML input to String.
      *
      * @param input input Source that contains only MathML.
@@ -30,6 +32,8 @@ public interface IMathMLTransformer {
             throws TransformerConfigurationException, TransformerException, IllegalArgumentException;
 
     /**
+     * @deprecated This method is used only for backward compatibility.
+     * Use {@link IMathMLTransformer#transform(java.util.Collection, java.util.Locale) }.
      * Transforms MathML input
      *
      * @param input input XML file that contains only MathML
@@ -44,6 +48,12 @@ public interface IMathMLTransformer {
                          @Nonnull final String language) 
             throws TransformerConfigurationException, TransformerException, IllegalAccessException;
     
+    /**
+     * Transforms collection of XML files containing MathML markup.
+     * 
+     * @param filesToTransform Collection of files that will be transformed.
+     * @param language Language of transformation.
+     */
     void transform(@Nonnull final Collection<File> filesToTransform,
                    @Nonnull final Locale language);
 }

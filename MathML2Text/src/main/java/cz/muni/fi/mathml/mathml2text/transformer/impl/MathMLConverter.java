@@ -21,7 +21,9 @@ import cz.muni.fi.mathml.mathml2text.transformer.numbers.NumberFormat;
 import cz.muni.fi.mathml.mathml2text.transformer.numbers.NumberTransformer;
 
 /**
- *
+ * Transformer of {@link MathMLNode} trees into string representations.
+ * @todo extract interface
+ * 
  * @author Maros Kucbel
  * @date 2012-11-03T18:55:09+0100
  */
@@ -31,7 +33,7 @@ public final class MathMLConverter {
      */
     private static final Logger logger = LoggerFactory.getLogger(MathMLConverter.class);
     /**
-     * Localization properties for locales.
+     * Localization properties for locales. 
      */
     @Nonnull
     private Map<Locale, Properties> localizationMap = new HashMap<Locale, Properties>();
@@ -45,7 +47,7 @@ public final class MathMLConverter {
     private Properties currentLocalization;
     /**
      * Indicates format of a number we are transforming.
-     * If other than {@link NumberFormat#CARDINAL} is used, it should be set 
+     * Whenever other than {@link NumberFormat#CARDINAL} is used, it should be set 
      * back to {@link NumberFormat#CARDINAL} afterwards.
      */
     private NumberFormat numberFormat = NumberFormat.CARDINAL;
@@ -82,6 +84,8 @@ public final class MathMLConverter {
      */
     public List<String> convert(final List<MathMLNode> nodeList, final Locale language) {
         final List<MathMLNode> checked = new ArrayList<MathMLNode>();
+        // check whether every root of tree is of type math
+        //@todo for perfomance optimization, delete this check
         for (final MathMLNode node : nodeList) {
             if (MathMLElement.MATH.equals(node.getType())) {
                 checked.add(node);
@@ -100,7 +104,7 @@ public final class MathMLConverter {
     
     /**
      * Converts a single math node.
-     * @param root 
+     * @param node Node. 
      */
     private String processNode(final MathMLNode node) {
         
@@ -221,7 +225,6 @@ public final class MathMLConverter {
             throw new IllegalStateException("[mo] node should have its value set.");
         }
         final String op = StringEscapeUtils.escapeHtml4(node.getValue());
-//                logger.debug(String.format("[%1$s]", op));
         final Operation operator = Operation.forSymbol(op);
         if (operator != null) {
             return this.getProperty(operator.getKey()) + Strings.SPACE;

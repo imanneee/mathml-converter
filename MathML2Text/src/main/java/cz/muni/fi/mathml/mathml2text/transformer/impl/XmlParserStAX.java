@@ -22,7 +22,12 @@ import com.ctc.wstx.stax.WstxInputFactory;
 import cz.muni.fi.mathml.MathMLElement;
 
 /**
- *
+ * Parser for creating {@link MathMLNode} trees from input XML files.
+ * Input files are read via Woodstox ({@linkplain http://woodstox.codehaus.org})
+ * implementation of StAX API.
+ * 
+ * @todo extract interface
+ * 
  * @author Maros Kucbel Oct 31, 2012, 19:07:12 PM
  */
 public final class XmlParserStAX {
@@ -34,15 +39,11 @@ public final class XmlParserStAX {
     
     private WstxInputFactory xmlInputFactory;
     
-
     public XmlParserStAX() {
         this.xmlInputFactory = (WstxInputFactory) XMLInputFactory.newInstance();
-//        this.xmlInputFactory.setProperty("javax.xml.stream.isValidating", false);
-        this.xmlInputFactory.setProperty("javax.xml.stream.isReplacingEntityReferences", false);
         this.xmlInputFactory.getConfig().doSupportDTDs(false);
         this.xmlInputFactory.getConfig().doCacheDTDs(true);
         this.xmlInputFactory.getConfig().doReplaceEntityRefs(false);
-        //        this.xmlInputFactory.getConfig().doSupportDTDPP(false);
     }
     
     /**
@@ -52,6 +53,17 @@ public final class XmlParserStAX {
         return this.logger;
     }
 
+    /**
+     * Parses collection of files into the list of {@link MathMLNode} trees. 
+     * Every occurrence of math element inside any file is parsed as new instance
+     * of {@link MathMLNode} tree.
+     * 
+     * @todo change return type, maybe accept only single file. As it is now
+     * the information about from which file given tree comes is lost.
+     * 
+     * @param filesToTransform
+     * @return 
+     */
     public List<MathMLNode> parse(@Nonnull final Collection<File> filesToTransform) {
         Validate.isTrue(filesToTransform != null, "List of files for transformation should not be null.");
         Validate.notEmpty(filesToTransform, "List of files for transformation should not be empty.");
@@ -59,12 +71,20 @@ public final class XmlParserStAX {
 
         final List<MathMLNode> nodeList = new ArrayList<MathMLNode>();
         
+        // process every file
         for (final File file : filesToTransform) {
             nodeList.addAll(this.parse0(file));
         }
         return nodeList;
     }
 
+    /**
+     * Parses single file. For every occurrence of math element inside input 
+     * XML file new {@link MathMLNode} tree is builded. 
+     * 
+     * @param file Input XML file.
+     * @return List of {@link MathMLNode} trees.
+     */
     private List<MathMLNode> parse0(@Nonnull final File file) {
         Validate.isTrue(file != null, "File for transformation should not be null.");
 
@@ -72,12 +92,17 @@ public final class XmlParserStAX {
         
         XMLStreamReader reader;
         
+        /** root node */
         MathMLNode tree = null;
+        /** current node of reader */
         MathMLNode currentNode = null;
+        /** parent node of current node */
         MathMLNode parentNode = null;
+        /** type of current element */
         MathMLElement currentElement = null;
         
         try {
+            // create stream reader from input file
             final FileReader input = new FileReader(file);
             reader = this.xmlInputFactory.createXMLStreamReader(input);
 
@@ -89,7 +114,8 @@ public final class XmlParserStAX {
                 // determine type of event
                 final XmlStreamConstant constant = XmlStreamConstant.forEventCode(eventCode);
 
-                // check whether we are inside math element
+                // check whether we are inside math element, if not and current event is not
+                // START_ELEMENT continue to the next event
                 if (!processingMathMLElement && !XmlStreamConstant.START_ELEMENT.equals(constant)) {
                     continue;
                 }
@@ -98,23 +124,19 @@ public final class XmlParserStAX {
                     case START_ELEMENT: {
                         // retrieve element name
                         final String elementName = reader.getLocalName();
-                        
+                        // if we are not inside math element continue to the next event
                         if (!processingMathMLElement && !MathMLElement.MATH.getElementName().equals(elementName)) {
                             continue;
                         }
                         
-                        // if we are outside math element this element's name is not math
-                        // we will copy element with its attributes
+                        // now we are surely inside math element, we can determine type of math element
                         currentElement = MathMLElement.forElementName(elementName);
-//                        if (currentElement == MathMLElement.UNKNOWN) {
-//                            this.getLogger().debug(String.format("Unknown math element [%1$s]", elementName));
-//                        }
-//                        this.getLogger().debug("Starting to parse math element.");
                         processingMathMLElement = true;
                         // set new current node
                         currentNode = new MathMLNode();
                         // set its name
                         currentNode.setType(currentElement);
+                        // set its attributes if there are any
                         for (int index = 0; index < reader.getAttributeCount(); ++index) {
                             currentNode.getAttributes().add(
                                     new XmlAttribute(reader.getAttributeLocalName(index), 
@@ -135,14 +157,13 @@ public final class XmlParserStAX {
                         break;
                     }
                     case END_ELEMENT: {
+                        // we are going "one level up" inside the tree
                         parentNode = currentNode.getParent();
                         currentNode = parentNode;
 
+                        //@todo it should be enough to check whether currentNode is not null
                         final String elementName = reader.getLocalName();
                         final MathMLElement element = MathMLElement.forElementName(elementName);
-//                        if (currentElement == MathMLElement.UNKNOWN) {
-//                            this.getLogger().debug(String.format("Unknown math element [%1$s]", elementName));
-//                        }
                         switch (element) {
                             case MATH: {
                                 processingMathMLElement = false;

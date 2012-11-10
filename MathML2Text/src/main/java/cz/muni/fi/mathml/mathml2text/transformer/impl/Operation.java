@@ -5,7 +5,9 @@ import java.util.Collection;
 import com.google.common.collect.ImmutableList;
 
 /**
- *
+ * Enumeration of supported mathematical operations and their possible 
+ * representation in presentation MathML (mo element).
+ * 
  * @author Maros Kucbel Sep 16, 2012, 4:54:09 PM
  */
 public enum Operation {

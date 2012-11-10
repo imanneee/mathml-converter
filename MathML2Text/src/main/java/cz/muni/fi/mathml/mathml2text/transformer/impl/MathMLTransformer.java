@@ -35,6 +35,7 @@ import cz.muni.fi.mathml.mathml2text.transformer.numbers.NumberTransformer;
 /**
  * Implementation of MathML to plain text transformer.
  * 
+ * @deprecated 
  * @author Maros Kucbel Sep 13, 2012, 9:18:12 PM
  */
 public final class MathMLTransformer implements IMathMLTransformer {
