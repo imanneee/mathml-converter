@@ -1,27 +1,44 @@
 package cz.muni.fi.mathml.mathml2text.transformer.impl;
 
 /**
- * Single attribute of a node.
+ * Immutable attribute of a node.
  * 
  * @author Maros Kucbel
  * @date 2012-11-02T21:06:27+0100
  */
 public final class XmlAttribute {
-    
+    /**
+     * Attribute identifier.
+     */
     private final String key;
-    
+    /**
+     * Attribute value.
+     */
     private final String value;
     
+    /**
+     * Constructor.
+     * @param key Identifier.
+     * @param value Value.
+     */
     public XmlAttribute(final String key,
                         final String value) {
         this.key = key;
         this.value = value;
     }
 
+    /**
+     * Returns identifier of this attribute.
+     * @return Identifier.
+     */
     public String getKey() {
         return key;
     }
 
+    /**
+     * Returns value of this attribute.
+     * @return Value.
+     */
     public String getValue() {
         return value;
     }

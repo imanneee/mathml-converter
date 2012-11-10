@@ -6,10 +6,16 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import cz.muni.fi.mathml.MathMLElement;
 
 /**
- *
+ * DOM-like representation of MathML document tree.
+ * Root element (the only node without a parent)
+ * should always be of type {@link MathMLElement#MATH}.
+ * There's no checking whether this structure is actually a valid MathML tree.
+ * 
  * @author Maros Kucbel
  * @date 2012-10-30T20:00:48+0100
  */
@@ -30,39 +36,79 @@ public final class MathMLNode {
      * Parent node.
      */
     private MathMLNode parent;
-    
+    /**
+     * Set of attributes.
+     */
     @Nonnull
     private Set<XmlAttribute> attributes = new HashSet<XmlAttribute>();
 
+    /**
+     * Returns parent node of this node.
+     * @return Parent node.
+     */
     public MathMLNode getParent() {
         return parent;
     }
 
+    /**
+     * Sets parent node of this node.
+     * @param parent Parent node.
+     */
     public void setParent(MathMLNode parent) {
         this.parent = parent;
     }
     
+    /**
+     * Return type of this node.
+     * @return Type.
+     */
     public MathMLElement getType() {
         return type;
     }
 
+    /**
+     * Sets type of this node.
+     * @param type Type.
+     */
     public void setType(MathMLElement type) {
         this.type = type;
     }
 
+    /**
+     * Returns a list of child nodes of this node.
+     * Never returns <code>null</node>. If there are no children, returns 
+     * empty list.
+     * @return 
+     */
     @Nonnull
     public List<MathMLNode> getChildren() {
         return children;
     }
 
+    /**
+     * Returns text value of this node. Can be <code>null</code>
+     * @return Text value.
+     */
+    @Nullable
     public String getValue() {
         return value;
     }
 
+    /**
+     * Sets text value of this node.
+     * @param value Text value.
+     */
     public void setValue(String value) {
         this.value = value;
     }
 
+    /**
+     * Returns set of attributes of this node.
+     * Never returns <code>null</node>. If there are no children, returns 
+     * empty set.
+     * @return 
+     */
+    @Nonnull
     public Set<XmlAttribute> getAttributes() {
         return attributes;
     }
