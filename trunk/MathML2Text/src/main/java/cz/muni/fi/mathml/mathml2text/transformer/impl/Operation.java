@@ -14,11 +14,11 @@ public enum Operation {
     /**
      * Addition operator.
      */
-    ADD("plus", "+"),
+    ADD("plus", "+", "&plus;", "plus"),
     /**
      * Subtraction operator.
      */
-    SUBTRACT("minus", "-", "&minus;"),
+    SUBTRACT("minus", "-", "&minus;", "minus"),
     /**
      * Multiplication operator.
      */
@@ -26,7 +26,19 @@ public enum Operation {
     /**
      * Division operator.
      */
-    DIVIDE("divide", "/", "&divide;");
+    DIVIDE("divide", "/", "&divide;", "divide"),
+    /**
+     * Logarithm.
+     */
+    LOGARITHM("logarithm", "log"),
+    /**
+     * Natural logarithm.
+     */
+    NATURAL_LOGARITHM("naturalLogarithm", "ln"),
+    /**
+     * Square. (to the power of 2)
+     */
+    SQUARE("square", "2");
     
     /**
      * Localization key for this operation.

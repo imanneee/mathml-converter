@@ -15,5 +15,10 @@
     <entry key="close_braces">close braces</entry>
     <entry key="square_root">square root of</entry>
     <entry key="root">root of</entry>
+    <entry key="logarithm_base">logarithm to the base</entry>
+    <entry key="logarithm_from">of</entry>
+    <entry key="squared">squared</entry>
+    <entry key="superscript">raised to</entry>
+    <entry key=""></entry>
     <entry key=""></entry>
 </properties>
