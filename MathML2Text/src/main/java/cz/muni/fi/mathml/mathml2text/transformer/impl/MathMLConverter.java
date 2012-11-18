@@ -150,6 +150,14 @@ public final class MathMLConverter {
                 builder.append(this.processMroot(node));
                 break;
             }    
+            case MSUB: {
+                builder.append(this.processMsub(node));
+                break;
+            }
+            case MSUP: {
+                builder.append(this.processMsup(node));
+                break;
+            }
             default: {
                 if (node.getChildren().isEmpty()) {
                     builder.append(node.getValue());
@@ -357,6 +365,48 @@ public final class MathMLConverter {
             builder.append(Strings.SPACE);
         }
         
+        return builder.toString();
+    }
+    
+    /**
+     * Processes msub node.
+     */
+    private String processMsub(final MathMLNode node) {
+        if (node.getChildren().size() != 2) {
+            throw new IllegalArgumentException("[mroot] should have two children.");
+        }
+        final StringBuilder builder = new StringBuilder();
+        // if first child is operation logarithm
+        if (Operation.LOGARITHM.getSymbols().contains(node.getChildren().get(0).getValue())) {
+            builder.append(this.getProperty("logarithm_base"));
+            builder.append(Strings.SPACE);
+            builder.append(this.processNode(node.getChildren().get(1)));
+            builder.append(this.getProperty("logarithm_from"));
+            builder.append(Strings.SPACE);
+        } else {
+            builder.append(this.processNode(node.getChildren().get(0)));
+            builder.append(this.processNode(node.getChildren().get(1)));
+        }
+        return builder.toString();
+    }
+    
+    /**
+     * Processes msup node.
+     */
+    private String processMsup(final MathMLNode node) {
+        if (node.getChildren().size() != 2) {
+            throw new IllegalArgumentException("[mroot] should have two children.");
+        }
+        final StringBuilder builder = new StringBuilder();
+        builder.append(this.processNode(node.getChildren().get(0)));
+        if (Operation.SQUARE.getSymbols().contains(node.getChildren().get(1).getValue())) {
+            builder.append(this.getProperty("squared"));
+            builder.append(Strings.SPACE);
+        } else {
+            builder.append(this.getProperty("superscript"));
+            builder.append(Strings.SPACE);
+            builder.append(this.processNode(node.getChildren().get(1)));
+        }
         return builder.toString();
     }
 }
