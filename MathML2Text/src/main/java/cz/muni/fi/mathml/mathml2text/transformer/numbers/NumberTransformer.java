@@ -278,6 +278,9 @@ public final class NumberTransformer {
      */
     private String translateNumber(long number) {
         StringBuilder ret = new StringBuilder("");
+        if (number == 0) {
+            return this.getBundle().getString("ZERO");
+        }
         if (number < 0) {
             ret.append(this.getBundle().getString("MINUS")).append(" ");
             number *= -1;
