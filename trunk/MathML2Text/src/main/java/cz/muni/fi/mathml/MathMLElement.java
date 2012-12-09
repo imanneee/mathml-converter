@@ -94,6 +94,15 @@ public enum MathMLElement {
      */
     MTD("mtd"),
     /**
+     * Container for annotations.
+     */
+    SEMANTICS("semantics"),
+    /**
+     * Different kind of MathML notation (for example content). 
+     * Attribute <code>encoding</code> is used to ascertain exact type.
+     */
+    ANNOTAION_XML("annotation-xml"),
+    /**
      * Unknown element.
      */
     UNKNOWN("unknown");

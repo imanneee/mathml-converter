@@ -28,6 +28,10 @@ public enum Operation {
      */
     DIVIDE("divide", "/", "&divide;", "divide"),
     /**
+     * Equals.
+     */
+    EQUALS("equals", "="),
+    /**
      * Logarithm.
      */
     LOGARITHM("logarithm", "log"),
@@ -38,7 +42,29 @@ public enum Operation {
     /**
      * Square. (to the power of 2)
      */
-    SQUARE("square", "2");
+    SQUARE("square", "2"),
+    /**
+     * Limit.
+     */
+    LIMIT("limit", "lim"),
+    
+    APPROACHES("approaches", "&rarr;", "rarr"),
+    /**
+     * Integral.
+     */
+    INTEGRAL("integral", "int", "&int;"),
+    /**
+     * Differential of integral.
+     */
+    DIFFERENTIAL("differential", "dd", "&dd;"),
+    /**
+     * Summation.
+     */
+    SUMMATION("summation", "sum", "&sum;"),
+    /**
+     * Product.
+     */
+    PRODUCT("product", "prod", "&prod;");
     
     /**
      * Localization key for this operation.

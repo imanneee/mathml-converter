@@ -29,15 +29,17 @@ public class App {
         final XmlParserStAX parser = new XmlParserStAX();
 //        final List<MathMLNode> nodeList = parser.parse(Lists.<File>newArrayList(new File("d:\\Projects\\math.0001002.xhtml")));
         
-        final List<MathMLNode> nodeList = parser.parse(Lists.<File>newArrayList(new File("d:\\Projects\\ex1.xml")));
-        final MathMLConverter converter = new MathMLConverter();
-        final List<String> convert = converter.convert(nodeList, Locale.ENGLISH);
-        for (final String s : convert) {
-            System.out.println(s);
-        }
-        
+        File input = new File("d:\\Projects\\ex4.xml");
+//        final List<MathMLNode> nodeList = parser.parse(Lists.<File>newArrayList());
+//        final MathMLConverter converter = new MathMLConverter();
+//        final List<String> convert = converter.convert(nodeList, Locale.ENGLISH);
+//        for (final String s : convert) {
+//            System.out.println(s);
+//        }
 //        System.out.println(nodeList);
-        System.out.println(nodeList.size());
+//        System.out.println(nodeList.size());
+        File parse = parser.parse(input);
+        System.out.println(parse.getPath());
         
         final Instant end = Instant.now();
         final Duration duration = new Duration(start, end);

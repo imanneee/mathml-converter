@@ -37,6 +37,11 @@ public final class MathMLNode {
      */
     private MathMLNode parent;
     /**
+     * Was this node already processed? Usefull when you have to "look ahead" and process
+     * element sooner.
+     */
+    private boolean processed = false;
+    /**
      * Set of attributes.
      */
     @Nonnull
@@ -111,6 +116,14 @@ public final class MathMLNode {
     @Nonnull
     public Set<XmlAttribute> getAttributes() {
         return attributes;
+    }
+
+    public boolean isProcessed() {
+        return processed;
+    }
+
+    public void setProcessed() {
+        this.processed = true;
     }
 
     @Override

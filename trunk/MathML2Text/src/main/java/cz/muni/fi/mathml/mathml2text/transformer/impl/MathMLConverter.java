@@ -74,7 +74,7 @@ public final class MathMLConverter {
      * Returns <code>null</code> if there isn't one.
      */
     private String getProperty(final String key) {
-        return this.currentLocalization.getProperty(key);
+        return this.currentLocalization.getProperty(key) + Strings.SPACE;
     }
     
     /**
@@ -102,12 +102,23 @@ public final class MathMLConverter {
         return converted;
     }
     
+    public String convert(final MathMLNode node, final Locale language) {
+        if (!MathMLElement.MATH.equals(node.getType())) {
+            throw new IllegalStateException(String.format("Expected [math] node, but got [%1$s].", node.getType().getElementName()));
+        }
+        this.numberTransformer = new NumberTransformer(language);
+        this.currentLocalization = this.getLocalization(language);
+        return this.processNode(node);
+    }
+    
     /**
      * Converts a single math node.
      * @param node Node. 
      */
     private String processNode(final MathMLNode node) {
-        
+        if (node.isProcessed()) {
+            return Strings.EMPTY;
+        }
         final StringBuilder builder = new StringBuilder();
         
         switch (node.getType()) {
@@ -158,6 +169,14 @@ public final class MathMLConverter {
                 builder.append(this.processMsup(node));
                 break;
             }
+            case MUNDER: {
+                builder.append(this.processMunder(node));
+                break;
+            } 
+            case MUNDEROVER: case MSUBSUP: {
+                builder.append(this.processMunderover(node));
+                break;
+            }
             default: {
                 if (node.getChildren().isEmpty()) {
                     builder.append(node.getValue());
@@ -169,6 +188,7 @@ public final class MathMLConverter {
                 break;
             }
         }
+        node.setProcessed();
         return builder.toString();
     } 
     
@@ -235,7 +255,7 @@ public final class MathMLConverter {
         final String op = StringEscapeUtils.escapeHtml4(node.getValue());
         final Operation operator = Operation.forSymbol(op);
         if (operator != null) {
-            return this.getProperty(operator.getKey()) + Strings.SPACE;
+            return this.getProperty(operator.getKey());
         } else {
             logger.warn("Operation [{}] not supported.", op);
         }
@@ -260,42 +280,32 @@ public final class MathMLConverter {
         }
         if (isFraction) {
             builder.append(this.getProperty("fraction"));
-            builder.append(Strings.SPACE);
             boolean braces = false;
             if (node.getChildren().get(0).getChildren().size() > 1) {
                 builder.append(this.getProperty("open_braces"));
-                builder.append(Strings.SPACE);
                 braces = true;
             }
             builder.append(this.processNode(node.getChildren().get(0)));
             if (braces) {
                 builder.append(this.getProperty("close_braces"));
-                builder.append(Strings.SPACE);
             }
             builder.append(this.getProperty("divided_by"));
-            builder.append(Strings.SPACE);
             braces = false;
             if (node.getChildren().get(0).getChildren().size() > 1) {
                 builder.append(this.getProperty("open_braces"));
-                builder.append(Strings.SPACE);
                 braces = true;
             }
             builder.append(this.processNode(node.getChildren().get(1)));
             if (braces) {
                 builder.append(this.getProperty("close_braces"));
-                builder.append(Strings.SPACE);
             }
             builder.append(this.getProperty("end_fraction"));
-            builder.append(Strings.SPACE);
         } else {
             builder.append(this.getProperty("binomial_coefficient"));
-            builder.append(Strings.SPACE);
             builder.append(this.processNode(node.getChildren().get(0)));
             builder.append(this.getProperty("choose"));
-            builder.append(Strings.SPACE);
             builder.append(this.processNode(node.getChildren().get(1)));
             builder.append(this.getProperty("end_binomial_coefficient"));
-            builder.append(Strings.SPACE);
         }
         return builder.toString();
     }
@@ -309,19 +319,16 @@ public final class MathMLConverter {
         }
         final StringBuilder builder = new StringBuilder();
         builder.append(this.getProperty("square_root"));
-        builder.append(Strings.SPACE);
         boolean braces = false;
         if (node.getChildren().get(0).getChildren().size() > 1) {
             braces = true;
         }
         if (braces) {
             builder.append(this.getProperty("open_braces"));
-            builder.append(Strings.SPACE);
         }
         builder.append(this.processNode(node.getChildren().get(0)));
         if (braces) {
             builder.append(this.getProperty("close_braces"));
-            builder.append(Strings.SPACE);
         }
         return builder.toString();
     }
@@ -341,28 +348,23 @@ public final class MathMLConverter {
         }
         if (braces) {
             builder.append(this.getProperty("open_braces"));
-            builder.append(Strings.SPACE);
         }
         builder.append(this.processNode(node.getChildren().get(1)));
         if (braces) {
             builder.append(this.getProperty("close_braces"));
-            builder.append(Strings.SPACE);
         }
         this.numberFormat = NumberFormat.CARDINAL;
         builder.append(this.getProperty("root"));
-        builder.append(Strings.SPACE);
         braces = false;
         if (node.getChildren().get(0).getChildren().size() > 1) {
             braces = true;
         }
         if (braces) {
             builder.append(this.getProperty("open_braces"));
-            builder.append(Strings.SPACE);
         }
         builder.append(this.processNode(node.getChildren().get(0)));
         if (braces) {
             builder.append(this.getProperty("close_braces"));
-            builder.append(Strings.SPACE);
         }
         
         return builder.toString();
@@ -373,16 +375,14 @@ public final class MathMLConverter {
      */
     private String processMsub(final MathMLNode node) {
         if (node.getChildren().size() != 2) {
-            throw new IllegalArgumentException("[mroot] should have two children.");
+            throw new IllegalArgumentException("[msub] should have two children.");
         }
         final StringBuilder builder = new StringBuilder();
         // if first child is operation logarithm
         if (Operation.LOGARITHM.getSymbols().contains(node.getChildren().get(0).getValue())) {
             builder.append(this.getProperty("logarithm_base"));
-            builder.append(Strings.SPACE);
             builder.append(this.processNode(node.getChildren().get(1)));
             builder.append(this.getProperty("logarithm_from"));
-            builder.append(Strings.SPACE);
         } else {
             builder.append(this.processNode(node.getChildren().get(0)));
             builder.append(this.processNode(node.getChildren().get(1)));
@@ -395,17 +395,88 @@ public final class MathMLConverter {
      */
     private String processMsup(final MathMLNode node) {
         if (node.getChildren().size() != 2) {
-            throw new IllegalArgumentException("[mroot] should have two children.");
+            throw new IllegalArgumentException("[msup] should have two children.");
         }
         final StringBuilder builder = new StringBuilder();
         builder.append(this.processNode(node.getChildren().get(0)));
         if (Operation.SQUARE.getSymbols().contains(node.getChildren().get(1).getValue())) {
             builder.append(this.getProperty("squared"));
-            builder.append(Strings.SPACE);
         } else {
             builder.append(this.getProperty("superscript"));
-            builder.append(Strings.SPACE);
             builder.append(this.processNode(node.getChildren().get(1)));
+        }
+        return builder.toString();
+    }
+    
+    private String processMunder(final MathMLNode node) {
+        if (node.getChildren().size() != 2) {
+            throw new IllegalArgumentException("[munder] should have two children.");
+        }
+        final StringBuilder builder = new StringBuilder();
+        if (Operation.LIMIT.getSymbols().contains(node.getChildren().get(0).getValue())) {
+            builder.append(this.processNode(node.getChildren().get(0)));
+            MathMLNode firstSibling = node.getParent().getChildren().get(1);
+            if (firstSibling != null) {
+                builder.append(this.processNode(firstSibling));
+            }
+            builder.append(this.getProperty("limit_as"));
+            builder.append(this.processNode(node.getChildren().get(1)));
+        } else {
+            builder.append(this.processNode(node.getChildren().get(0)));
+            builder.append(this.getProperty("subscript"));
+            builder.append(this.processNode(node.getChildren().get(1)));
+        }
+        return builder.toString();
+    }
+    
+    private String processMunderover(final MathMLNode node) {
+        if (node.getChildren().size() != 3) {
+            throw new IllegalArgumentException("[munderover] should have three children.");
+        }
+        final StringBuilder builder = new StringBuilder();
+        final String possibleOperation = node.getChildren().get(0).getValue();
+        if (Operation.INTEGRAL.getSymbols().contains(possibleOperation)) {
+            builder.append(this.getProperty("integral_definite"));
+            builder.append(this.processNode(node.getChildren().get(0)));
+            builder.append(this.getProperty("from"));
+            builder.append(this.processNode(node.getChildren().get(1)));
+            builder.append(this.getProperty("to"));
+            builder.append(this.processNode(node.getChildren().get(2)));
+            builder.append(this.getProperty("of"));
+            MathMLNode firstSibling = node.getParent().getChildren().get(1);
+            if (firstSibling != null) {
+                builder.append(this.processNode(firstSibling));
+            }
+        } else if (Operation.SUMMATION.getSymbols().contains(possibleOperation)
+                || Operation.PRODUCT.getSymbols().contains(possibleOperation)) {
+            builder.append(this.processNode(node.getChildren().get(0)));
+            MathMLNode identifier = !node.getChildren().get(1).getChildren().isEmpty() 
+                    ? node.getChildren().get(1).getChildren().get(0)
+                    : null;
+            if (identifier != null && MathMLElement.MI.equals(identifier.getType())) {
+                builder.append(this.getProperty("over"));
+                builder.append(this.processNode(identifier));
+                builder.append(this.getProperty("from"));
+                this.processNode(node.getChildren().get(1).getChildren().get(1)); // so that the node will be processed
+                builder.append(this.processNode(node.getChildren().get(1)));
+                builder.append(this.getProperty("to"));
+                builder.append(this.processNode(node.getChildren().get(2)));
+                builder.append(this.getProperty("of"));
+                MathMLNode firstSibling = node.getParent().getChildren().get(1);
+                if (firstSibling != null) {
+                    builder.append(this.processNode(firstSibling));
+                }
+            } else {
+                builder.append(this.getProperty("from"));
+                builder.append(this.processNode(node.getChildren().get(1)));
+                builder.append(this.getProperty("to"));
+                builder.append(this.processNode(node.getChildren().get(2)));
+                builder.append(this.getProperty("of"));
+                MathMLNode firstSibling = node.getParent().getChildren().get(1);
+                if (firstSibling != null) {
+                    builder.append(this.processNode(firstSibling));
+                }
+            }
         }
         return builder.toString();
     }

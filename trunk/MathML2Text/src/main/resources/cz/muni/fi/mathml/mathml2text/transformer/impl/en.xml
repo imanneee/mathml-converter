@@ -5,6 +5,7 @@
     <entry key="minus">minus</entry>
     <entry key="times">times</entry>
     <entry key="divide">divided by</entry>
+    <entry key="equals">equals</entry>
     <entry key="fraction">fraction</entry>
     <entry key="end_fraction">end of fraction</entry>
     <entry key="divided_by">divided by</entry>
@@ -19,6 +20,19 @@
     <entry key="logarithm_from">of</entry>
     <entry key="squared">squared</entry>
     <entry key="superscript">raised to</entry>
-    <entry key=""></entry>
+    <entry key="subscript">with lower index</entry>
+    <entry key="limit">the limit of</entry>
+    <entry key="limit_as">as</entry>
+    <entry key="approaches">approaches</entry>
+    <entry key="integral">integral</entry>
+    <entry key="integral_definite">definite</entry>
+    <entry key="integral_indefinite">indefinite</entry>
+    <entry key="differential">with respect to</entry>
+    <entry key="of">of</entry>
+    <entry key="from">from</entry>
+    <entry key="to">to</entry>
+    <entry key="summation">sum</entry>
+    <entry key="product">product</entry>
+    <entry key="over">over</entry>
     <entry key=""></entry>
 </properties>
