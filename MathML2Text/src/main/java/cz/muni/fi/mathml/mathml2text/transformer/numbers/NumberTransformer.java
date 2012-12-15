@@ -28,6 +28,8 @@ public final class NumberTransformer {
     private final ResourceBundle bundle;
     private final Logger logger = LoggerFactory.getLogger(NumberTransformer.class);
 
+    private NumberFormat numberFormat = NumberFormat.CARDINAL;
+    
     public NumberTransformer(@Nullable final Locale locale) {
         this.bundle = ResourceBundle.getBundle("cz.muni.fi.mathml.mathml2text.transformer.numbers.numbers", locale != null ? locale : Locale.getDefault());
     }
@@ -48,6 +50,28 @@ public final class NumberTransformer {
      */
     private Logger getLogger() {
         return this.logger;
+    }
+
+    public NumberFormat getNumberFormat() {
+        return numberFormat;
+    }
+
+    public void setNumberFormat(NumberFormat numberFormat) {
+        this.numberFormat = numberFormat;
+    }
+    
+    public String transform(final String value) {
+        switch (this.getNumberFormat()) {
+            case CARDINAL: {
+                return this.transformNumber(value);
+            }
+            case ORDINAL: {
+                return this.transformOrdinalNumber(value);
+            }
+            default: {
+                return Strings.EMPTY;
+            }
+        }
     }
     
     /**

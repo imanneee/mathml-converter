@@ -27,7 +27,7 @@ import cz.muni.fi.mathml.mathml2text.transformer.numbers.NumberTransformer;
  * @author Maros Kucbel
  * @date 2012-11-03T18:55:09+0100
  */
-public final class MathMLConverter {
+public class MathMLConverter {
     /**
      * Logger.
      */
@@ -73,8 +73,20 @@ public final class MathMLConverter {
      * Finds a property value for given key.
      * Returns <code>null</code> if there isn't one.
      */
-    private String getProperty(final String key) {
+    protected String getProperty(final String key) {
         return this.currentLocalization.getProperty(key) + Strings.SPACE;
+    }
+    
+    protected NumberFormat getNumberFormat() {
+        return this.numberFormat;
+    }
+    
+    protected void setNumberFormat(final NumberFormat numberFormat) {
+        this.numberFormat = numberFormat;
+    }
+    
+    protected NumberTransformer getNumberTransformer() {
+        return this.numberTransformer;
     }
     
     /**
@@ -122,7 +134,7 @@ public final class MathMLConverter {
         final StringBuilder builder = new StringBuilder();
         
         switch (node.getType()) {
-            case MATH: {
+            case MATH: case SEMANTICS: {
                 // root element, iterate through children
                 for (final MathMLNode child : node.getChildren()) {
                     builder.append(this.processNode(child));
@@ -177,6 +189,22 @@ public final class MathMLConverter {
                 builder.append(this.processMunderover(node));
                 break;
             }
+            case CN: {
+                builder.append(this.processCn(node));
+                break;
+            }
+            case CI: {
+                builder.append(this.processCi(node));
+                break;
+            }
+            case APPLY: {
+                builder.append(this.processApply(node));
+                break;
+            }
+            case CSYMBOL: {
+                builder.append(this.processCsymbol(node));
+                break;
+            }
             default: {
                 if (node.getChildren().isEmpty()) {
                     builder.append(node.getValue());
@@ -219,7 +247,7 @@ public final class MathMLConverter {
         }
         try {
             final String number;
-            switch (this.numberFormat) {
+            switch (this.getNumberFormat()) {
                 case ORDINAL: {
                     number = this.numberTransformer.transformOrdinalNumber(node.getValue());
                     break;
@@ -341,7 +369,7 @@ public final class MathMLConverter {
             throw new IllegalArgumentException("[mroot] should have two children.");
         }
         final StringBuilder builder = new StringBuilder();
-        this.numberFormat = NumberFormat.ORDINAL;
+        this.setNumberFormat(NumberFormat.ORDINAL);
         boolean braces = false;
         if (node.getChildren().get(1).getChildren().size() > 1) {
             braces = true;
@@ -353,7 +381,7 @@ public final class MathMLConverter {
         if (braces) {
             builder.append(this.getProperty("close_braces"));
         }
-        this.numberFormat = NumberFormat.CARDINAL;
+        this.setNumberFormat(NumberFormat.CARDINAL);
         builder.append(this.getProperty("root"));
         braces = false;
         if (node.getChildren().get(0).getChildren().size() > 1) {
@@ -479,5 +507,80 @@ public final class MathMLConverter {
             }
         }
         return builder.toString();
+    }
+    
+    private String processCn(final MathMLNode node) {
+        if (node.getValue() == null) {
+            throw new IllegalStateException("[mi] node should have its value set.");
+        }
+        final StringBuilder builder = new StringBuilder();
+        for (final XmlAttribute attr : node.getAttributes()) {
+            if (("base".equals(attr.getKey()) && !"10".equals(attr.getValue()))
+                    || ("type".equals(attr.getKey()) && "hexdouble".equals(attr.getValue()))) {
+                builder.append(node.getValue());
+                builder.append(Strings.SPACE);
+                return builder.toString();
+            }
+        }
+        try {
+            final String number;
+            switch (this.getNumberFormat()) {
+                case ORDINAL: {
+                    number = this.numberTransformer.transformOrdinalNumber(node.getValue());
+                    break;
+                }
+                case CARDINAL: {
+                    number = this.numberTransformer.transformNumber(node.getValue());
+                    break;
+                }
+                default: {
+                    number = Strings.EMPTY;
+                    break;
+                }
+            }
+            return number + Strings.SPACE;
+        } catch (final NumberFormatException ex) {
+            logger.warn(String.format("Cannot transform string [%1$s] to number.", node.getValue()), ex);
+        }
+        return Strings.EMPTY;
+    }
+    
+    private String processCi(final MathMLNode node) {
+        // this node is an identifier
+        // it has no child elements
+        if (!node.getChildren().isEmpty()) {
+            throw new IllegalStateException("[mi] node should not have children.");
+        }
+        final String identifier = StringEscapeUtils.escapeHtml4(node.getValue());
+        return identifier + Strings.SPACE;
+    }
+    
+    private String processApply(final MathMLNode node) {
+        final StringBuilder builder = new StringBuilder();
+        int childrenCount = node.getChildren().size();
+        if (childrenCount < 1) {
+            
+        } else if (childrenCount < 2) {
+            builder.append(this.getProperty("function"));
+            builder.append(this.processNode(node.getChildren().get(0)));
+            builder.append(this.getProperty("applied_to"));
+            builder.append(this.processNode(node.getChildren().get(1)));
+        } else {
+            String function = this.processNode(node.getChildren().get(0));
+            for (int index = 1; index < childrenCount; ++index) {
+                builder.append(this.processNode(node.getChildren().get(index)));
+                if (index < childrenCount - 1) {
+                    builder.append(function);
+                }
+            }
+        }
+        return builder.toString();
+    }
+    
+    private String processCsymbol(final MathMLNode node) {
+        if (node.getValue() == null) {
+            throw new IllegalStateException("[csymbol] should have some value.");
+        }
+        return Strings.EMPTY;
     }
 }
