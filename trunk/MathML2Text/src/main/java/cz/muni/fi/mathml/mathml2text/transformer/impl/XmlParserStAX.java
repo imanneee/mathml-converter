@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -26,6 +25,7 @@ import com.ctc.wstx.stax.WstxInputFactory;
 import com.ctc.wstx.stax.WstxOutputFactory;
 
 import cz.muni.fi.mathml.MathMLElement;
+import cz.muni.fi.mathml.mathml2text.transformer.impl.converter.MathMLConverter;
 
 /**
  * Parser for creating {@link MathMLNode} trees from input XML files.
@@ -133,7 +133,8 @@ public final class XmlParserStAX {
             FileWriter output = new FileWriter(outputFile);
 //            writer = this.xmlOutputFactory.createXMLStreamWriter(output);
             writer = this.xmlOutputFactory.createXMLStreamWriter(System.out);
-
+            writer.writeStartDocument(reader.getEncoding(), reader.getVersion());
+            
             // indicates whether we are inside a math element
             boolean processingMathMLElement = false;
             while (reader.hasNext()) {
@@ -166,9 +167,12 @@ public final class XmlParserStAX {
                         final String elementName = reader.getLocalName();
                         // if we are not inside math element continue to the next event
                         if (!processingMathMLElement && !MathMLElement.MATH.getElementName().equals(elementName)) {
-                            writer.writeStartElement(reader.getLocalName());
+                            writer.writeStartElement(reader.getName().getPrefix(), reader.getLocalName(), reader.getName().getNamespaceURI());
                             for (int index = 0; index < reader.getAttributeCount(); ++index) {
                                 writer.writeAttribute(reader.getAttributeLocalName(index), reader.getAttributeValue(index));
+                            }
+                            for (int index = 0; index < reader.getNamespaceCount(); ++index) {
+                                writer.writeNamespace(reader.getNamespacePrefix(index), reader.getNamespaceURI(index));
                             }
                             continue;
                         }

@@ -34,5 +34,8 @@
     <entry key="summation">sum</entry>
     <entry key="product">product</entry>
     <entry key="over">over</entry>
+    <entry key="function">function</entry>
+    <entry key="applied_to">applied to</entry>
+    <entry key=""></entry>
     <entry key=""></entry>
 </properties>

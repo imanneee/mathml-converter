@@ -7,111 +7,132 @@ package cz.muni.fi.mathml;
  * @author Maros Kucbel Sep 16, 2012, 11:58:46 AM
  */
 public enum MathMLElement {
+    /************** PRESENTATION MATHML *************/
     /** 
      * Root element of MathML.
      */
-    MATH("math"),
+    MATH("math", MathMLType.PRESENTATION),
     
     /*** Presentation MathML elements. ***/
     /**
      * Grouping element.
      */
-    MROW("mrow"),
+    MROW("mrow", MathMLType.PRESENTATION),
     /**
      * Number.
      */
-    MN("mn"),
+    MN("mn", MathMLType.PRESENTATION),
     /**
      * Identifier.
      */
-    MI("mi"),
+    MI("mi", MathMLType.PRESENTATION),
     /**
      * Operation.
      */
-    MO("mo"),
+    MO("mo", MathMLType.PRESENTATION),
     /**
      * Fraction or binomial number.
      */
-    MFRAC("mfrac"),
+    MFRAC("mfrac", MathMLType.PRESENTATION),
     /**
      * Subscript.
      */
-    MSUB("msub"),
+    MSUB("msub", MathMLType.PRESENTATION),
     /**
      * Superscript.
      */
-    MSUP("msup"),
+    MSUP("msup", MathMLType.PRESENTATION),
     /**
      * Subscript-superscript.
      */
-    MSUBSUP("msubsup"),
+    MSUBSUP("msubsup", MathMLType.PRESENTATION),
     /**
      * Underscript.
      */
-    MUNDER("munder"),
+    MUNDER("munder", MathMLType.PRESENTATION),
     /**
      * Overscript.
      */
-    MOVER("mover"),
+    MOVER("mover", MathMLType.PRESENTATION),
     /**
      * Underscript-overscript.
      */
-    MUNDEROVER("munderover"),
+    MUNDEROVER("munderover", MathMLType.PRESENTATION),
     /**
      * Square root.
      */
-    MSQRT("msqrt"),
+    MSQRT("msqrt", MathMLType.PRESENTATION),
     /**
      * Radical with index.
      */
-    MROOT("mroot"),
+    MROOT("mroot", MathMLType.PRESENTATION),
     /**
      * Parentheses.
      */
-    MFENCED("mfenced"),
+    MFENCED("mfenced", MathMLType.PRESENTATION),
     /**
      * String literal.
      */
-    MS("ms"),
+    MS("ms", MathMLType.PRESENTATION),
     /**
      * Text.
      */
-    MTEXT("mtext"),
+    MTEXT("mtext", MathMLType.PRESENTATION),
     /**
      * Space.
      */
-    MSPACE("mspace"),
+    MSPACE("mspace", MathMLType.PRESENTATION),
     /**
      * Table or matrix.
      */
-    MTABLE("mtable"),
+    MTABLE("mtable", MathMLType.PRESENTATION),
     /**
      * Row in a table or a matrix.
      */
-    MTR("mtr"),
+    MTR("mtr", MathMLType.PRESENTATION),
     /**
      * Cell in a table or a matrix.
      */
-    MTD("mtd"),
+    MTD("mtd", MathMLType.PRESENTATION),
     /**
      * Container for annotations.
      */
-    SEMANTICS("semantics"),
+    SEMANTICS("semantics", MathMLType.OTHER),
     /**
      * Different kind of MathML notation (for example content). 
      * Attribute <code>encoding</code> is used to ascertain exact type.
      */
-    ANNOTAION_XML("annotation-xml"),
+    ANNOTATION_XML("annotation-xml", MathMLType.OTHER),
+    /************** CONTENT MATHML *************/
+    /**
+     * A number.
+     */
+    CN("cn", MathMLType.CONTENT),
+    /**
+     * An identifier.
+     */
+    CI("ci", MathMLType.CONTENT),
+    /**
+     * Symbol.
+     */
+    CSYMBOL("csymbol", MathMLType.CONTENT),
+    /**
+     * Function application.
+     */
+    APPLY("apply", MathMLType.CONTENT),
     /**
      * Unknown element.
      */
-    UNKNOWN("unknown");
+    UNKNOWN("unknown", MathMLType.OTHER);
     
     /** Name of this element (name of XML tag). */
     private final String elementName;
     
-    private MathMLElement(final String elementName) {
+    private final MathMLType type;
+    
+    private MathMLElement(final String elementName, final MathMLType type) {
         this.elementName = elementName;
+        this.type = type;
     }
     
     /**
@@ -119,6 +140,10 @@ public enum MathMLElement {
      */
     public String getElementName() {
         return this.elementName;
+    }
+    
+    public MathMLType getType() {
+        return this.type;
     }
     
     /**
