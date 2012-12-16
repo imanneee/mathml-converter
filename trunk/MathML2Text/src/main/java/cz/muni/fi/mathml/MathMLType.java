@@ -15,6 +15,10 @@ public enum MathMLType {
      */
     CONTENT,
     /**
+     * Trigonometric functions in content MathML.
+     */
+    CONTENT_TRIGONOMETRY,
+    /**
      * Elements that don't strictly belong to presentation or content elements 
      * (semantics, annotation, ...).
      */
