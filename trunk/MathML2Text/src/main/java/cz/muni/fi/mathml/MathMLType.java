@@ -19,6 +19,10 @@ public enum MathMLType {
      */
     CONTENT_TRIGONOMETRY,
     /**
+     * Content MathML elements that form a "group" (max, min, set, etc).
+     */
+    CONTENT_GROUP,
+    /**
      * Elements that don't strictly belong to presentation or content elements 
      * (semantics, annotation, ...).
      */
