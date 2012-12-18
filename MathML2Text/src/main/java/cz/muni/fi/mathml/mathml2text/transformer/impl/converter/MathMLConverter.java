@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import cz.muni.fi.mathml.MathMLElement;
 import cz.muni.fi.mathml.mathml2text.Strings;
 import cz.muni.fi.mathml.mathml2text.transformer.impl.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.transformer.impl.XmlAttribute;
 import cz.muni.fi.mathml.mathml2text.transformer.numbers.NumberFormat;
 import cz.muni.fi.mathml.mathml2text.transformer.numbers.NumberTransformer;
 
@@ -112,7 +113,9 @@ public class MathMLConverter {
         settings.setNumberTransformer(this.numberTransformer);
         final List<String> converted = new ArrayList<String>(checked.size());
         for (final MathMLNode root : checked) {
-            converted.add(Node.process(root, settings));
+//            settings.setUseContentMathML(this.chooseMathMLTypeToUse(root));
+            MathMLNode nodeToProcess = this.getNodeForProcessing(root);
+            converted.add(Node.process(nodeToProcess, settings));
         }
         return converted;
     }
@@ -126,7 +129,59 @@ public class MathMLConverter {
         ConverterSettings settings = new ConverterSettings();
         settings.setLocalization(this.currentLocalization);
         settings.setNumberTransformer(this.numberTransformer);
-        return Node.process(node, settings);
+//        settings.setUseContentMathML(this.chooseMathMLTypeToUse(node));
+        MathMLNode nodeToProcess = this.getNodeForProcessing(node);
+        return Node.process(nodeToProcess, settings);
     }
     
+    private boolean chooseMathMLTypeToUse(final MathMLNode node) {
+        for (final MathMLNode child : node.getChildren()) {
+            if (MathMLElement.SEMANTICS.equals(child.getType())) {
+                for (final MathMLNode semanticsChild : child.getChildren()) {
+                    if (MathMLElement.ANNOTATION_XML.equals(semanticsChild.getType())) {
+                        for (final XmlAttribute attr : semanticsChild.getAttributes()) {
+                            if ("encoding".equals(attr.getKey()) && "MathML-Content".equals(attr.getValue())) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            } else if (MathMLElement.ANNOTATION_XML.equals(child.getType())) {
+                for (final XmlAttribute attr : child.getAttributes()) {
+                    if ("encoding".equals(attr.getKey()) && "MathML-Content".equals(attr.getValue())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Returns a node that will be converted based on some input parameters.
+     * @param node
+     * @return 
+     */
+    private MathMLNode getNodeForProcessing(final MathMLNode node) {
+        for (final MathMLNode child : node.getChildren()) {
+            if (MathMLElement.SEMANTICS.equals(child.getType())) {
+                for (final MathMLNode semanticsChild : child.getChildren()) {
+                    if (MathMLElement.ANNOTATION_XML.equals(semanticsChild.getType())) {
+                        for (final XmlAttribute attr : semanticsChild.getAttributes()) {
+                            if ("encoding".equals(attr.getKey()) && "MathML-Content".equals(attr.getValue())) {
+                                return semanticsChild;
+                            }
+                        }
+                    }
+                }
+            } else if (MathMLElement.ANNOTATION_XML.equals(child.getType())) {
+                for (final XmlAttribute attr : child.getAttributes()) {
+                    if ("encoding".equals(attr.getKey()) && "MathML-Content".equals(attr.getValue())) {
+                        return child;
+                    }
+                }
+            }
+        }
+        return node;
+    }
 }

@@ -4,6 +4,8 @@ import java.util.Collection;
 
 import com.google.common.collect.ImmutableList;
 
+import cz.muni.fi.mathml.MathMLType;
+
 /**
  * Enumeration of supported mathematical operations and their possible 
  * representation in presentation MathML (mo element).
@@ -64,7 +66,103 @@ public enum Operation {
     /**
      * Product.
      */
-    PRODUCT("product", "prod", "&prod;");
+    PRODUCT("product", "prod", "&prod;"),
+    /**
+     * Sine.
+     */
+    SIN("sin", "sin"),
+    /**
+     * Cosine.
+     */
+    COS("cos", "cos"),
+    /**
+     * Tangent
+     */
+    TAN("tan", "tan"),
+    /**
+     * Secant.
+     */
+    SEC("sec", "sec"),
+    /**
+     * Cosecant.
+     */
+    CSC("csc", "csc"),
+    /**
+     * Cotangent.
+     */
+    COT("cot", "cot"),
+    /**
+     * Hyperbolic sine.
+     */
+    SINH("sinh", "sinh"),
+    /**
+     * Hyperbolic cosine.
+     */
+    COSH("cosh", "cosh"),
+    /**
+     * Hyperbolic tangent.
+     */
+    TANH("tanh", "tanh"),
+    /**
+     * Hyperbolic secant.
+     */
+    SECH("sech", "sech"),
+    /**
+     * Hyperbolic cosecant.
+     */
+    CSCH("csch", "csch"),
+    /**
+     * Hyperbolic cotangent.
+     */
+    COTH("coth", "coth"),
+    /**
+     * Arcsine.
+     */
+    ARCSIN("arcsin", "arcsin"),
+    /**
+     * Arccosine.
+     */
+    ARCCOS("arccos", "arccos"),
+    /**
+     * Arctangent.
+     */
+    ARCTAN("arctan", "arctan"),
+    /**
+     * Inverse hyperbolic cosine.
+     */
+    ARCCOSH("arccosh", "arccosh"),
+    /**
+     * Arccotangent.
+     */
+    ARCCOT("arccot", "arccot"),
+    /**
+     * Inverse hyperbolic tangent.
+     */
+    ARCCOTH("arccoth", "arccoth"),
+    /**
+     * Inverse cosecant.
+     */
+    ARCCSC("arccsc", "arccsc"),
+    /**
+     * Inverse hyperbolic cosecant.
+     */
+    ARCCSCH("arccsch", "arccsch"),
+    /**
+     * Inverse secant.
+     */
+    ARCSEC("arcsec", "arcsec"),
+    /**
+     * Inverse hyperbolic secant.
+     */
+    ARCSECH("arcsech", "arcsech"),
+    /**
+     * Inverse hyperbolic sine.
+     */
+    ARCSINH("arcsinh", "arcsinh"),
+    /**
+     * Inverse hyperbolic tangent.
+     */
+    ARCTANH("arctanh", "arctanh");
     
     /**
      * Localization key for this operation.

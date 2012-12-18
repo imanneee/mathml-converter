@@ -17,6 +17,8 @@ public final class ConverterSettings {
     
     private NumberTransformer numberTransformer;
 
+    private boolean useContentMathML = false;
+    
     public Properties getLocalization() {
         return localization;
     }
@@ -44,5 +46,13 @@ public final class ConverterSettings {
     public String getProperty(final String key) {
         return this.getLocalization().getProperty(key) + Strings.SPACE;
     }
-        
+
+    public boolean isUseContentMathML() {
+        return useContentMathML;
+    }
+
+    public void setUseContentMathML(boolean useContentMathML) {
+        this.useContentMathML = useContentMathML;
+    }
+    
 }

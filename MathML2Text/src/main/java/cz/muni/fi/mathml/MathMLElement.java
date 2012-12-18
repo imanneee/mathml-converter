@@ -127,7 +127,7 @@ public enum MathMLElement {
     /**
      * Factorial.
      */
-    FACTORIAL("factorial", MathMLType.CONTENT),
+    FACTORIAL("factorial", MathMLType.CONTENT_GROUP),
     /**
      * Division
      */
@@ -135,11 +135,11 @@ public enum MathMLElement {
     /**
      * Maximum.
      */
-    MAX("max", MathMLType.CONTENT),
+    MAX("max", MathMLType.CONTENT_GROUP),
     /**
      * Minumum
      */
-    MIN("min", MathMLType.CONTENT),
+    MIN("min", MathMLType.CONTENT_GROUP),
     /**
      * With one argument it's unary operator (-x), with two it's subtraction.
      */
@@ -165,9 +165,13 @@ public enum MathMLElement {
      */
     ROOT("root", MathMLType.CONTENT),
     /**
+     * Degree of the root.
+     */
+    DEGREE("degree", MathMLType.CONTENT),
+    /**
      * Greatest common divisor.
      */
-    GCD("gcd", MathMLType.CONTENT),
+    GCD("gcd", MathMLType.CONTENT_GROUP),
     /**
      * Logical and.
      */
@@ -224,7 +228,7 @@ public enum MathMLElement {
     /**
      * Lowest common multiple.
      */
-    LCM("lcm", MathMLType.CONTENT),
+    LCM("lcm", MathMLType.CONTENT_GROUP),
     /**
      * Rounds down to the nearest integer.
      */
@@ -300,11 +304,11 @@ public enum MathMLElement {
     /**
      * Set.
      */
-    SET("set", MathMLType.CONTENT),
+    SET("set", MathMLType.CONTENT_GROUP),
     /**
      * List.
      */
-    LIST("list", MathMLType.CONTENT),
+    LIST("list", MathMLType.CONTENT_GROUP),
     /**
      * Union of sets.
      */
