@@ -23,6 +23,14 @@ public enum MathMLType {
      */
     CONTENT_GROUP,
     /**
+     * Content MathML elements that are used in infix form (plus, times, equals, etc).
+     */
+    CONTENT_MIDDLE,
+    /**
+     * Content MathML elements that are used in prefix form (not, abs, floor, etc).
+     */
+    CONTENT_BEFORE,
+    /**
      * Elements that don't strictly belong to presentation or content elements 
      * (semantics, annotation, ...).
      */

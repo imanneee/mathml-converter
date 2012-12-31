@@ -131,7 +131,7 @@ public enum MathMLElement {
     /**
      * Division
      */
-    DIVIDE("divide", MathMLType.CONTENT),
+    DIVIDE("divide", MathMLType.CONTENT_MIDDLE),
     /**
      * Maximum.
      */
@@ -147,7 +147,7 @@ public enum MathMLElement {
     /**
      * Addition.
      */
-    PLUS("plus", MathMLType.CONTENT),
+    PLUS("plus", MathMLType.CONTENT_MIDDLE),
     /**
      * Exponentiation.
      */
@@ -159,7 +159,7 @@ public enum MathMLElement {
     /**
      * Multiplication.
      */
-    TIMES("times", MathMLType.CONTENT),
+    TIMES("times", MathMLType.CONTENT_MIDDLE),
     /**
      * Root.
      */
@@ -175,23 +175,23 @@ public enum MathMLElement {
     /**
      * Logical and.
      */
-    AND("and", MathMLType.CONTENT),
+    AND("and", MathMLType.CONTENT_MIDDLE),
     /**
      * Logical or.
      */
-    OR("or", MathMLType.CONTENT),
+    OR("or", MathMLType.CONTENT_MIDDLE),
     /**
      * Logical xor.
      */
-    XOR("xor", MathMLType.CONTENT),
+    XOR("xor", MathMLType.CONTENT_MIDDLE),
     /**
      * Logical not.
      */
-    NOT("not", MathMLType.CONTENT),
+    NOT("not", MathMLType.CONTENT_BEFORE),
     /**
      * Logical implication.
      */
-    IMPLIES("implies", MathMLType.CONTENT),
+    IMPLIES("implies", MathMLType.CONTENT_MIDDLE),
     /**
      * For all quantifier.
      */
@@ -203,7 +203,7 @@ public enum MathMLElement {
     /**
      * Absolute value.
      */
-    ABS("abs", MathMLType.CONTENT),
+    ABS("abs", MathMLType.CONTENT_BEFORE),
     /**
      * Function defined over the complex numbers with returns 
      * the complex conjugate of its argument.
@@ -232,47 +232,47 @@ public enum MathMLElement {
     /**
      * Rounds down to the nearest integer.
      */
-    FLOOR("floor", MathMLType.CONTENT),
+    FLOOR("floor", MathMLType.CONTENT_BEFORE),
     /**
      * Rounds up to the nearest integer.
      */
-    CEILING("ceiling", MathMLType.CONTENT),
+    CEILING("ceiling", MathMLType.CONTENT_BEFORE),
     /**
      * Equal to.
      */
-    EQ("eq", MathMLType.CONTENT),
+    EQ("eq", MathMLType.CONTENT_MIDDLE),
     /**
      * Not equal to.
      */
-    NEQ("neq", MathMLType.CONTENT),
+    NEQ("neq", MathMLType.CONTENT_MIDDLE),
     /**
      * Greater than.
      */
-    GT("gt", MathMLType.CONTENT),
+    GT("gt", MathMLType.CONTENT_MIDDLE),
     /**
      * Lower than.
      */
-    LT("lt", MathMLType.CONTENT),
+    LT("lt", MathMLType.CONTENT_MIDDLE),
     /**
      * Greater than or equal to.
      */
-    GEQ("geq", MathMLType.CONTENT),
+    GEQ("geq", MathMLType.CONTENT_MIDDLE),
     /**
      * Lower than or equal to.
      */
-    LEQ("leq", MathMLType.CONTENT),
+    LEQ("leq", MathMLType.CONTENT_MIDDLE),
     /**
      * Equivalence.
      */
-    EQUIVALENT("equivalent", MathMLType.CONTENT),
+    EQUIVALENT("equivalent", MathMLType.CONTENT_MIDDLE),
     /**
      * Approximation.
      */
-    APPROX("approx", MathMLType.CONTENT),
+    APPROX("approx", MathMLType.CONTENT_MIDDLE),
     /**
      * Factor of.
      */
-    FACTOROF("factorof", MathMLType.CONTENT),
+    FACTOROF("factorof", MathMLType.CONTENT_MIDDLE),
     /**
      * Integral.
      */
@@ -312,39 +312,39 @@ public enum MathMLElement {
     /**
      * Union of sets.
      */
-    UNION("union", MathMLType.CONTENT),
+    UNION("union", MathMLType.CONTENT_MIDDLE),
     /**
      * Intersection of sets.
      */
-    INTERSECT("intersect", MathMLType.CONTENT),
+    INTERSECT("intersect", MathMLType.CONTENT_MIDDLE),
     /**
      * Set inclusion.
      */
-    IN("in", MathMLType.CONTENT),
+    IN("in", MathMLType.CONTENT_MIDDLE),
     /**
      * Negated set inclusion.
      */
-    NOTIN("notin", MathMLType.CONTENT),
+    NOTIN("notin", MathMLType.CONTENT_MIDDLE),
     /**
      * Subset.
      */
-    SUBSET("subset", MathMLType.CONTENT),
+    SUBSET("subset", MathMLType.CONTENT_MIDDLE),
     /**
      * Proper subset.
      */
-    PRSUBSET("prsubset", MathMLType.CONTENT),
+    PRSUBSET("prsubset", MathMLType.CONTENT_MIDDLE),
     /**
      * Negated subset.
      */
-    NOTSUBSET("notsubset", MathMLType.CONTENT),
+    NOTSUBSET("notsubset", MathMLType.CONTENT_MIDDLE),
     /**
      * Negated proper subset.
      */
-    NOTPRSUBSET("notprsubset", MathMLType.CONTENT),
+    NOTPRSUBSET("notprsubset", MathMLType.CONTENT_MIDDLE),
     /**
      * Set difference.
      */
-    SETDIFF("setdiff", MathMLType.CONTENT),
+    SETDIFF("setdiff", MathMLType.CONTENT_MIDDLE),
     /**
      * Set cardinality.
      */
@@ -468,11 +468,11 @@ public enum MathMLElement {
     /**
      * Exponentiation.
      */
-    EXP("exp", MathMLType.CONTENT),
+    EXP("exp", MathMLType.CONTENT_BEFORE),
     /**
      * Natural logarithm.
      */
-    LN("ln", MathMLType.CONTENT),
+    LN("ln", MathMLType.CONTENT_BEFORE),
     /**
      * Logarithm.
      */
