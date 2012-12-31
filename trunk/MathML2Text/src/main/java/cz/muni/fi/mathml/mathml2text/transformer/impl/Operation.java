@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import com.google.common.collect.ImmutableList;
 
-import cz.muni.fi.mathml.MathMLType;
 
 /**
  * Enumeration of supported mathematical operations and their possible 
@@ -32,7 +31,7 @@ public enum Operation {
     /**
      * Equals.
      */
-    EQUALS("equals", "="),
+    EQUALS("equals", "=", "eq"),
     /**
      * Logarithm.
      */
@@ -49,7 +48,9 @@ public enum Operation {
      * Limit.
      */
     LIMIT("limit", "lim"),
-    
+    /**
+     * A variable approaches a value.
+     */
     APPROACHES("approaches", "&rarr;", "rarr"),
     /**
      * Integral.
@@ -162,7 +163,111 @@ public enum Operation {
     /**
      * Inverse hyperbolic tangent.
      */
-    ARCTANH("arctanh", "arctanh");
+    ARCTANH("arctanh", "arctanh"),
+    /**
+     * Not equal.
+     */
+    NOT_EQUAL_TO("neq", "neq"),
+    /**
+     * Greater than.
+     */
+    GREATER_THAN("gt", "gt"),
+    /**
+     * Lower than.
+     */
+    LOWER_THAN("lt", "lt"),
+    /**
+     * Greater than or equal to.
+     */
+    GREATER_THAN_OR_EQUAL_TO("geq", "geq"),
+    /**
+     * Lower than or equal to.
+     */
+    LOWER_THAN_OR_EQUAL_TO("leq", "leq"),
+    /**
+     * Equivalence.
+     */
+    EQUIVALENT_TO("equivalent", "equivalent"),
+    /**
+     * Approximation.
+     */
+    APPROXIMATELY("approx", "approx"),
+    /**
+     * Logical and.
+     */
+    AND("and", "and"),
+    /**
+     * Logical or.
+     */
+    OR("or", "or"),
+    /**
+     * Logical xor.
+     */
+    XOR("xor", "xor"),
+    /**
+     * Logical implication.
+     */
+    IMPLIES("implies", "implies"),
+    /**
+     * Factor of.
+     */
+    FACTOR_OF("factorof", "factorof"),
+    /**
+     * Union of sets.
+     */
+    UNION("union", "union"),
+    /**
+     * Intersection of sets.
+     */
+    INTERSECT("intersect", "intersect"),
+    /**
+     * Set inclusion.
+     */
+    IN("in", "in"),
+    /**
+     * Negated set inclusion.
+     */
+    NOTIN("notin", "notin"),
+    /**
+     * Subset.
+     */
+    SUBSET("subset", "subset"),
+    /**
+     * Proper subset.
+     */
+    PRSUBSET("prsubset", "prsubset"),
+    /**
+     * Negated subset.
+     */
+    NOTSUBSET("notsubset", "notsubset"),
+    /**
+     * Negated proper subset.
+     */
+    NOTPRSUBSET("notprsubset", "notprsubset"),
+    /**
+     * Set difference.
+     */
+    SETDIFF("setdiff", "setdiff"),
+    /**
+     * Logical negation.
+     */
+    NOT("not", "not"),
+    /**
+     * Absolute value.
+     */
+    ABSOLUTE_VALUE("abs", "abs"),
+    /**
+     * Function that rounds down to the nearest integer.
+     */
+    FLOOR("floor", "floor"),
+    /**
+     * Function that rounds up to the nearest integer.
+     */
+    CEILING("ceiling", "ceiling"),
+    /**
+     * Exponentiation with base <i>e</i>.
+     */
+    EXPONENTIAL("exp", "exp");
     
     /**
      * Localization key for this operation.
