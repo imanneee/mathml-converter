@@ -123,7 +123,7 @@ public enum MathMLElement {
     /**
      * Integer division operator.
      */
-    QUOTIENT("quotient", MathMLType.CONTENT),
+    QUOTIENT("quotient", MathMLType.CONTENT_BEFORE_MIDDLE),
     /**
      * Factorial.
      */
@@ -143,7 +143,7 @@ public enum MathMLElement {
     /**
      * With one argument it's unary operator (-x), with two it's subtraction.
      */
-    MINUS("minus", MathMLType.CONTENT),
+    MINUS("minus", MathMLType.CONTENT_MIDDLE),
     /**
      * Addition.
      */
@@ -153,9 +153,9 @@ public enum MathMLElement {
      */
     POWER("power", MathMLType.CONTENT),
     /**
-     * Reminder.
+     * Remainder.
      */
-    REM("rem", MathMLType.CONTENT),
+    REM("rem", MathMLType.CONTENT_BEFORE_MIDDLE),
     /**
      * Multiplication.
      */
@@ -348,7 +348,7 @@ public enum MathMLElement {
     /**
      * Set cardinality.
      */
-    CARD("card", MathMLType.CONTENT),
+    CARD("card", MathMLType.CONTENT_BEFORE),
     /**
      * Cartesian product.
      */

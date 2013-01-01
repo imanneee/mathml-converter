@@ -525,7 +525,9 @@ public final class NumberTransformer {
     public String translateOrdinalNumber(long inputNumber) {
         StringBuilder ret = new StringBuilder("");
         long number = 0;
-        if ((inputNumber % 100) != 0) {
+        if (inputNumber < 100) {
+            number = inputNumber;
+        } else if ((inputNumber % 100) != 0) {
             number = inputNumber % 100;
             ret.append(translateNumber(inputNumber - number));
         } else if (inputNumber % 1000 != 0) {

@@ -19,7 +19,7 @@ public final class Msub {
         final StringBuilder builder = new StringBuilder();
         // if first child is operation logarithm
         if (Operation.LOGARITHM.getSymbols().contains(node.getChildren().get(0).getValue())) {
-            builder.append(settings.getProperty("logarithm_base"));
+            builder.append(settings.getProperty("logarithm"));
             builder.append(Node.process(node.getChildren().get(1), settings));
             builder.append(settings.getProperty("logarithm_from"));
         } else {

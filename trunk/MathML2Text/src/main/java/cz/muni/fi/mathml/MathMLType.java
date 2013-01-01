@@ -31,6 +31,10 @@ public enum MathMLType {
      */
     CONTENT_BEFORE,
     /**
+     * Content MathML elements that are used before formulae and in the middle as well (quotient, remainder).
+     */
+    CONTENT_BEFORE_MIDDLE,
+    /**
      * Elements that don't strictly belong to presentation or content elements 
      * (semantics, annotation, ...).
      */
