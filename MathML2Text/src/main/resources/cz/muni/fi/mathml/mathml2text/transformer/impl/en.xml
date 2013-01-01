@@ -16,7 +16,7 @@
     <entry key="close_braces">close braces</entry>
     <entry key="square_root">square root of</entry>
     <entry key="root">root of</entry>
-    <entry key="logarithm_base">logarithm to the base</entry>
+    <entry key="logarithm">logarithm to the base</entry>
     <entry key="logarithm_from">of</entry>
     <entry key="squared">squared</entry>
     <entry key="superscript">raised to</entry>
@@ -95,6 +95,11 @@
     <entry key="ceiling">ceiling of</entry>
     <entry key="exp">exponential of</entry>
     <entry key="naturalLogarithm">natural logarithm of</entry>
+    <entry key="card">cardinality of</entry>
+    <entry key="rem">remainder of</entry>
+    <entry key="quotient">quotient of</entry>
+    <entry key="power">raised to the power of</entry>
+    <entry key="root">root of</entry>
     <entry key=""></entry>
     <entry key=""></entry>
 </properties>

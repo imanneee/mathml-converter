@@ -267,7 +267,27 @@ public enum Operation {
     /**
      * Exponentiation with base <i>e</i>.
      */
-    EXPONENTIAL("exp", "exp");
+    EXPONENTIAL("exp", "exp"),
+    /**
+     * Set cardinality.
+     */
+    CARDINALITY("card", "card"),
+    /**
+     * Remainder.
+     */
+    REMAINDER("rem", "rem"),
+    /**
+     * Integer division operator.
+     */
+    QUOTIENT("quotient", "quotient"),
+    /**
+     * Exponentiation.
+     */
+    EXPONENTIATION("power", "power"),
+    /**
+     * Root extraction.
+     */
+    ROOT("root", "root");
     
     /**
      * Localization key for this operation.

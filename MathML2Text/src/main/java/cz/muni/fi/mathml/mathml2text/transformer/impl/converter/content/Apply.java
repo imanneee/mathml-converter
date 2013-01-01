@@ -8,6 +8,7 @@ import cz.muni.fi.mathml.mathml2text.transformer.impl.MathMLNode;
 import cz.muni.fi.mathml.mathml2text.transformer.impl.Operation;
 import cz.muni.fi.mathml.mathml2text.transformer.impl.converter.ConverterSettings;
 import cz.muni.fi.mathml.mathml2text.transformer.impl.converter.Node;
+import cz.muni.fi.mathml.mathml2text.transformer.numbers.NumberFormat;
 
 /**
  *
@@ -18,7 +19,6 @@ public final class Apply {
 
     public static String process(final MathMLNode node, final ConverterSettings settings) {
         final StringBuilder builder = new StringBuilder();
-        int childrenCount = node.getChildren().size();
         // first element is function
         MathMLElement function = node.getChildren().get(0).getType();
         Operation operation = Operation.forSymbol(function.getElementName());
@@ -26,6 +26,70 @@ public final class Apply {
         if (StringUtils.isBlank(functionName)) {
             LoggerFactory.getLogger(Apply.class).warn("Unknown function [{}]", function.getElementName());
         }
+        
+        switch (operation) {
+            case EXPONENTIATION: {
+                builder.append(Node.process(node.getChildren().get(1), settings));
+                builder.append(functionName);
+                builder.append(Node.process(node.getChildren().get(2), settings));
+                return builder.toString();
+            }
+            case ROOT: {
+                settings.setNumberFormat(NumberFormat.ORDINAL);
+                MathMLNode degree = node.getChildren().get(1);
+                MathMLNode from;
+                if (MathMLElement.DEGREE.equals(degree.getType())) {
+                    degree = degree.getChildren().get(0);
+                    from = node.getChildren().get(2);
+                } else {
+                    degree = node.getChildren().get(2);
+                    from = node.getChildren().get(1);
+                }
+                builder.append(Node.process(degree, settings));
+                settings.setNumberFormat(NumberFormat.CARDINAL);
+                builder.append(functionName);
+                builder.append(Node.process(from, settings));
+                return builder.toString();
+            }
+            case LOGARITHM: {
+                builder.append(functionName);
+                MathMLNode base;
+                if (node.getChildren().size() == 2) {
+                    builder.append(settings.getNumberTransformer().transform("10"));
+                    builder.append(settings.getProperty("logarithm_from"));
+                    builder.append(Node.process(node.getChildren().get(1), settings));
+                } else {
+                    if (MathMLElement.LOGBASE.equals(node.getChildren().get(1).getType())) {
+                        base = node.getChildren().get(1).getChildren().get(0);
+                    } else {
+                        base = node.getChildren().get(1);
+                    }
+                    builder.append(Node.process(base, settings));
+                    builder.append(settings.getProperty("logarithm_from"));
+                    builder.append(Node.process(node.getChildren().get(2), settings));
+                }
+                return builder.toString();
+            }
+            case SUBTRACT: {
+                if (node.getChildren().size() == 2) {
+                    // unary function (minus one, etc)
+                    builder.append(functionName);
+                    builder.append(Node.process(node.getChildren().get(1), settings));
+                    return builder.toString();
+                } else {
+                    break;
+                }
+            }
+            default: // do nothing
+        }
+        
+        if (Operation.SUBTRACT.equals(operation) && node.getChildren().size() == 2) {
+            // unary function (minus one, etc)
+            builder.append(functionName);
+            builder.append(Node.process(node.getChildren().get(1), settings));
+            return builder.toString();
+        }
+
         switch (function.getType()) {
             case CONTENT_TRIGONOMETRY: {
                 builder.append(functionName);
@@ -62,23 +126,18 @@ public final class Apply {
                 builder.append(Node.process(node.getChildren().get(1), settings));
                 return builder.toString();
             }
-        }
-        if (childrenCount < 1) {
-            
-        } else if (childrenCount < 2) {
-            builder.append(settings.getProperty("function"));
-            builder.append(Node.process(node.getChildren().get(0), settings));
-            builder.append(settings.getProperty("applied_to"));
-            builder.append(Node.process(node.getChildren().get(1), settings));
-        } else {
-            String funct = Node.process(node.getChildren().get(0), settings);
-            for (int index = 1; index < childrenCount; ++index) {
-                builder.append(Node.process(node.getChildren().get(index), settings));
-                if (index < childrenCount - 1) {
-                    builder.append(funct);
-                }
+            case CONTENT_BEFORE_MIDDLE: {
+                builder.append(functionName);
+                builder.append(Node.process(node.getChildren().get(1), settings));
+                builder.append(settings.getProperty(Operation.DIVIDE.getKey()));
+                builder.append(Node.process(node.getChildren().get(2), settings));
+                return builder.toString();
             }
+            default: // do nothing
         }
+        
+        
+        
         return builder.toString();
     }
 }
