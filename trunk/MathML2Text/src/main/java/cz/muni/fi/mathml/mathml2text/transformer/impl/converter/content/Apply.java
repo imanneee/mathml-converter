@@ -20,11 +20,18 @@ public final class Apply {
     public static String process(final MathMLNode node, final ConverterSettings settings) {
         final StringBuilder builder = new StringBuilder();
         // first element is function
-        MathMLElement function = node.getChildren().get(0).getType();
-        Operation operation = Operation.forSymbol(function.getElementName());
+        
+        String function;
+        if (MathMLElement.CSYMBOL.equals(node.getChildren().get(0).getType())) {
+            function = node.getChildren().get(0).getValue();
+        } else {
+            function = node.getChildren().get(0).getType().getElementName();
+        }
+        Operation operation = Operation.forSymbol(function);
+         
         String functionName = settings.getProperty(operation.getKey());
         if (StringUtils.isBlank(functionName)) {
-            LoggerFactory.getLogger(Apply.class).warn("Unknown function [{}]", function.getElementName());
+            LoggerFactory.getLogger(Apply.class).warn("Unknown function [{}]", function);
         }
         
         switch (operation) {
@@ -90,7 +97,8 @@ public final class Apply {
             return builder.toString();
         }
 
-        switch (function.getType()) {
+        MathMLElement functionElement = MathMLElement.forElementName(function);
+        switch (functionElement.getType()) {
             case CONTENT_TRIGONOMETRY: {
                 builder.append(functionName);
                 builder.append(settings.getProperty("of"));
