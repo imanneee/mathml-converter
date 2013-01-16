@@ -23,11 +23,11 @@ public enum Operation {
     /**
      * Multiplication operator.
      */
-    MULTIPLY("times", "&times;", "*", "times"),
+    MULTIPLY("times", "&times;", "*", "times", "&sdot;"),
     /**
      * Division operator.
      */
-    DIVIDE("divide", "/", "&divide;", "divide"),
+    DIVIDE("divide", "/", "&divide;", "divide", ":"),
     /**
      * Equals.
      */
@@ -51,7 +51,7 @@ public enum Operation {
     /**
      * A variable approaches a value.
      */
-    APPROACHES("approaches", "&rarr;", "rarr"),
+    APPROACHES("approaches", "&rarr;", "rarr", "→"),
     /**
      * Integral.
      */
@@ -67,7 +67,7 @@ public enum Operation {
     /**
      * Product.
      */
-    PRODUCT("product", "prod", "&prod;"),
+    PRODUCT("product", "prod", "&prod;", "∏", "&amp;prod;"),
     /**
      * Sine.
      */
@@ -167,27 +167,27 @@ public enum Operation {
     /**
      * Not equal.
      */
-    NOT_EQUAL_TO("neq", "neq"),
+    NOT_EQUAL_TO("neq", "neq", "&neq;"),
     /**
      * Greater than.
      */
-    GREATER_THAN("gt", "gt"),
+    GREATER_THAN("gt", "gt", "&gt;"),
     /**
      * Lower than.
      */
-    LOWER_THAN("lt", "lt"),
+    LOWER_THAN("lt", "lt", "&lt;"),
     /**
      * Greater than or equal to.
      */
-    GREATER_THAN_OR_EQUAL_TO("geq", "geq"),
+    GREATER_THAN_OR_EQUAL_TO("geq", "geq", "&geq;"),
     /**
      * Lower than or equal to.
      */
-    LOWER_THAN_OR_EQUAL_TO("leq", "leq"),
+    LOWER_THAN_OR_EQUAL_TO("leq", "leq", "&leq;"),
     /**
      * Equivalence.
      */
-    EQUIVALENT_TO("equivalent", "equivalent"),
+    EQUIVALENT_TO("equivalent", "equivalent", "&hArr;"),
     /**
      * Approximation.
      */
@@ -223,7 +223,7 @@ public enum Operation {
     /**
      * Set inclusion.
      */
-    IN("in", "in"),
+    IN("in", "in", "∈", "&isin;"),
     /**
      * Negated set inclusion.
      */
@@ -231,7 +231,7 @@ public enum Operation {
     /**
      * Subset.
      */
-    SUBSET("subset", "subset"),
+    SUBSET("subset", "subset", "⊂", "&sub;"),
     /**
      * Proper subset.
      */
@@ -287,7 +287,55 @@ public enum Operation {
     /**
      * Root extraction.
      */
-    ROOT("root", "root");
+    ROOT("root", "root"),
+    /**
+     * Open parentheses.
+     */
+    OPEN_BRACES("open_braces", "("),
+    /**
+     * Close parentheses.
+     */
+    CLOSE_BRACES("close_braces", ")"),
+    /**
+     * Superscript.
+     */
+    SUPERSCRIPT("superscript", "superscript"),
+    /**
+     * Subscript.
+     */
+    SUBSCRIPT("subscript", "subscript"),
+    /**
+     * Some files use ci instead of csymbol to express function.
+     */
+    CI("ci"),
+    /**
+     * Assign value to variable.
+     */
+    ASSIGN("assign", ":="),
+    /**
+     * Tilde above a letter.
+     */
+    TILDE("tilde", "~"),
+    /**
+     * Dash above a letter.
+     */
+    DASHED("dashed", "¯"),
+    /**
+     * Interval.
+     */
+    INTERVAL("interval", "interval"),
+    /**
+     * Function composition.
+     */
+    COMPOSE("compose", "compose"),
+    /**
+     * Vector (a matrix with one column).
+     */
+    VECTOR("vector", "vector"),
+    /**
+     * Direct sum.
+     */
+    DIRECT_SUM("direct_sum", "&oplus;", "⊕");
     
     /**
      * Localization key for this operation.

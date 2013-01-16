@@ -21,28 +21,27 @@ import cz.muni.fi.mathml.mathml2text.transformer.impl.XmlParserStAX;
  */
 public class App {
     
-    private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
+    private static final Logger logger = LoggerFactory.getLogger(App.class);
     
     public static void main(final String[] args) {
+        if (args.length != 1) {
+            System.out.println("Please specify input file path.");
+            System.exit(0);
+        }
+        File input = new File(args[0]);
+        
         final Instant start = Instant.now();
 
         final XmlParserStAX parser = new XmlParserStAX();
-//        final List<MathMLNode> nodeList = parser.parse(Lists.<File>newArrayList(new File("d:\\Projects\\math.0001002.xhtml")));
         
-        File input = new File("d:\\Projects\\ex2.xml");
+//        File input = new File("d:\\Projects\\math.0001002.xhtml");
+//        File input = new File("d:\\Projects\\ex3.xml");
 //        final List<MathMLNode> nodeList = parser.parse(Lists.<File>newArrayList());
-//        final MathMLConverter converter = new MathMLConverter();
-//        final List<String> convert = converter.convert(nodeList, Locale.ENGLISH);
-//        for (final String s : convert) {
-//            System.out.println(s);
-//        }
-//        System.out.println(nodeList);
-//        System.out.println(nodeList.size());
         File parse = parser.parse(input);
-        System.out.println(parse.getPath());
+//        System.out.println(parse.getPath());
         
         final Instant end = Instant.now();
         final Duration duration = new Duration(start, end);
-        System.out.println("\n\n" + duration.getMillis());
+        System.out.println(duration.getMillis() + " ms");
     }
 }

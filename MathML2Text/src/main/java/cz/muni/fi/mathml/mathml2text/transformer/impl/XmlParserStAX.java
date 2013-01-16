@@ -12,6 +12,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLResolver;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
@@ -20,9 +21,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.ctc.wstx.stax.WstxInputFactory;
-import com.ctc.wstx.stax.WstxOutputFactory;
 
 import cz.muni.fi.mathml.MathMLElement;
 import cz.muni.fi.mathml.mathml2text.transformer.impl.converter.MathMLConverter;
@@ -46,8 +44,8 @@ public final class XmlParserStAX {
     private MathMLConverter converter;
     private Locale language;
     
-    private WstxInputFactory xmlInputFactory;
-    private WstxOutputFactory xmlOutputFactory;
+    private XMLInputFactory xmlInputFactory;
+    private XMLOutputFactory xmlOutputFactory;
     
     public XmlParserStAX() {
         this(Locale.ENGLISH);
@@ -56,12 +54,22 @@ public final class XmlParserStAX {
     public XmlParserStAX(Locale language) {
         this.converter = new MathMLConverter();
         this.language = language;
-        this.xmlInputFactory = (WstxInputFactory) XMLInputFactory.newInstance();
-        this.xmlInputFactory.getConfig().doSupportDTDs(false);
-        this.xmlInputFactory.getConfig().doCacheDTDs(true);
-        this.xmlInputFactory.getConfig().doReplaceEntityRefs(false);
-        this.xmlOutputFactory = (WstxOutputFactory) XMLOutputFactory.newInstance();
-        this.xmlOutputFactory.getConfig().doAddSpaceAfterEmptyElem(true);
+        this.xmlInputFactory = XMLInputFactory.newInstance();
+        this.xmlInputFactory.setProperty(XMLInputFactory.IS_REPLACING_ENTITY_REFERENCES, true);
+        this.xmlInputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, true);
+        this.xmlInputFactory.setProperty(XMLInputFactory.IS_COALESCING, Boolean.TRUE);
+        this.xmlInputFactory.setProperty(XMLInputFactory.IS_VALIDATING, Boolean.FALSE);
+        this.xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, true);
+        this.xmlInputFactory.setProperty(XMLInputFactory.RESOLVER, new XMLResolver() {
+            @Override
+            public Object resolveEntity(String publicID, String systemID, String baseURI, String namespace) throws XMLStreamException {
+                if (systemID.endsWith("dtd")) {
+                        return XmlParserStAX.class.getResourceAsStream("xhtml-math11-f.dtd");
+                }
+                return null;
+            }
+        });
+        this.xmlOutputFactory = XMLOutputFactory.newInstance();
     }
     
     /**
@@ -112,9 +120,9 @@ public final class XmlParserStAX {
         String outputFilePath = filePath.substring(0, filePath.lastIndexOf('.'));
         File outputFile = new File(outputFilePath + "-transformed.xml");
         try {
-            System.out.println(outputFile.createNewFile());
+            outputFile.createNewFile();
         } catch (IOException ex) {
-            System.out.println("File already exists.");
+            this.getLogger().warn("File [{}] already exists.", outputFile.getPath());
         }
         
         /** root node */
@@ -131,8 +139,8 @@ public final class XmlParserStAX {
             final FileReader input = new FileReader(file);
             reader = this.xmlInputFactory.createXMLStreamReader(input);
             FileWriter output = new FileWriter(outputFile);
-//            writer = this.xmlOutputFactory.createXMLStreamWriter(output);
-            writer = this.xmlOutputFactory.createXMLStreamWriter(System.out);
+            writer = this.xmlOutputFactory.createXMLStreamWriter(output);
+//            writer = this.xmlOutputFactory.createXMLStreamWriter(System.out);
             writer.writeStartDocument(reader.getEncoding(), reader.getVersion());
             
             // indicates whether we are inside a math element
@@ -154,6 +162,9 @@ public final class XmlParserStAX {
                         case CHARACTERS: {
                             writer.writeCharacters(reader.getText());
                             break;
+                        }
+                        case DTD: {
+                            writer.writeDTD(reader.getText());
                         }
                         default:
                             break;
@@ -245,7 +256,15 @@ public final class XmlParserStAX {
                             currentNode.setValue(value);
                         }
                         break;
-                    }   
+                    }
+                    case COMMENT: {
+                        // comment in input file is ignored, no comment event is received...
+                        writer.writeComment(reader.getText());
+                        break;
+                    }    
+                    case DTD: {
+                        writer.writeDTD(reader.getText());
+                    }
                     default:
                         break;
                 }
