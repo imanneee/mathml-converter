@@ -1,6 +1,7 @@
 package cz.muni.fi.mathml.mathml2text.transformer.impl.converter.content;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.muni.fi.mathml.MathMLElement;
@@ -17,24 +18,55 @@ import cz.muni.fi.mathml.mathml2text.transformer.numbers.NumberFormat;
  */
 public final class Apply {
 
+    private static final Logger logger = LoggerFactory.getLogger(Apply.class);
+    
     public static String process(final MathMLNode node, final ConverterSettings settings) {
         final StringBuilder builder = new StringBuilder();
         // first element is function
         
         String function;
-        if (MathMLElement.CSYMBOL.equals(node.getChildren().get(0).getType())) {
-            function = node.getChildren().get(0).getValue();
+        MathMLNode firstChild = node.getChildren().get(0);
+        if (MathMLElement.CSYMBOL.equals(firstChild.getType())) {
+            function = firstChild.getValue();
+        } else if (MathMLElement.APPLY.equals(firstChild.getType())) {
+            builder.append(Node.process(firstChild, settings));
+            builder.append(settings.getProperty("applied_to"));
+            for (int index = 1; index < node.getChildren().size(); ++index) {
+                builder.append(Node.process(node.getChildren().get(index), settings));
+            }
+            return builder.toString();
+        } else if (MathMLElement.CI.equals(firstChild.getType()) && node.getChildren().size() > 1) {
+            function = firstChild.getValue();
         } else {
-            function = node.getChildren().get(0).getType().getElementName();
+            function = firstChild.getType().getElementName();
         }
+        firstChild.setProcessed();
         Operation operation = Operation.forSymbol(function);
+        if (operation == null) {
+            logger.info("Unknown operation [{}]", function);
+//            logger.debug(node.toString());
+            return builder.toString();
+        }
          
         String functionName = settings.getProperty(operation.getKey());
         if (StringUtils.isBlank(functionName)) {
-            LoggerFactory.getLogger(Apply.class).warn("Unknown function [{}]", function);
+            logger.info("Unknown function [{}]", function);
         }
         
         switch (operation) {
+            case SUPERSCRIPT: case SUBSCRIPT: case APPROACHES: {
+                builder.append(Node.process(node.getChildren().get(1), settings));
+                builder.append(functionName);
+                builder.append(Node.process(node.getChildren().get(2), settings));
+                return builder.toString();
+            }
+            case ASSIGN: {
+                builder.append(functionName);
+                builder.append(Node.process(node.getChildren().get(1), settings));
+                builder.append(settings.getProperty("value"));
+                builder.append(Node.process(node.getChildren().get(2), settings));
+                return builder.toString();
+            }
             case EXPONENTIATION: {
                 builder.append(Node.process(node.getChildren().get(1), settings));
                 builder.append(functionName);
@@ -87,6 +119,43 @@ public final class Apply {
                     break;
                 }
             }
+            case TILDE: case DASHED: {
+                builder.append(Node.process(node.getChildren().get(1), settings));
+                builder.append(functionName);
+                return builder.toString();
+            }
+            case INTERVAL: {
+                builder.append(functionName);
+                builder.append(settings.getProperty("from"));
+                builder.append(Node.process(node.getChildren().get(1), settings));
+                builder.append(settings.getProperty("to"));
+                builder.append(Node.process(node.getChildren().get(2), settings));
+                return builder.toString();
+            }
+            case COMPOSE: {
+                builder.append(functionName);
+                builder.append(Node.process(node.getChildren().get(1), settings));
+                for (int index = 2; index < node.getChildren().size(); ++index) {
+                    if (index + 1 == node.getChildren().size()) {
+                        builder.append(settings.getProperty("and"));
+                    } else {
+                        builder.append(", ");
+                    }
+                    builder.append(Node.process(node.getChildren().get(index), settings));
+                }
+                return builder.toString();
+            }
+            case VECTOR: {
+                builder.append(functionName);
+                builder.append(settings.getProperty("first_value"));
+                builder.append(Node.process(node.getChildren().get(1), settings));
+                for (int index = 2; index < node.getChildren().size(); ++index) {
+                    builder.append(settings.getProperty("next_value"));
+                    builder.append(Node.process(node.getChildren().get(index), settings));
+                }
+                builder.append(settings.getProperty("vector_end"));
+                return builder.toString();
+            }
             default: // do nothing
         }
         
@@ -98,6 +167,9 @@ public final class Apply {
         }
 
         MathMLElement functionElement = MathMLElement.forElementName(function);
+        if (MathMLElement.UNKNOWN.equals(functionElement)) {
+            functionElement = MathMLElement.forElementName(operation.getKey());
+        }
         switch (functionElement.getType()) {
             case CONTENT_TRIGONOMETRY: {
                 builder.append(functionName);

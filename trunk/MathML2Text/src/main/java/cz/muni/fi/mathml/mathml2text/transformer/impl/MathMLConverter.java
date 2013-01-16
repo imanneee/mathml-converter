@@ -285,7 +285,7 @@ public class MathMLConverter {
         if (operator != null) {
             return this.getProperty(operator.getKey());
         } else {
-            logger.warn("Operation [{}] not supported.", op);
+            logger.info("Operation [{}] not supported.", op);
         }
         return Strings.EMPTY;
     }

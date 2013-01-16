@@ -59,7 +59,7 @@ public class MathMLConverter {
     private Properties getLocalization(final Locale locale) {
         if (this.localizationMap.get(locale) == null) {
             final Properties properties = new Properties();
-            final InputStream resourceAsStream = this.getClass().getResourceAsStream(String.format("../%1$s.xml", locale.getLanguage()));
+            final InputStream resourceAsStream = this.getClass().getResourceAsStream(String.format("%1$s.xml", locale.getLanguage()));
             try {
                 properties.loadFromXML(resourceAsStream);
                 this.localizationMap.put(locale, properties);
@@ -169,7 +169,9 @@ public class MathMLConverter {
                     if (MathMLElement.ANNOTATION_XML.equals(semanticsChild.getType())) {
                         for (final XmlAttribute attr : semanticsChild.getAttributes()) {
                             if ("encoding".equals(attr.getKey()) && "MathML-Content".equals(attr.getValue())) {
-                                return semanticsChild;
+                                if (!semanticsChild.getChildren().isEmpty()) {
+                                    return semanticsChild;
+                                }
                             }
                         }
                     }
@@ -177,7 +179,9 @@ public class MathMLConverter {
             } else if (MathMLElement.ANNOTATION_XML.equals(child.getType())) {
                 for (final XmlAttribute attr : child.getAttributes()) {
                     if ("encoding".equals(attr.getKey()) && "MathML-Content".equals(attr.getValue())) {
-                        return child;
+                        if (!child.getChildren().isEmpty()) {
+                            return child;
+                        }
                     }
                 }
             }

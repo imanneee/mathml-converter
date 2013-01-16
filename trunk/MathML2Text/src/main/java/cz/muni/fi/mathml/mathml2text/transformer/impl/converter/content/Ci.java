@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 
 import cz.muni.fi.mathml.mathml2text.Strings;
 import cz.muni.fi.mathml.mathml2text.transformer.impl.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.transformer.impl.Operation;
 import cz.muni.fi.mathml.mathml2text.transformer.impl.converter.ConverterSettings;
 
 /**
@@ -18,6 +19,7 @@ public final class Ci {
             throw new IllegalStateException("[mi] node should not have children.");
         }
         final String identifier = StringEscapeUtils.escapeHtml4(node.getValue());
-        return identifier + Strings.SPACE;
+        Operation operation = Operation.forSymbol(identifier);
+        return operation != null ? settings.getProperty(operation.getKey()) : identifier + Strings.SPACE;
     }
 }

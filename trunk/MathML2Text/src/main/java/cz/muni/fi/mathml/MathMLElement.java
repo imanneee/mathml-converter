@@ -541,6 +541,18 @@ public enum MathMLElement {
      * Infinity
      */
     INFINITY("infinity", MathMLType.CONTENT),
+    /**
+     * Interval (a..b).
+     */
+    INTERVAL("interval", MathMLType.CONTENT),
+    /**
+     * Function composition.
+     */
+    COMPOSE("compose", MathMLType.CONTENT),
+    /**
+     * Vector (a matrix with one column).
+     */
+    VECTOR("vector", MathMLType.CONTENT),
     
     //@todo vectors and statistics
     
