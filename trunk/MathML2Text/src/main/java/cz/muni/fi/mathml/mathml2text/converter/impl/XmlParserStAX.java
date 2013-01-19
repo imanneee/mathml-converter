@@ -1,4 +1,4 @@
-package cz.muni.fi.mathml.mathml2text.transformer.impl;
+package cz.muni.fi.mathml.mathml2text.converter.impl;
 
 import java.io.File;
 import java.io.FileReader;
@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.muni.fi.mathml.MathMLElement;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.converter.MathMLConverter;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.MathMLConverter;
 
 /**
  * This parser is responsible for reading input file or string and invoking

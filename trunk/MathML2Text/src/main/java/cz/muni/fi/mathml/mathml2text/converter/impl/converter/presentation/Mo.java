@@ -1,23 +1,28 @@
-package cz.muni.fi.mathml.mathml2text.transformer.impl.converter.presentation;
-
-import java.util.Properties;
+package cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.LoggerFactory;
 
 import cz.muni.fi.mathml.mathml2text.Strings;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.MathMLNode;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.Operation;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.converter.ConverterSettings;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.converter.MathMLConverter;
+import cz.muni.fi.mathml.mathml2text.converter.impl.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.impl.Operation;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.ConverterSettings;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.MathMLConverter;
 
 /**
- *
+ * Specific implementation of <code>&lt;mo&gt;</code> node.
+ * 
  * @author Maros Kucbel
  * @date 2012-12-14T17:16:51+0100
  */
 public final class Mo {
 
+    /**
+     * Processes input node.
+     * @param node Input node.
+     * @param settings Converter settings.
+     * @return Content of the input node converted to string.
+     */
     public static String process(final MathMLNode node, final ConverterSettings settings) {
         if (!node.getChildren().isEmpty()) {
             throw new IllegalStateException("[mo] node should not have children.");

@@ -1,4 +1,4 @@
-package cz.muni.fi.mathml.mathml2text.transformer.impl;
+package cz.muni.fi.mathml.mathml2text.converter.impl;
 
 import java.util.Collection;
 

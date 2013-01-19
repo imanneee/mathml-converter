@@ -1,10 +1,10 @@
-package cz.muni.fi.mathml.mathml2text.transformer.impl.converter;
+package cz.muni.fi.mathml.mathml2text.converter.impl.converter;
 
 import java.util.Properties;
 
 import cz.muni.fi.mathml.mathml2text.Strings;
-import cz.muni.fi.mathml.mathml2text.transformer.numbers.NumberFormat;
-import cz.muni.fi.mathml.mathml2text.transformer.numbers.NumberTransformer;
+import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberFormat;
+import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberTransformer;
 
 /**
  * Settings for {@link MathMLConverter}. 

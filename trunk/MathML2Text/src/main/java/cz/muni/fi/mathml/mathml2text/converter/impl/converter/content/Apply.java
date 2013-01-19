@@ -1,18 +1,21 @@
-package cz.muni.fi.mathml.mathml2text.transformer.impl.converter.content;
+package cz.muni.fi.mathml.mathml2text.converter.impl.converter.content;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.muni.fi.mathml.MathMLElement;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.MathMLNode;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.Operation;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.converter.ConverterSettings;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.converter.Node;
-import cz.muni.fi.mathml.mathml2text.transformer.numbers.NumberFormat;
+import cz.muni.fi.mathml.mathml2text.converter.impl.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.impl.Operation;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.ConverterSettings;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.Node;
+import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberFormat;
 
 /**
- *
+ * Specific implementation of <code>&lt;apply&gt;</code> node.
+ * Based on the type of mathematic operation, different approach to conversion
+ * is taken.
+ * 
  * @author Maros Kucbel
  * @date 2012-12-15T11:45:41+0100
  */
@@ -27,8 +30,10 @@ public final class Apply {
         String function;
         MathMLNode firstChild = node.getChildren().get(0);
         if (MathMLElement.CSYMBOL.equals(firstChild.getType())) {
+            // function can be defined in csymbol
             function = firstChild.getValue();
         } else if (MathMLElement.APPLY.equals(firstChild.getType())) {
+            // or another function can be used in apply
             builder.append(Node.process(firstChild, settings));
             builder.append(settings.getProperty("applied_to"));
             for (int index = 1; index < node.getChildren().size(); ++index) {
@@ -36,15 +41,20 @@ public final class Apply {
             }
             return builder.toString();
         } else if (MathMLElement.CI.equals(firstChild.getType()) && node.getChildren().size() > 1) {
+            // function can be defined in ci
             function = firstChild.getValue();
         } else {
+            // if nothing else holds true, we will assume that first child is function definition
             function = firstChild.getType().getElementName();
         }
+        // mark first child as processed to prevent its conversion at later time
         firstChild.setProcessed();
+        // find operation for given function, if no function was defined or 
+        // operation is not defined in enumeration return current content in
+        // StringBuilder
         Operation operation = Operation.forSymbol(function);
         if (operation == null) {
             logger.info("Unknown operation [{}]", function);
-//            logger.debug(node.toString());
             return builder.toString();
         }
          
@@ -53,6 +63,7 @@ public final class Apply {
             logger.info("Unknown function [{}]", function);
         }
         
+        // process based on operation
         switch (operation) {
             case SUPERSCRIPT: case SUBSCRIPT: case APPROACHES: {
                 builder.append(Node.process(node.getChildren().get(1), settings));
@@ -166,6 +177,10 @@ public final class Apply {
             return builder.toString();
         }
 
+        // try to corresponding element to given function, if none is found
+        // try a look up for operation
+        // this is done to simplify number of cases needed for processing, 
+        // as elements can be sorted into groups
         MathMLElement functionElement = MathMLElement.forElementName(function);
         if (MathMLElement.UNKNOWN.equals(functionElement)) {
             functionElement = MathMLElement.forElementName(operation.getKey());
@@ -215,8 +230,6 @@ public final class Apply {
             }
             default: // do nothing
         }
-        
-        
         
         return builder.toString();
     }

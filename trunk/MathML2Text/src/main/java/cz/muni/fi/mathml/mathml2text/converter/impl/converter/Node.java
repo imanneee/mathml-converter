@@ -1,18 +1,36 @@
-package cz.muni.fi.mathml.mathml2text.transformer.impl.converter;
+package cz.muni.fi.mathml.mathml2text.converter.impl.converter;
 
-
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation.Mn;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation.Mfrac;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation.Mroot;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation.Msqrt;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation.Msup;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation.Mi;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation.Msub;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation.Munderover;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation.Munder;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation.Mo;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.content.Cn;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.content.Apply;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.content.Ci;
 import cz.muni.fi.mathml.mathml2text.Strings;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.MathMLNode;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.converter.content.*;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.converter.presentation.*;
+import cz.muni.fi.mathml.mathml2text.converter.impl.MathMLNode;
 
 /**
- *
+ * General MathML node.
+ * 
  * @author Maros Kucbel
  * @date 2012-12-15T09:58:02+0100
  */
 public final class Node {
     
+    /**
+     * Processes given node.
+     * Based on type of input node calls specific node implementations.
+     * @param node Input node.
+     * @param settings Converter settings.
+     * @return Content of the input node converted to string.
+     */
     public static String process(final MathMLNode node, 
                                  final ConverterSettings settings) {
         if (node.isProcessed()) {
