@@ -1,9 +1,10 @@
 package cz.muni.fi.mathml.mathml2text.converter.impl;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -20,7 +21,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.muni.fi.mathml.MathMLElement;
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.MathMLConverter;
+import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.XmlAttribute;
 
 /**
  * This parser is responsible for reading input file or string and invoking
@@ -152,12 +154,11 @@ public final class XmlParserStAX {
         
         try {
             // create stream reader from input file
-            final FileReader input = new FileReader(file);
-            reader = this.xmlInputFactory.createXMLStreamReader(input);
-            FileWriter output = new FileWriter(outputFile);
+            reader = this.xmlInputFactory.createXMLStreamReader(new FileInputStream(file), "UTF-8");
+            OutputStream output = new FileOutputStream(outputFile);
             // create stream writer
-            writer = this.xmlOutputFactory.createXMLStreamWriter(output);
-//            writer = this.xmlOutputFactory.createXMLStreamWriter(System.out);
+            writer = this.xmlOutputFactory.createXMLStreamWriter(output, "UTF-8");
+//            writer = this.xmlOutputFactory.createXMLStreamWriter(System.out, "UTF-8");
             writer.writeStartDocument(reader.getEncoding(), reader.getVersion());
             
             // indicates whether we are inside a math element

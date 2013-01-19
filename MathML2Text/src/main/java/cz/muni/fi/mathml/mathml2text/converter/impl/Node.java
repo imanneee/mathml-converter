@@ -1,20 +1,20 @@
-package cz.muni.fi.mathml.mathml2text.converter.impl.converter;
+package cz.muni.fi.mathml.mathml2text.converter.impl;
 
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation.Mn;
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation.Mfrac;
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation.Mroot;
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation.Msqrt;
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation.Msup;
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation.Mi;
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation.Msub;
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation.Munderover;
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation.Munder;
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation.Mo;
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.content.Cn;
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.content.Apply;
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.content.Ci;
+import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
 import cz.muni.fi.mathml.mathml2text.Strings;
-import cz.muni.fi.mathml.mathml2text.converter.impl.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.impl.content.Apply;
+import cz.muni.fi.mathml.mathml2text.converter.impl.content.Ci;
+import cz.muni.fi.mathml.mathml2text.converter.impl.content.Cn;
+import cz.muni.fi.mathml.mathml2text.converter.impl.presentation.Mfrac;
+import cz.muni.fi.mathml.mathml2text.converter.impl.presentation.Mi;
+import cz.muni.fi.mathml.mathml2text.converter.impl.presentation.Mn;
+import cz.muni.fi.mathml.mathml2text.converter.impl.presentation.Mo;
+import cz.muni.fi.mathml.mathml2text.converter.impl.presentation.Mroot;
+import cz.muni.fi.mathml.mathml2text.converter.impl.presentation.Msqrt;
+import cz.muni.fi.mathml.mathml2text.converter.impl.presentation.Msub;
+import cz.muni.fi.mathml.mathml2text.converter.impl.presentation.Msup;
+import cz.muni.fi.mathml.mathml2text.converter.impl.presentation.Munder;
+import cz.muni.fi.mathml.mathml2text.converter.impl.presentation.Munderover;
 
 /**
  * General MathML node.

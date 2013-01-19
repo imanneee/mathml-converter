@@ -1,4 +1,4 @@
-package cz.muni.fi.mathml.mathml2text.converter.impl.converter;
+package cz.muni.fi.mathml.mathml2text.converter.impl;
 
 import java.util.Properties;
 

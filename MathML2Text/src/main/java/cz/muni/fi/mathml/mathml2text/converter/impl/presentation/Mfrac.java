@@ -1,9 +1,9 @@
-package cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation;
+package cz.muni.fi.mathml.mathml2text.converter.impl.presentation;
 
-import cz.muni.fi.mathml.mathml2text.converter.impl.MathMLNode;
-import cz.muni.fi.mathml.mathml2text.converter.impl.XmlAttribute;
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.ConverterSettings;
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.Node;
+import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.XmlAttribute;
+import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
+import cz.muni.fi.mathml.mathml2text.converter.impl.Node;
 
 /**
  * Specific implementation of <code>&lt;mfrac&gt;</code> node.

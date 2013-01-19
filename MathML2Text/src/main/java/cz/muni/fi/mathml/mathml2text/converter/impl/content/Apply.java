@@ -1,14 +1,14 @@
-package cz.muni.fi.mathml.mathml2text.converter.impl.converter.content;
+package cz.muni.fi.mathml.mathml2text.converter.impl.content;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.muni.fi.mathml.MathMLElement;
-import cz.muni.fi.mathml.mathml2text.converter.impl.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
+import cz.muni.fi.mathml.mathml2text.converter.impl.Node;
 import cz.muni.fi.mathml.mathml2text.converter.impl.Operation;
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.ConverterSettings;
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.Node;
 import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberFormat;
 
 /**

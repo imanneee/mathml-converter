@@ -1,11 +1,11 @@
-package cz.muni.fi.mathml.mathml2text.converter.impl.converter.content;
+package cz.muni.fi.mathml.mathml2text.converter.impl.content;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import cz.muni.fi.mathml.mathml2text.Strings;
-import cz.muni.fi.mathml.mathml2text.converter.impl.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
 import cz.muni.fi.mathml.mathml2text.converter.impl.Operation;
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.ConverterSettings;
 
 /**
  * Specific implementation of <code>&lt;ci&gt;</code> node.
