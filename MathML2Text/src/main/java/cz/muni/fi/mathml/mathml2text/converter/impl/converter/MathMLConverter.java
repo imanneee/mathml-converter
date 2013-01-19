@@ -1,4 +1,4 @@
-package cz.muni.fi.mathml.mathml2text.transformer.impl.converter;
+package cz.muni.fi.mathml.mathml2text.converter.impl.converter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,10 +16,10 @@ import org.slf4j.LoggerFactory;
 
 import cz.muni.fi.mathml.MathMLElement;
 import cz.muni.fi.mathml.mathml2text.Strings;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.MathMLNode;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.XmlAttribute;
-import cz.muni.fi.mathml.mathml2text.transformer.numbers.NumberFormat;
-import cz.muni.fi.mathml.mathml2text.transformer.numbers.NumberTransformer;
+import cz.muni.fi.mathml.mathml2text.converter.impl.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.impl.XmlAttribute;
+import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberFormat;
+import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberTransformer;
 
 /**
  * Transformer of {@link MathMLNode} trees into string representations.

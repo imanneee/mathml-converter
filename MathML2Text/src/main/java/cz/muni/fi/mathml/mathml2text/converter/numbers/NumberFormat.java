@@ -1,4 +1,4 @@
-package cz.muni.fi.mathml.mathml2text.transformer.numbers;
+package cz.muni.fi.mathml.mathml2text.converter.numbers;
 
 /**
  * Number format used for transformation.

@@ -1,19 +1,26 @@
-package cz.muni.fi.mathml.mathml2text.transformer.impl.converter.presentation;
+package cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation;
 
 import org.slf4j.LoggerFactory;
 
 import cz.muni.fi.mathml.mathml2text.Strings;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.MathMLNode;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.converter.ConverterSettings;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.converter.MathMLConverter;
+import cz.muni.fi.mathml.mathml2text.converter.impl.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.ConverterSettings;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.MathMLConverter;
 
 /**
- *
+ * Specific implementation of <code>&lt;mn&gt;</code> node.
+ * 
  * @author Maros Kucbel
  * @date 2012-12-15T10:01:49+0100
  */
 public final class Mn {
 
+    /**
+     * Processes input node.
+     * @param node Input node.
+     * @param settings Converter settings.
+     * @return Content of the input node converted to string.
+     */
     public static String process(final MathMLNode node, final ConverterSettings settings) {
         if (!node.getChildren().isEmpty()) {
             throw new IllegalStateException("[mi] node should not have children.");

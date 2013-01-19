@@ -1,20 +1,27 @@
-package cz.muni.fi.mathml.mathml2text.transformer.impl.converter.content;
+package cz.muni.fi.mathml.mathml2text.converter.impl.converter.content;
 
 import org.slf4j.LoggerFactory;
 
 import cz.muni.fi.mathml.mathml2text.Strings;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.MathMLNode;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.XmlAttribute;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.converter.ConverterSettings;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.converter.MathMLConverter;
+import cz.muni.fi.mathml.mathml2text.converter.impl.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.impl.XmlAttribute;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.ConverterSettings;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.MathMLConverter;
 
 /**
- *
+ * Specific implementation of <code>&lt;cn&gt;</code> node.
+ * 
  * @author Maros Kucbel
  * @date 2012-12-15T11:42:18+0100
  */
 public final class Cn {
 
+    /**
+     * Processes input node.
+     * @param node Input node.
+     * @param settings Converter settings.
+     * @return Content of the input node converted to string.
+     */
     public static String process(final MathMLNode node, final ConverterSettings settings) {
         if (node.getValue() == null) {
             throw new IllegalStateException("[mi] node should have its value set.");

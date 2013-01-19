@@ -1,17 +1,24 @@
-package cz.muni.fi.mathml.mathml2text.transformer.impl.converter.presentation;
+package cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation;
 
-import cz.muni.fi.mathml.mathml2text.transformer.impl.MathMLNode;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.XmlAttribute;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.converter.ConverterSettings;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.converter.Node;
+import cz.muni.fi.mathml.mathml2text.converter.impl.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.impl.XmlAttribute;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.ConverterSettings;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.Node;
 
 /**
- *
+ * Specific implementation of <code>&lt;mfrac&gt;</code> node.
+ * 
  * @author Maros Kucbel
  * @date 2012-12-14T17:18:44+0100
  */
 public final class Mfrac {
 
+    /**
+     * Processes input node.
+     * @param node Input node.
+     * @param settings Converter settings.
+     * @return Content of the input node converted to string.
+     */
     public static String process(final MathMLNode node, final ConverterSettings settings) {
         if (node.getChildren().size() != 2) {
             throw new IllegalStateException("[mfrac] should have two children.");

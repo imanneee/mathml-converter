@@ -1,13 +1,8 @@
-package cz.muni.fi.mathml.mathml2text.transformer.numbers;
+package cz.muni.fi.mathml.mathml2text.converter.numbers;
 
-import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.slf4j.Logger;
@@ -19,7 +14,7 @@ import cz.muni.fi.mathml.mathml2text.Strings;
  * Transforms all numbers (arabic numerals) in input data to their written form.
  * Takes into consideration inflection, e.g. in square roots, powers, etc.
  * 
- * @todo clean unneeded methods, fix ordinal number transformation
+ * @todo fix ordinal number transformation
  * 
  * @author Maros Kucbel Sep 13, 2012, 9:54:59 PM
  */
@@ -31,13 +26,9 @@ public final class NumberTransformer {
     private NumberFormat numberFormat = NumberFormat.CARDINAL;
     
     public NumberTransformer(@Nullable final Locale locale) {
-        this.bundle = ResourceBundle.getBundle("cz.muni.fi.mathml.mathml2text.transformer.numbers.numbers", locale != null ? locale : Locale.getDefault());
+        this.bundle = ResourceBundle.getBundle("cz.muni.fi.mathml.mathml2text.converter.numbers.numbers", locale != null ? locale : Locale.getDefault());
     }
 
-    public Locale getLanguage() {
-        return this.getBundle().getLocale();
-    }
-    
     /** 
      * Returns resource bundle with localized messages. 
      */
@@ -52,14 +43,29 @@ public final class NumberTransformer {
         return this.logger;
     }
 
+    /**
+     * Return current number format.
+     * @return Current number format.
+     */
     public NumberFormat getNumberFormat() {
         return numberFormat;
     }
 
+    /**
+     * Set current number format.
+     * @param numberFormat New number format.
+     */
     public void setNumberFormat(NumberFormat numberFormat) {
         this.numberFormat = numberFormat;
     }
     
+    /**
+     * Converts given number to its spoken form.
+     * Based on {@link #getNumberFormat() number format} converts to cardinal
+     * or ordinal form.
+     * @param value
+     * @return 
+     */
     public String transform(final String value) {
         switch (this.getNumberFormat()) {
             case CARDINAL: {
@@ -75,115 +81,11 @@ public final class NumberTransformer {
     }
     
     /**
-     * Parses input and transforms all numbers to their designated form.
-     *
-     * @param data Data from XML transformation
-     * @return String representation of input data with transformed numbers
+     * Converts given number to its spoken cardinal form.
+     * @param numberAsString Number.
+     * @return Spoken cardinal form.
+     * @throws NumberFormatException If input string does not contain valid number.
      */
-    public String transformNumbers(final ByteArrayOutputStream data) {
-        String xml;
-        try {
-            xml = data.toString("UTF-8");
-        } catch (final UnsupportedEncodingException ex) {
-            return null;
-        }
-        System.out.println(xml);
-        String s = this.transformBasicNumbers(xml);
-        System.out.println(s);
-        s = this.transformOrdinalNumbers(s).replace("\t", "");
-        s = s.trim();
-        System.out.println(s);
-        return s;
-    }
-
-    /**
-     * Transforms all cardinal numbers from input. If there is none returns
-     * unchanged parameter
-     *
-     * @param xml String input
-     * @return String from param with transformed cardinal numbers
-     */
-    @Nonnull
-    private String transformBasicNumbers(final String xml) {
-        Matcher m = Pattern.compile("NMBR(.*?):").matcher(xml);
-        StringBuilder builder = new StringBuilder();
-        int lastStop = 0;
-        while (m.find()) {
-            int startIndex = m.start();
-            int stopIndex = xml.indexOf(":", startIndex);
-            double number = 0;
-            try {
-                number = Double.parseDouble(xml.substring(startIndex + 4, stopIndex));
-                this.getLogger().debug("Transforming number " + number);
-            } catch (NumberFormatException nfe) {
-                this.getLogger().error("Number cannot be transformed.");
-            }
-            long integralPart = (long) Math.floor(number);
-            long decimalPart = 0;
-            String decimal = String.valueOf(number).split("\\.")[1];
-            try {
-                decimalPart = Long.valueOf(decimal);
-            } catch (NumberFormatException nfe) {
-                this.getLogger().error("ERROR");
-            }
-            String integralPartString = translateNumber(integralPart);
-            String decimalPartString = translateNumber(decimalPart);
-
-            builder.append(xml.substring(lastStop, startIndex));
-            builder.append(" ").append(integralPartString).append(" ");
-            if (decimalPart != 0) {
-                if (integralPart == 1 || integralPart == -1) {
-                    builder.append(this.getBundle().getString("POINT1"));
-                } else if (Math.abs(integralPart) > 1 && Math.abs(integralPart) < 5) {
-                    builder.append(this.getBundle().getString("POINT2"));
-                } else {
-                    builder.append(this.getBundle().getString("POINT3"));
-                }
-                builder.append(" ").append(decimalPartString).append(" ");
-                int length = decimal.length();
-                switch (length) {
-                    case 1:
-                        if (decimalPart == 1) {
-                            builder.append(this.getBundle().getString("TENTH1"));
-                        } else if (decimalPart < 5) {
-                            builder.append(this.getBundle().getString("TENTH2"));
-                        } else {
-                            builder.append(this.getBundle().getString("TENTH3"));
-                        }
-                        break;
-                    case 2:
-                        if (decimalPart == 1) {
-                            builder.append(this.getBundle().getString("HUNDREDTH1"));
-                        } else if (decimalPart < 5) {
-                            builder.append(this.getBundle().getString("HUNDREDTH2"));
-                        } else {
-                            builder.append(this.getBundle().getString("HUNDREDTH3"));
-                        }
-                        break;
-                    case 3:
-                        if (decimalPart == 1) {
-                            builder.append(this.getBundle().getString("THOUSANDTH1"));
-                        } else if (decimalPart < 5) {
-                            builder.append(this.getBundle().getString("THOUSANDTH2"));
-                        } else {
-                            builder.append(this.getBundle().getString("THOUSANDTH3"));
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                builder.append(" ");
-            }
-            lastStop = stopIndex + 1;
-        }
-        builder.append(xml.substring(lastStop));
-
-        if (builder.toString().isEmpty()) {
-            return xml;
-        }
-        return builder.toString().replace("  ", " ");
-    }
-
     public String transformNumber(final String numberAsString) throws NumberFormatException {
         final StringBuilder builder = new StringBuilder();
         
@@ -223,6 +125,11 @@ public final class NumberTransformer {
         return builder.toString();
     }
     
+    /**
+     * Converts given number to its spoken ordinal form.
+     * @param numberAsString Number.
+     * @return Spoken ordinal form.
+     */
     public String transformOrdinalNumber(final String numberAsString) {
         double number = 0.0;
         try {
@@ -246,53 +153,6 @@ public final class NumberTransformer {
         return this.translateOrdinalNumber(integralPart);
     }
     
-    /**
-     * Transforms all ordinal numbers from input. If there is none returns
-     * unchanged parameter
-     *
-     * @param xml String input
-     * @return String from param with transformed ordinal numbers
-     */
-    private String transformOrdinalNumbers(final String xml) {
-        Matcher m = Pattern.compile("NMBZ(.*?):").matcher(xml);
-        StringBuilder builder = new StringBuilder();
-        int lastStop = 0;
-        while (m.find()) {
-            int startIndex = m.start();
-            int stopIndex = xml.indexOf(":", startIndex);
-            double number = 0;
-            try {
-                number = Double.parseDouble(xml.substring(startIndex + 4, stopIndex));
-                this.getLogger().debug("Transforming ordinal number " + number);
-            } catch (NumberFormatException nfe) {
-                this.getLogger().error("Number cannot be transformed.");
-            }
-            long integralPart = (long) Math.floor(number);
-            long decimalPart = 0;
-            String decimal = String.valueOf(number).split("\\.")[1];
-            try {
-                decimalPart = Long.valueOf(decimal);
-            } catch (NumberFormatException nfe) {
-                this.getLogger().error("ERROR");
-            }
-
-            if (decimalPart != 0) {
-                return transformBasicNumbers(xml);
-            }
-            final String integralPartString = this.translateOrdinalNumber(integralPart);
-
-            builder.append(xml.substring(lastStop, startIndex));
-            builder.append(" ").append(integralPartString).append(" ");
-            lastStop = stopIndex + 1;
-        }
-        builder.append(xml.substring(lastStop));
-
-        if (builder.toString().isEmpty()) {
-            return xml;
-        }
-        return builder.toString().replace("  ", " ");
-    }
-
     /**
      * Transforms given long number to string, as is its written form (1 -> one,
      * etc.)

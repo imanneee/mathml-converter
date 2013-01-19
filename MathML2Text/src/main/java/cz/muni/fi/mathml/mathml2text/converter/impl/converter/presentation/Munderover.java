@@ -1,18 +1,26 @@
-package cz.muni.fi.mathml.mathml2text.transformer.impl.converter.presentation;
+package cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation;
 
 import cz.muni.fi.mathml.MathMLElement;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.MathMLNode;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.Operation;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.converter.ConverterSettings;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.converter.Node;
+import cz.muni.fi.mathml.mathml2text.converter.impl.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.impl.Operation;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.ConverterSettings;
+import cz.muni.fi.mathml.mathml2text.converter.impl.converter.Node;
 
 /**
- *
+ * Specific implementation of <code>&lt;munderover&gt;</code> 
+ * and <code>&lt;msubsup&gt;</code> node.
+ * 
  * @author Maros Kucbel
  * @date 2012-12-15T11:19:57+0100
  */
 public final class Munderover {
 
+    /**
+     * Processes input node.
+     * @param node Input node.
+     * @param settings Converter settings.
+     * @return Content of the input node converted to string.
+     */
     public static String process(final MathMLNode node, final ConverterSettings settings) {
         if (node.getChildren().size() != 3) {
             throw new IllegalArgumentException("[munderover] should have three children.");
