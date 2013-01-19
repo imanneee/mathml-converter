@@ -7,7 +7,8 @@ import com.google.common.collect.ImmutableList;
 
 /**
  * Enumeration of supported mathematical operations and their possible 
- * representation in presentation MathML (mo element).
+ * representation in presentation MathML (<code>&lt;mo&gt;</code>, <code>&lt;mi&gt;</code>) 
+ * as well as in content MathML (<code>&lt;csymbol&gt;</code>, <code>&lt;ci&gt;</code>).
  * 
  * @author Maros Kucbel Sep 16, 2012, 4:54:09 PM
  */

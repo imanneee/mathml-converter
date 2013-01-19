@@ -4,9 +4,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -26,9 +23,24 @@ import cz.muni.fi.mathml.MathMLElement;
 import cz.muni.fi.mathml.mathml2text.transformer.impl.converter.MathMLConverter;
 
 /**
- * Parser for creating {@link MathMLNode} trees from input XML files.
- * Input files are read via Woodstox ({@linkplain http://woodstox.codehaus.org})
- * implementation of StAX API.
+ * This parser is responsible for reading input file or string and invoking
+ * {@link MathMLConverter converter} for every occurence of MathML code block
+ * in the input.
+ * Resulting output format depends on the type of input:
+ * <ul>
+ *  <li>XML file &rarr; output is an XML file in which every MathML node is substituted
+ *      with converted value,</li>
+ *  <li>string &rarr; 
+ *      <ol>
+ *          <li>if input string is just MathML element (parent node of XML is 
+ *              <code>&lt;math&gt;</code>), output will consist only of the 
+ *              converted string without any XML tags
+ *          </li>
+ *          <li>otherwise result will be similar to the case of input XML file,
+ *              but instead of to file, the result will be written as string
+ *              and outputted.
+ *          </li>
+ * </ul>
  * 
  * @todo extract interface
  * 
@@ -40,17 +52,44 @@ public final class XmlParserStAX {
      * Logger.
      */
     private final Logger logger = LoggerFactory.getLogger(XmlParserStAX.class);
-    
+    /**
+     * Responsible for converting MathML tree to string.
+     */
     private MathMLConverter converter;
+    /**
+     * Selected language of transformation.
+     */
     private Locale language;
-    
+    /**
+     * Input factory for creating {@link XMLStreamReader} instance.
+     */
     private XMLInputFactory xmlInputFactory;
+    /**
+     * Output factory for creating {@link XMLStreamWriter} instance.
+     */
     private XMLOutputFactory xmlOutputFactory;
     
+    /**
+     * Constructor.
+     * Delelegates to {@link #XmlParserStAX(java.util.Locale) } with parameter
+     * value {@link Locale#ENGLISH}.
+     */
     public XmlParserStAX() {
         this(Locale.ENGLISH);
     }
     
+    /**
+     * Constructor.
+     * {@link XMLInputFactory} is configured with values:
+     * <ul>
+     *  <li>{@link XMLInputFactory#IS_REPLACING_ENTITY_REFERENCES} &rarr <code>true</code></li>
+     *  <li>{@link XMLInputFactory#IS_SUPPORTING_EXTERNAL_ENTITIES} &rarr <code>true</code></li>
+     *  <li>{@link XMLInputFactory#IS_COALESCING} &rarr <code>true</code></li>
+     *  <li>{@link XMLInputFactory#IS_VALIDATING} &rarr <code>false</code></li>
+     *  <li>{@link XMLInputFactory#SUPPORT_DTD} &rarr <code>true</code></li>
+     * </ul>
+     * @param language Language of transformation.
+     */
     public XmlParserStAX(Locale language) {
         this.converter = new MathMLConverter();
         this.language = language;
@@ -80,36 +119,13 @@ public final class XmlParserStAX {
     }
 
     /**
-     * Parses collection of files into the list of {@link MathMLNode} trees. 
-     * Every occurrence of math element inside any file is parsed as new instance
-     * of {@link MathMLNode} tree.
-     * 
-     * @todo change return type, maybe accept only single file. As it is now
-     * the information about from which file given tree comes is lost.
-     * 
-     * @param filesToTransform
-     * @return 
-     */
-    public List<MathMLNode> parse(@Nonnull final Collection<File> filesToTransform) {
-        Validate.isTrue(filesToTransform != null, "List of files for transformation should not be null.");
-        Validate.notEmpty(filesToTransform, "List of files for transformation should not be empty.");
-        Validate.noNullElements(filesToTransform, "List of files for transformation should not contain null elements.");
-
-        final List<MathMLNode> nodeList = new ArrayList<MathMLNode>();
-        
-        // process every file
-        for (final File file : filesToTransform) {
-            nodeList.addAll(this.parse0(file));
-        }
-        return nodeList;
-    }
-
-    /**
      * Parses single file. For every occurrence of math element inside input 
-     * XML file new {@link MathMLNode} tree is builded. 
+     * XML file new {@link MathMLNode} tree is builded and subsequently converted
+     * to string.
      * 
      * @param file Input XML file.
-     * @return List of {@link MathMLNode} trees.
+     * @return A file with every occurence of <code>&lt;math&gt;</code> tag replaced
+     *  with converted string inside <code>&lt;mathconv&gt;</code> tag.
      */
     public File parse(@Nonnull final File file) {
         Validate.isTrue(file != null, "File for transformation should not be null.");
@@ -139,6 +155,7 @@ public final class XmlParserStAX {
             final FileReader input = new FileReader(file);
             reader = this.xmlInputFactory.createXMLStreamReader(input);
             FileWriter output = new FileWriter(outputFile);
+            // create stream writer
             writer = this.xmlOutputFactory.createXMLStreamWriter(output);
 //            writer = this.xmlOutputFactory.createXMLStreamWriter(System.out);
             writer.writeStartDocument(reader.getEncoding(), reader.getVersion());
@@ -281,137 +298,6 @@ public final class XmlParserStAX {
             this.getLogger().error("Cannot open xml file for reading.", ex);
         }
         return outputFile;
-    }
-    
-    /**
-     * Parses single file. For every occurrence of math element inside input 
-     * XML file new {@link MathMLNode} tree is builded. 
-     * 
-     * @param file Input XML file.
-     * @return List of {@link MathMLNode} trees.
-     */
-    private List<MathMLNode> parse0(@Nonnull final File file) {
-        Validate.isTrue(file != null, "File for transformation should not be null.");
-
-        final List<MathMLNode> nodeList = new ArrayList<MathMLNode>();
-        
-        XMLStreamReader reader;
-        
-        /** root node */
-        MathMLNode tree = null;
-        /** current node of reader */
-        MathMLNode currentNode = null;
-        /** parent node of current node */
-        MathMLNode parentNode = null;
-        /** type of current element */
-        MathMLElement currentElement = null;
-        
-        try {
-            // create stream reader from input file
-            final FileReader input = new FileReader(file);
-            reader = this.xmlInputFactory.createXMLStreamReader(input);
-
-            // indicates whether we are inside a math element
-            boolean processingMathMLElement = false;
-            while (reader.hasNext()) {
-                // pull next event code
-                final int eventCode = reader.next();
-                // determine type of event
-                final XmlStreamConstant constant = XmlStreamConstant.forEventCode(eventCode);
-
-                // check whether we are inside math element, if not and current event is not
-                // START_ELEMENT continue to the next event
-                if (!processingMathMLElement && !XmlStreamConstant.START_ELEMENT.equals(constant)) {
-                    continue;
-                }
-
-                switch (constant) {
-                    case START_ELEMENT: {
-                        // retrieve element name
-                        final String elementName = reader.getLocalName();
-                        // if we are not inside math element continue to the next event
-                        if (!processingMathMLElement && !MathMLElement.MATH.getElementName().equals(elementName)) {
-                            continue;
-                        }
-                        
-                        // now we are surely inside math element, we can determine type of math element
-                        currentElement = MathMLElement.forElementName(elementName);
-                        processingMathMLElement = true;
-                        // set new current node
-                        currentNode = new MathMLNode();
-                        // set its name
-                        currentNode.setType(currentElement);
-                        // set its attributes if there are any
-                        for (int index = 0; index < reader.getAttributeCount(); ++index) {
-                            currentNode.getAttributes().add(
-                                    new XmlAttribute(reader.getAttributeLocalName(index), 
-                                                     reader.getAttributeValue(index)));
-                        }
-                        // if parent node was set, set it to current node
-                        if (parentNode != null) {
-                            currentNode.setParent(parentNode);
-                            parentNode.getChildren().add(currentNode);
-                        }
-
-                        // if we are just at math element initialize new tree
-                        if (tree == null) {
-                            tree = currentNode;
-                        }
-
-                        parentNode = currentNode;
-                        break;
-                    }
-                    case END_ELEMENT: {
-                        // we are going "one level up" inside the tree
-                        parentNode = currentNode.getParent();
-                        currentNode = parentNode;
-
-                        //@todo it should be enough to check whether currentNode is not null
-                        final String elementName = reader.getLocalName();
-                        final MathMLElement element = MathMLElement.forElementName(elementName);
-                        switch (element) {
-                            case MATH: {
-                                processingMathMLElement = false;
-                                currentElement = null;
-                                nodeList.add(tree);
-                                tree = null;
-                                currentNode = null;
-                                parentNode = null;
-                                break;
-                            }
-                            default:
-                                break;
-                        }
-
-                        break;
-                    }
-                    case CHARACTERS: {
-                        final String value = reader.getText();
-                        if (currentElement != null && StringUtils.isNotBlank(value)) {
-                            currentNode.setValue(value);
-                        }
-                        break;
-                    }  
-                    case ENTITY_REFERENCE: {
-                        final String value = reader.getLocalName();
-                        if (currentElement != null && StringUtils.isNotBlank(value)) {
-                            currentNode.setValue(value);
-                        }
-                        break;
-                    }   
-                    default:
-                        break;
-                }
-            }
-            reader.close();
-
-        } catch (final IOException ex) {
-            this.getLogger().error("Cannot load input file.", ex);
-        } catch (final XMLStreamException ex) {
-            this.getLogger().error("Cannot open xml file for reading.", ex);
-        }
-        
-        return nodeList;
     }
     
 }

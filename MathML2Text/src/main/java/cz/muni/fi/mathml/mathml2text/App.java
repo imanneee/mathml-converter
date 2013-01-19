@@ -1,18 +1,12 @@
 package cz.muni.fi.mathml.mathml2text;
 
 import java.io.File;
-import java.util.List;
-import java.util.Locale;
 
 import org.joda.time.Duration;
 import org.joda.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Lists;
-
-import cz.muni.fi.mathml.mathml2text.transformer.impl.converter.MathMLConverter;
-import cz.muni.fi.mathml.mathml2text.transformer.impl.MathMLNode;
 import cz.muni.fi.mathml.mathml2text.transformer.impl.XmlParserStAX;
 
 /**
@@ -36,9 +30,7 @@ public class App {
         
 //        File input = new File("d:\\Projects\\math.0001002.xhtml");
 //        File input = new File("d:\\Projects\\ex3.xml");
-//        final List<MathMLNode> nodeList = parser.parse(Lists.<File>newArrayList());
         File parse = parser.parse(input);
-//        System.out.println(parse.getPath());
         
         final Instant end = Instant.now();
         final Duration duration = new Duration(start, end);
