@@ -2,7 +2,6 @@ package cz.muni.fi.mathml;
 
 /**
  * Enumeration of MathML elements.
- * @todo Add content MathML elements.
  * 
  * @author Maros Kucbel Sep 16, 2012, 11:58:46 AM
  */
