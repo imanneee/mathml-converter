@@ -34,6 +34,6 @@ public class App {
         
         final Instant end = Instant.now();
         final Duration duration = new Duration(start, end);
-        System.out.println(duration.getMillis() + " ms");
+        System.out.println("\n" + duration.getMillis() + " ms");
     }
 }

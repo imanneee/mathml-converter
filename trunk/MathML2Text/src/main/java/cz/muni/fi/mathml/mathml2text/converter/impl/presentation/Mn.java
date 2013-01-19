@@ -1,11 +1,11 @@
-package cz.muni.fi.mathml.mathml2text.converter.impl.converter.presentation;
+package cz.muni.fi.mathml.mathml2text.converter.impl.presentation;
 
 import org.slf4j.LoggerFactory;
 
 import cz.muni.fi.mathml.mathml2text.Strings;
-import cz.muni.fi.mathml.mathml2text.converter.impl.MathMLNode;
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.ConverterSettings;
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.MathMLConverter;
+import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
+import cz.muni.fi.mathml.mathml2text.converter.impl.MathMLConverter;
 
 /**
  * Specific implementation of <code>&lt;mn&gt;</code> node.

@@ -1,12 +1,12 @@
-package cz.muni.fi.mathml.mathml2text.converter.impl.converter.content;
+package cz.muni.fi.mathml.mathml2text.converter.impl.content;
 
 import org.slf4j.LoggerFactory;
 
 import cz.muni.fi.mathml.mathml2text.Strings;
-import cz.muni.fi.mathml.mathml2text.converter.impl.MathMLNode;
-import cz.muni.fi.mathml.mathml2text.converter.impl.XmlAttribute;
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.ConverterSettings;
-import cz.muni.fi.mathml.mathml2text.converter.impl.converter.MathMLConverter;
+import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.XmlAttribute;
+import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
+import cz.muni.fi.mathml.mathml2text.converter.impl.MathMLConverter;
 
 /**
  * Specific implementation of <code>&lt;cn&gt;</code> node.

@@ -1,5 +1,7 @@
-package cz.muni.fi.mathml.mathml2text.converter.impl.converter;
+package cz.muni.fi.mathml.mathml2text.converter.impl;
 
+import cz.muni.fi.mathml.mathml2text.converter.XmlAttribute;
+import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -16,8 +18,6 @@ import org.slf4j.LoggerFactory;
 
 import cz.muni.fi.mathml.MathMLElement;
 import cz.muni.fi.mathml.mathml2text.Strings;
-import cz.muni.fi.mathml.mathml2text.converter.impl.MathMLNode;
-import cz.muni.fi.mathml.mathml2text.converter.impl.XmlAttribute;
 import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberFormat;
 import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberTransformer;
 

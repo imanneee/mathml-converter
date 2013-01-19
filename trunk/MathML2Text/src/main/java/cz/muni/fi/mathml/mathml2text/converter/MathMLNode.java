@@ -1,4 +1,4 @@
-package cz.muni.fi.mathml.mathml2text.converter.impl;
+package cz.muni.fi.mathml.mathml2text.converter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
