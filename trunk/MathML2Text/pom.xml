@@ -4,7 +4,7 @@
 
     <groupId>cz.muni.fi.mathml</groupId>
     <artifactId>mathml-converter</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>MathMLConverter</name>
