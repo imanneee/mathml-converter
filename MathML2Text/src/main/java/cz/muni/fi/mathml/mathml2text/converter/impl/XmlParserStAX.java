@@ -62,10 +62,6 @@ public final class XmlParserStAX {
      */
     private MathMLConverter converter;
     /**
-     * Selected language of transformation.
-     */
-    private Locale language;
-    /**
      * Input factory for creating {@link XMLStreamReader} instance.
      */
     private XMLInputFactory xmlInputFactory;
@@ -73,15 +69,6 @@ public final class XmlParserStAX {
      * Output factory for creating {@link XMLStreamWriter} instance.
      */
     private XMLOutputFactory xmlOutputFactory;
-    
-    /**
-     * Constructor.
-     * Delelegates to {@link #XmlParserStAX(java.util.Locale) } with parameter
-     * value {@link Locale#ENGLISH}.
-     */
-    public XmlParserStAX() {
-        this(Locale.ENGLISH);
-    }
     
     /**
      * Constructor.
@@ -93,11 +80,9 @@ public final class XmlParserStAX {
      *  <li>{@link XMLInputFactory#IS_VALIDATING} &rarr <code>false</code></li>
      *  <li>{@link XMLInputFactory#SUPPORT_DTD} &rarr <code>true</code></li>
      * </ul>
-     * @param language Language of transformation.
      */
-    public XmlParserStAX(Locale language) {
+    public XmlParserStAX() {
         this.converter = new MathMLConverter();
-        this.language = language;
         this.xmlInputFactory = XMLInputFactory.newInstance();
         this.xmlInputFactory.setProperty(XMLInputFactory.IS_REPLACING_ENTITY_REFERENCES, true);
         this.xmlInputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, true);
@@ -128,10 +113,14 @@ public final class XmlParserStAX {
      * plain text. Returned string is a concatenation of every such converted
      * element.
      * @param inputString Input.
+     * @param language Language of conversion.
      * @return Input converted to plain text.
+     * @throws UnsupportedLanguageException
      */
-    public String parse(@Nonnull final String inputString) {
+    public String parse(@Nonnull final String inputString, final Locale language)
+            throws UnsupportedLanguageException {
         Validate.isTrue(StringUtils.isNotBlank(inputString));
+        this.checkSupportedLanguages(language);
         
         XMLStreamReader reader;
         XMLStreamWriter writer;
@@ -213,7 +202,7 @@ public final class XmlParserStAX {
                         switch (element) {
                             case MATH: {
                                 // transform created tree and write to output
-                                String converted = this.converter.convert(tree, this.language);
+                                String converted = this.converter.convert(tree, language);
                                 writer.writeCharacters(converted);
                                 processingMathMLElement = false;
                                 currentElement = null;
@@ -262,10 +251,12 @@ public final class XmlParserStAX {
      * to string.
      * 
      * @param file Input XML file.
+     * @param language Language of conversion.
      * @return A file with every occurence of <code>&lt;math&gt;</code> tag replaced
      *  with converted string inside <code>&lt;mathconv&gt;</code> tag.
+     * @throws UnsupportedLanguageException
      */
-    public File parse(@Nonnull final File file) {
+    public File parse(@Nonnull final File file, final Locale language) {
         Validate.isTrue(file != null, "File for transformation should not be null.");
         
         XMLStreamReader reader;
@@ -381,7 +372,7 @@ public final class XmlParserStAX {
                         switch (element) {
                             case MATH: {
                                 // transform created tree and write to output
-                                String converted = this.converter.convert(tree, this.language);
+                                String converted = this.converter.convert(tree, language);
                                 writer.writeStartElement("mathconv");
                                 writer.writeCharacters(converted);
                                 writer.writeEndElement();
@@ -436,6 +427,12 @@ public final class XmlParserStAX {
             this.getLogger().error("Cannot open xml file for reading.", ex);
         }
         return outputFile;
+    }
+    
+    private void checkSupportedLanguages(final Locale language) throws UnsupportedLanguageException {
+        if (!"en".equals(language.getLanguage())) {
+            throw new UnsupportedLanguageException(String.format("[%1$s] is not supported.", language.getLanguage()));
+        }
     }
     
 }

@@ -4,8 +4,9 @@ import org.apache.commons.lang3.StringEscapeUtils;
 
 import cz.muni.fi.mathml.mathml2text.Strings;
 import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
-import cz.muni.fi.mathml.mathml2text.converter.impl.Operation;
 import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
+import cz.muni.fi.mathml.mathml2text.converter.impl.Operation;
+import cz.muni.fi.mathml.mathml2text.converter.impl.Symbol;
 
 /**
  * Specific implementation of <code>&lt;mi&gt;</code> node.
@@ -27,6 +28,14 @@ public final class Mi {
         }
         final String identifier = StringEscapeUtils.escapeHtml4(node.getValue());
         Operation operation = Operation.forSymbol(identifier);
-        return operation != null ? settings.getProperty(operation.getKey()) : identifier + Strings.SPACE;
+        if (operation != null) {
+            return settings.getProperty(operation.getKey());
+        }
+        // it's not operation let's try symbol
+        Symbol symbol = Symbol.forValue(identifier);
+        if (symbol != null) {
+            return settings.getProperty(symbol.getKey());
+        }
+        return identifier + Strings.SPACE;
     }
 }
