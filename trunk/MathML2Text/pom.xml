@@ -3,19 +3,35 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cz.muni.fi.mathml</groupId>
-    <artifactId>MathML2Text</artifactId>
+    <artifactId>mathml-converter</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>MathML2Text</name>
+    <name>MathMLConverter</name>
 
     <description>
-        
+        Tool for converting mathematical formulae entered in MathML to their plain text equivalent.
+        For example formula "x + 5" will be converted to "x plus five" and so on.
     </description>
+
+    <url>http://code.google.com/p/mathml-converter/</url>
+
+    <licenses>
+        <license>
+            <name>GNU General Public License, Version 3</name>
+            <url>http://www.gnu.org/licenses/gpl.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    
+    <scm>
+        <url>http://mathml-converter.googlecode.com/svn/trunk/</url>
+        <connection>http://mathml-converter.googlecode.com/svn/trunk/</connection>
+    </scm>
 
     <developers>
         <developer>
-            <id>maroskucbel</id>
+            <id>maros.kucbel</id>
             <name>Maros Kucbel</name>
             <email>maros.kucbel@gmail.com</email>
         </developer>
@@ -71,7 +87,7 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
-            <plugin>
+<!--            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.3</version>
@@ -95,7 +111,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -103,6 +119,19 @@
                 <executions>
                     <execution>
                         <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
                         <goals>
                             <goal>jar</goal>
                         </goals>
@@ -120,12 +149,43 @@
                     instructions on releasing to this project's Sonatype repository
             -->
             <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-release-plugin</artifactId>
-                    <version>2.4</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.4</version>
             </plugin>
         </plugins>
     </build>
+    
+    <!-- mvn release:perform -->
+    <profiles>
+        <profile>
+            <id>release-sign-artifacts</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.4</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

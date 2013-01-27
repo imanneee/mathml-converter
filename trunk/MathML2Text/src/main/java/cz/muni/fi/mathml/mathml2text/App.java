@@ -1,6 +1,7 @@
 package cz.muni.fi.mathml.mathml2text;
 
 import java.io.File;
+import java.util.Locale;
 
 import org.joda.time.Duration;
 import org.joda.time.Instant;
@@ -28,7 +29,7 @@ public class App {
 
         final XmlParserStAX parser = new XmlParserStAX();
         
-        File parse = parser.parse(input);
+        File parse = parser.parse(input, Locale.ENGLISH);
         
         /**************************************************************/
         /*  You can instantiate parser from inside application and run the parse() methods.  */
