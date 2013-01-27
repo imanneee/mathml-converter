@@ -1,5 +1,7 @@
 package cz.muni.fi.mathml.mathml2text.converter.impl;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -21,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.muni.fi.mathml.MathMLElement;
+import cz.muni.fi.mathml.mathml2text.Strings;
 import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
 import cz.muni.fi.mathml.mathml2text.converter.XmlAttribute;
 
@@ -121,6 +124,139 @@ public final class XmlParserStAX {
     }
 
     /**
+     * Parses input string and converts every occurence of math element into 
+     * plain text. Returned string is a concatenation of every such converted
+     * element.
+     * @param inputString Input.
+     * @return Input converted to plain text.
+     */
+    public String parse(@Nonnull final String inputString) {
+        Validate.isTrue(StringUtils.isNotBlank(inputString));
+        
+        XMLStreamReader reader;
+        XMLStreamWriter writer;
+        
+        /** root node */
+        MathMLNode tree = null;
+        /** current node of reader */
+        MathMLNode currentNode = null;
+        /** parent node of current node */
+        MathMLNode parentNode = null;
+        /** type of current element */
+        MathMLElement currentElement = null;
+        
+        try {
+            // create stream reader from input file
+            reader = this.xmlInputFactory.createXMLStreamReader(new ByteArrayInputStream(inputString.getBytes()), "UTF-8");
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            // create stream writer
+            writer = this.xmlOutputFactory.createXMLStreamWriter(output, "UTF-8");
+            
+            // indicates whether we are inside a math element
+            boolean processingMathMLElement = false;
+            while (reader.hasNext()) {
+                // pull next event code
+                final int eventCode = reader.next();
+                // determine type of event
+                final XmlStreamConstant constant = XmlStreamConstant.forEventCode(eventCode);
+
+                // check whether we are inside math element, if not and current event is not
+                // START_ELEMENT continue to the next event
+                if (!processingMathMLElement && !XmlStreamConstant.START_ELEMENT.equals(constant)) {
+                    continue;
+                }
+
+                switch (constant) {
+                    case START_ELEMENT: {
+                        // retrieve element name
+                        final String elementName = reader.getLocalName();
+                        // if we are not inside math element continue to the next event
+                        if (!processingMathMLElement && !MathMLElement.MATH.getElementName().equals(elementName)) {
+                            continue;
+                        }
+                        
+                        // now we are surely inside math element, we can determine type of math element
+                        currentElement = MathMLElement.forElementName(elementName);
+                        processingMathMLElement = true;
+                        // set new current node
+                        currentNode = new MathMLNode();
+                        // set its name
+                        currentNode.setType(currentElement);
+                        // set its attributes if there are any
+                        for (int index = 0; index < reader.getAttributeCount(); ++index) {
+                            currentNode.getAttributes().add(
+                                    new XmlAttribute(reader.getAttributeLocalName(index), 
+                                                     reader.getAttributeValue(index)));
+                        }
+                        // if parent node was set, set it to current node
+                        if (parentNode != null) {
+                            currentNode.setParent(parentNode);
+                            parentNode.getChildren().add(currentNode);
+                        }
+
+                        // if we are just at math element initialize new tree
+                        if (tree == null) {
+                            tree = currentNode;
+                        }
+
+                        parentNode = currentNode;
+                        break;
+                    }
+                    case END_ELEMENT: {
+                        // we are going "one level up" inside the tree
+                        parentNode = currentNode.getParent();
+                        currentNode = parentNode;
+
+                        //@todo it should be enough to check whether currentNode is not null
+                        final String elementName = reader.getLocalName();
+                        final MathMLElement element = MathMLElement.forElementName(elementName);
+                        switch (element) {
+                            case MATH: {
+                                // transform created tree and write to output
+                                String converted = this.converter.convert(tree, this.language);
+                                writer.writeCharacters(converted);
+                                processingMathMLElement = false;
+                                currentElement = null;
+                                tree = null;
+                                currentNode = null;
+                                parentNode = null;
+                                break;
+                            }
+                            default:
+                                break;
+                        }
+
+                        break;
+                    }
+                    case CHARACTERS: {
+                        final String value = reader.getText();
+                        if (currentElement != null && StringUtils.isNotBlank(value)) {
+                            currentNode.setValue(value);
+                        }
+                        break;
+                    }  
+                    case ENTITY_REFERENCE: {
+                        final String value = reader.getLocalName();
+                        if (currentElement != null && StringUtils.isNotBlank(value)) {
+                            currentNode.setValue(value);
+                        }
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            }
+            reader.close();
+            writer.flush();
+            writer.close();
+            return output.toString();
+        } catch (final XMLStreamException ex) {
+            this.getLogger().error("Cannot open xml file for reading.", ex);
+        }
+        return Strings.EMPTY;
+    }
+    
+    /**
      * Parses single file. For every occurrence of math element inside input 
      * XML file new {@link MathMLNode} tree is builded and subsequently converted
      * to string.
@@ -183,6 +319,7 @@ public final class XmlParserStAX {
                         }
                         case DTD: {
                             writer.writeDTD(reader.getText());
+                            break;
                         }
                         default:
                             break;
