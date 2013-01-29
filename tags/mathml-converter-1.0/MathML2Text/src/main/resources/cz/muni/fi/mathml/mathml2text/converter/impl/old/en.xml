@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE texts [
+    <!ELEMENT texts (text+)>
+    <!ELEMENT text (#PCDATA)>
+    <!ATTLIST text name CDATA #REQUIRED>
+]>
+<!--
+    Document   : en.xml
+    Created on : 10. duben 2011, 17:07
+    Author     : Maros Kucbel
+    Description:
+        Localized text for mathml2text.xsl stylesheet.
+-->
+
+<texts>
+    <text name="subtract">minus</text>
+    <text name="add">plus</text>
+    <text name="multiply">times</text>
+    <text name="divide">divided by</text>
+    <text name="equals">equals</text>
+    <text name="logarithm_base">logarithm to the base</text>
+    <text name="logarithm_from">of</text>
+    <text name="natural_logarithm">natural logarithm of</text>
+    <text name="open_braces">open braces</text>
+    <text name="close_braces">close braces</text>
+    <text name="fraction">fraction</text>
+    <text name="divided_by">divided by</text>
+    <text name="binomial_coefficient">Binomial coefficient</text>
+    <text name="choose">choose</text>
+    <text name="square_root">square root of</text>
+    <text name="superscript">raised to</text>
+    <text name="root">root of</text>
+    <text name="root_suffix">-th</text>
+    <text name="sine">sine of</text>
+    <text name="cosine">cosine of</text>
+    <text name="tangent">tangent of</text>
+    <text name="cotangent">cotangent of</text>
+    <text name="lim">limit of</text>
+    <text name="as">as</text>
+    <text name="approaches">approaches</text>
+    <text name="integral">integral</text>
+    <text name="definite">definite</text>
+    <text name="dee">dee</text>
+    <text name="from">from</text>
+    <text name="to">to</text>
+    <text name="of">of</text>
+    <text name="alpha">alfa</text>
+    <text name="beta">beta</text>
+    <text name="gamma">gamma</text>
+    <text name="delta">delta</text>
+    <text name="epsilon">epsilon</text>
+    <text name="zeta">zeta</text>
+    <text name="eta">eta</text>
+    <text name="theta">theta</text>
+    <text name="iota">iota</text>
+    <text name="kappa">kappa</text>
+    <text name="lambda">lambda</text>
+    <text name="mu">mu</text>
+    <text name="nu">nu</text>
+    <text name="xi">xi</text>
+    <text name="omicron">omicron</text>
+    <text name="pi">pi</text>
+    <text name="rho">rho</text>
+    <text name="sigma">sigma</text>
+    <text name="tau">tau</text>
+    <text name="upsilon">upsilon</text>
+    <text name="phi">phi</text>
+    <text name="chi">chi</text>
+    <text name="psi">psi</text>
+    <text name="omega">omega</text>
+    <text name="squared">squared</text>
+    <text name="sum">sum</text>
+    <text name="lt">is less than</text>
+    <text name="gt">is greater than</text>
+    <text name="leq">is less than or equal to</text>
+    <text name="geq">is greater than or equal to</text>
+</texts>
