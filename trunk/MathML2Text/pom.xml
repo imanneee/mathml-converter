@@ -3,7 +3,7 @@
 
     <groupId>cz.muni.fi.mathml</groupId>
     <artifactId>mathml-converter</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.2</version>
     <packaging>jar</packaging>
 
     <name>MathMLConverter</name>
@@ -65,11 +65,6 @@
             <artifactId>logback-classic</artifactId>
             <version>1.0.6</version>
             <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.sourceforge.saxon</groupId>
-            <artifactId>saxon</artifactId>
-            <version>9.1.0.8</version>
         </dependency>
         <dependency>
             <groupId>com.google.collections</groupId>
@@ -163,14 +158,14 @@
         </plugins>
     </build>
     
-<!--    <distributionManagement>
-         My project's Sonatype repository to be used by the release plugin 
+    <distributionManagement>
+         <!-- My project's Sonatype repository to be used by the release plugin -->
         <repository>
             <id>sonatype-nexus-staging</id>
             <name>Nexus Staging Repository</name>
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
         </repository>
-    </distributionManagement>-->
+    </distributionManagement>
     
     
     <!-- mvn release:perform -->
