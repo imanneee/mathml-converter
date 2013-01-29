@@ -1,7 +1,6 @@
 package cz.muni.fi.mathml.mathml2text.converter.impl;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -137,10 +136,7 @@ public final class XmlParserStAX {
         try {
             // create stream reader from input file
             reader = this.xmlInputFactory.createXMLStreamReader(new ByteArrayInputStream(inputString.getBytes()), "UTF-8");
-            ByteArrayOutputStream output = new ByteArrayOutputStream();
-            // create stream writer
-            writer = this.xmlOutputFactory.createXMLStreamWriter(output, "UTF-8");
-            
+            StringBuilder output = new StringBuilder();
             // indicates whether we are inside a math element
             boolean processingMathMLElement = false;
             while (reader.hasNext()) {
@@ -203,7 +199,7 @@ public final class XmlParserStAX {
                             case MATH: {
                                 // transform created tree and write to output
                                 String converted = this.converter.convert(tree, language);
-                                writer.writeCharacters(converted);
+                                output.append(converted);
                                 processingMathMLElement = false;
                                 currentElement = null;
                                 tree = null;
@@ -236,8 +232,6 @@ public final class XmlParserStAX {
                 }
             }
             reader.close();
-            writer.flush();
-            writer.close();
             return output.toString();
         } catch (final XMLStreamException ex) {
             this.getLogger().error("Cannot open xml file for reading.", ex);
