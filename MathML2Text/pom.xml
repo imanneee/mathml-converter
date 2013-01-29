@@ -4,10 +4,17 @@
 
     <groupId>cz.muni.fi.mathml</groupId>
     <artifactId>mathml-converter</artifactId>
-    <version>1.0</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>MathMLConverter</name>
+
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+        <relativePath></relativePath>
+    </parent>
 
     <description>
         Tool for converting mathematical formulae entered in MathML to their plain text equivalent.
@@ -26,7 +33,8 @@
     
     <scm>
         <url>http://mathml-converter.googlecode.com/svn/trunk/</url>
-        <connection>http://mathml-converter.googlecode.com/svn/trunk/</connection>
+        <connection>scm:svn:http://mathml-converter.googlecode.com/svn/trunk/</connection>
+        <developerConnection>scm:svn:https://mathml-converter.googlecode.com/svn/trunk/</developerConnection>
     </scm>
 
     <developers>
@@ -156,6 +164,16 @@
         </plugins>
     </build>
     
+<!--    <distributionManagement>
+         My project's Sonatype repository to be used by the release plugin 
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <name>Nexus Staging Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+    </distributionManagement>-->
+    
+    
     <!-- mvn release:perform -->
     <profiles>
         <profile>
@@ -166,6 +184,10 @@
                     <value>true</value>
                 </property>
             </activation>
+            <properties>
+                <gpg.keyname>A3266741</gpg.keyname>	<!-- GPG Key ID to use for signing -->
+                <release.username>maros.kucbel</release.username> <!-- username for our svn repository -->
+            </properties>
             <build>
                 <plugins>
                     <plugin>
