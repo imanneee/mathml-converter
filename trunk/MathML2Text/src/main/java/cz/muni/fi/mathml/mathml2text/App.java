@@ -21,15 +21,15 @@ public class App {
     public static void main(final String[] args) {
         if (args.length != 1) {
             System.out.println("Please specify input file path.");
-            System.exit(1);
+//            System.exit(1);
         }
-        File input = new File(args[0]);
+//        File input = new File(args[0]);
         
         final Instant start = Instant.now();
 
         final XmlParserStAX parser = new XmlParserStAX();
-        
-        File parse = parser.parse(input, Locale.ENGLISH);
+        File input = new File("d:\\Projects\\ex2.xml");
+        File parse = parser.parse(input, new Locale("cs"));
         
         /**************************************************************/
         /*  You can instantiate parser from inside application and run the parse() methods.  */
