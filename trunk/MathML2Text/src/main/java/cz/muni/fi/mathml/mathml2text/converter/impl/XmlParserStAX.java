@@ -69,6 +69,12 @@ public final class XmlParserStAX {
      */
     private XMLOutputFactory xmlOutputFactory;
     
+    private static final String CONVERTER_NAMESPACE_URI = "http://code.google.com/p/mathml-converter/";
+    
+    private static final String CONVERTER_NAMESPACE_PREFIX = "conv";
+    
+    private static final String CONVERTER_ELEMENT_NAME = "math";
+    
     /**
      * Constructor.
      * {@link XMLInputFactory} is configured with values:
@@ -282,6 +288,8 @@ public final class XmlParserStAX {
 //            writer = this.xmlOutputFactory.createXMLStreamWriter(System.out, "UTF-8");
             writer.writeStartDocument(reader.getEncoding(), reader.getVersion());
             
+            // is this the root element
+            boolean isRoot = true;
             // indicates whether we are inside a math element
             boolean processingMathMLElement = false;
             while (reader.hasNext()) {
@@ -325,6 +333,10 @@ public final class XmlParserStAX {
                             for (int index = 0; index < reader.getNamespaceCount(); ++index) {
                                 writer.writeNamespace(reader.getNamespacePrefix(index), reader.getNamespaceURI(index));
                             }
+                            if (isRoot) {
+                                writer.writeNamespace(CONVERTER_NAMESPACE_PREFIX, CONVERTER_NAMESPACE_URI);
+                                isRoot = false;
+                            }
                             continue;
                         }
                         
@@ -367,7 +379,11 @@ public final class XmlParserStAX {
                             case MATH: {
                                 // transform created tree and write to output
                                 String converted = this.converter.convert(tree, language);
-                                writer.writeStartElement("mathconv");
+                                if (isRoot) {
+                                    writer.writeNamespace(CONVERTER_NAMESPACE_PREFIX, CONVERTER_NAMESPACE_URI);
+                                    isRoot = false;
+                                }
+                                writer.writeStartElement(CONVERTER_NAMESPACE_URI, CONVERTER_ELEMENT_NAME);
                                 writer.writeCharacters(converted);
                                 writer.writeEndElement();
                                 processingMathMLElement = false;
