@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><document xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:conv="http://code.google.com/p/mathml-converter/">
+	<firstchild id="42">
+		<content>content</content>
+		<child>
+			<deepchild>
+				<content></content>	
+				<conv:math>open braces x plus five point two close braces </conv:math>
+				<content></content>
+			</deepchild>
+		</child>
+	</firstchild>
+	<conv:math>theta is lower than or equal to alpha is lower than or equal to c is lower than or equal to five  </conv:math>
+	<conv:math>logarithm to the base two  of x </conv:math>
+</document>
