@@ -1,5 +1,6 @@
 package cz.muni.fi.mathml.mathml2text.converter.impl.presentation;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import cz.muni.fi.mathml.MathMLElement;
 import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
 import cz.muni.fi.mathml.mathml2text.converter.impl.Operation;
@@ -26,7 +27,7 @@ public final class Munderover {
             throw new IllegalArgumentException("[munderover] should have three children.");
         }
         final StringBuilder builder = new StringBuilder();
-        final String possibleOperation = node.getChildren().get(0).getValue();
+        final String possibleOperation = StringEscapeUtils.escapeHtml4(node.getChildren().get(0).getValue());
         if (Operation.INTEGRAL.getSymbols().contains(possibleOperation)) {
             builder.append(settings.getProperty("integral_definite"));
             builder.append(Node.process(node.getChildren().get(0), settings));

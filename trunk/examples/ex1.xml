@@ -1,7 +1,61 @@
-﻿<math xmlns="http://www.w3.org/1998/Math/MathML">
-	<mrow>
-		<mi>x</mi>
-		<mo>+</mo>
-		<mn>5.2</mn>
-	</mrow>			
-</math>
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns:m="http://www.w3.org/1998/Math/MathML">
+	<firstchild id="42">
+		<content>content</content>
+		<child>
+			<deepchild>
+				<content/>	
+				<m:math>
+					<m:mrow>
+						<m:mo>(</m:mo>
+						<m:mi>x</m:mi>
+						<m:mo>+</m:mo>
+						<m:mn>5.2</m:mn>
+						<m:mo>)</m:mo>
+					</m:mrow>			
+				</m:math>
+				<content/>
+			</deepchild>
+		</child>
+	</firstchild>
+	<m:math>
+		<m:semantics>	
+			<m:mrow>
+				<m:mi>&#952;</m:mi>
+				<m:mo>&#8804;</m:mo>
+				<m:mi>&#945;</m:mi>
+				<m:mo>&#8804;</m:mo>
+				<m:mi>c</m:mi>
+				<m:mo>&#8804;</m:mo>
+				<m:mn>5</m:mn>
+			</m:mrow>
+			<m:annotation-xml encoding="MathML-Content">
+				<m:apply>
+					<m:leq/>
+					<m:ci>&#952;</m:ci>
+					<m:ci>&#945;</m:ci>
+					<m:ci>c</m:ci>
+					<m:cn>5</m:cn>
+				</m:apply>
+			</m:annotation-xml>
+		</m:semantics>
+	</m:math>
+	<m:math>
+		<m:semantics>	
+			<m:mrow>
+				<m:msub>
+					<m:mo>log</m:mo>
+					<m:mn>2</m:mn>
+				</m:msub>
+				<m:mi>x</m:mi>
+			</m:mrow>
+			<m:annotation-xml encoding="MathML-Content">
+				<m:apply>
+					<m:csymbol>log</m:csymbol>
+					<m:logbase><m:cn>2</m:cn></m:logbase>
+					<m:ci>x</m:ci>
+				</m:apply>
+			</m:annotation-xml>
+		</m:semantics>
+	</m:math>
+</document>

@@ -1,32 +1,46 @@
-<test xmlns:m="http://www.w3.org/1998/Math/MathML">
-	<filler id="42">
-		<content>content</content>
-		<child>
-			<deepchild>
-				<filler/>	
-				<m:math>
-					<m:mrow>
-						<m:mi>x</m:mi>
-						<m:mo>+</m:mo>
-						<m:mn>5.2</m:mn>
-					</m:mrow>			
-				</m:math>
-				<trouble/>
-			</deepchild>
-		</child>
-	</filler>
-	<m:math>
-		<m:mrow>
-			<m:mi>x</m:mi>
-			<m:mo>+</m:mo>
-			<m:mn>5.2</m:mn>
+<?xml version="1.0" encoding="UTF-8"?>
+<m:math id="id55414" display="inline" xmlns:m="http://www.w3.org/1998/Math/MathML">
+	<m:semantics id="id55417">
+		<m:mrow id="id55418">
+			<m:mi id="id55419">e</m:mi>
+			<m:mo id="id55422" mathvariant="normal">:=</m:mo>
+			<m:mrow id="id55426">
+				<m:msub id="id55427">
+					<m:mo id="id55428" mathvariant="normal">∏</m:mo>
+					<m:mrow id="id55433">
+						<m:mi id="id55434">α</m:mi>
+						<m:mo id="id55436" mathvariant="normal">∈</m:mo>
+						<m:mi id="id55441" mathvariant="normal">Δ</m:mi>
+					</m:mrow>
+				</m:msub>
+				<m:mi id="id55446">e</m:mi>
+				<m:mo id="id55448" mathvariant="italic">⁢</m:mo>
+				<m:mfenced id="id55452" open="(" close=")">
+					<m:mi id="id55457">α</m:mi>
+				</m:mfenced>
+			</m:mrow>
 		</m:mrow>
-	</m:math>
-	<m:math>
-		<m:mrow>
-			<m:mi>x</m:mi>
-			<m:mo>/</m:mo>
-			<m:mn>5.0035</m:mn>
-		</m:mrow>
-	</m:math>
-</test>
+		<m:annotation-xml id="id55460" encoding="MathML-Content">
+			<m:apply id="id55463">
+				<m:ci id="id55464">:=</m:ci>
+				<m:ci id="id55466">e</m:ci>
+				<m:apply id="id55468">
+					<m:apply id="id55470">
+						<m:csymbol id="id55471" cd="ambiguous">subscript</m:csymbol>
+						<m:ci id="id55475">∏</m:ci>
+						<m:apply id="id55478">
+							<m:ci id="id55479">∈</m:ci>
+							<m:ci id="id55481">α</m:ci>
+							<m:ci id="id55484">Δ</m:ci>
+						</m:apply>
+					</m:apply>
+					<m:apply id="id55486">
+						<m:times id="id55487"/>
+						<m:ci id="id55488">e</m:ci>
+						<m:ci id="id55490">&#x3B1;</m:ci>
+					</m:apply>
+				</m:apply>
+			</m:apply>
+		</m:annotation-xml>
+	</m:semantics>
+</m:math>

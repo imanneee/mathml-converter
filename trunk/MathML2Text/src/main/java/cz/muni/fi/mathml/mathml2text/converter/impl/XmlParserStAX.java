@@ -380,10 +380,12 @@ public final class XmlParserStAX {
                                 // transform created tree and write to output
                                 String converted = this.converter.convert(tree, language);
                                 if (isRoot) {
-                                    writer.writeNamespace(CONVERTER_NAMESPACE_PREFIX, CONVERTER_NAMESPACE_URI);
+                                    writer.writeStartElement(CONVERTER_ELEMENT_NAME);
+                                    writer.writeDefaultNamespace(CONVERTER_NAMESPACE_URI);
                                     isRoot = false;
+                                } else {
+                                    writer.writeStartElement(CONVERTER_NAMESPACE_URI, CONVERTER_ELEMENT_NAME);
                                 }
-                                writer.writeStartElement(CONVERTER_NAMESPACE_URI, CONVERTER_ELEMENT_NAME);
                                 writer.writeCharacters(converted);
                                 writer.writeEndElement();
                                 processingMathMLElement = false;
