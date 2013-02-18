@@ -1,5 +1,6 @@
 package cz.muni.fi.mathml.mathml2text.converter.impl.presentation;
 
+import org.slf4j.LoggerFactory;
 import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
 import cz.muni.fi.mathml.mathml2text.converter.impl.Operation;
 import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
@@ -26,7 +27,16 @@ public final class Munder {
         final StringBuilder builder = new StringBuilder();
         if (Operation.LIMIT.getSymbols().contains(node.getChildren().get(0).getValue())) {
             builder.append(Node.process(node.getChildren().get(0), settings));
-            MathMLNode firstSibling = node.getParent().getChildren().get(1);
+            MathMLNode firstSibling = null;
+            for (int index = 0; index < node.getParent().getChildren().size(); ++index) {
+                if (node.equals(node.getParent().getChildren().get(index))) {
+                    try {
+                        firstSibling = node.getParent().getChildren().get(index + 1);
+                    } catch (ArrayIndexOutOfBoundsException ex) {
+                        LoggerFactory.getLogger(Munder.class).warn("No next sibling for [munder].");
+                    }
+                }
+            }
             if (firstSibling != null) {
                 builder.append(Node.process(firstSibling, settings));
             }

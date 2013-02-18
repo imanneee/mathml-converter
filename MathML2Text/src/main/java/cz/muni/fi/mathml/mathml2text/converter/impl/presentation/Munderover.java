@@ -1,11 +1,13 @@
 package cz.muni.fi.mathml.mathml2text.converter.impl.presentation;
 
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.slf4j.LoggerFactory;
+
 import cz.muni.fi.mathml.MathMLElement;
 import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
-import cz.muni.fi.mathml.mathml2text.converter.impl.Operation;
 import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
 import cz.muni.fi.mathml.mathml2text.converter.impl.Node;
+import cz.muni.fi.mathml.mathml2text.converter.impl.Operation;
 
 /**
  * Specific implementation of <code>&lt;munderover&gt;</code> 
@@ -36,7 +38,7 @@ public final class Munderover {
             builder.append(settings.getProperty("to"));
             builder.append(Node.process(node.getChildren().get(2), settings));
             builder.append(settings.getProperty("of"));
-            MathMLNode firstSibling = node.getParent().getChildren().get(1);
+            MathMLNode firstSibling = findFirstSibling(node);
             if (firstSibling != null) {
                 builder.append(Node.process(firstSibling, settings));
             }
@@ -55,7 +57,7 @@ public final class Munderover {
                 builder.append(settings.getProperty("to"));
                 builder.append(Node.process(node.getChildren().get(2), settings));
                 builder.append(settings.getProperty("of"));
-                MathMLNode firstSibling = node.getParent().getChildren().get(1);
+                MathMLNode firstSibling = findFirstSibling(node);
                 if (firstSibling != null) {
                     builder.append(Node.process(firstSibling, settings));
                 }
@@ -65,12 +67,31 @@ public final class Munderover {
                 builder.append(settings.getProperty("to"));
                 builder.append(Node.process(node.getChildren().get(2), settings));
                 builder.append(settings.getProperty("of"));
-                MathMLNode firstSibling = node.getParent().getChildren().get(1);
+                MathMLNode firstSibling = findFirstSibling(node);
                 if (firstSibling != null) {
                     builder.append(Node.process(firstSibling, settings));
                 }
             }
         }
         return builder.toString();
+    }
+    
+    /**
+     * Finds first sibling of this node.
+     * @param node Node
+     * @return First sibling or {@code null} if none exists.
+     */
+    private static MathMLNode findFirstSibling(final MathMLNode node) {
+        MathMLNode firstSibling = null;
+        for (int index = 0; index < node.getParent().getChildren().size(); ++index) {
+            if (node.equals(node.getParent().getChildren().get(index))) {
+                try {
+                    firstSibling = node.getParent().getChildren().get(index + 1);
+                } catch (ArrayIndexOutOfBoundsException ex) {
+                    LoggerFactory.getLogger(Munder.class).warn("No next sibling for [munder].");
+                }
+            }
+        }
+        return firstSibling;
     }
 }
