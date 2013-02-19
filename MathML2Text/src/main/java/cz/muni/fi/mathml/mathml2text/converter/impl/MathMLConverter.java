@@ -1,7 +1,5 @@
 package cz.muni.fi.mathml.mathml2text.converter.impl;
 
-import cz.muni.fi.mathml.mathml2text.converter.XmlAttribute;
-import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -17,8 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.muni.fi.mathml.MathMLElement;
-import cz.muni.fi.mathml.mathml2text.Strings;
-import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberFormat;
+import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.XmlAttribute;
 import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberTransformer;
 
 /**
@@ -46,12 +44,6 @@ public class MathMLConverter {
      * Helper property for access to properties file for current localization.
      */
     private Properties currentLocalization;
-    /**
-     * Indicates format of a number we are transforming.
-     * Whenever other than {@link NumberFormat#CARDINAL} is used, it should be set 
-     * back to {@link NumberFormat#CARDINAL} afterwards.
-     */
-    private NumberFormat numberFormat = NumberFormat.CARDINAL;
     
     /**
      * Returns localization properties for given locale.
@@ -71,29 +63,12 @@ public class MathMLConverter {
     }
     
     /**
-     * Finds a property value for given key.
-     * Returns <code>null</code> if there isn't one.
-     */
-    protected String getProperty(final String key) {
-        return this.currentLocalization.getProperty(key) + Strings.SPACE;
-    }
-    
-    protected NumberFormat getNumberFormat() {
-        return this.numberFormat;
-    }
-    
-    protected void setNumberFormat(final NumberFormat numberFormat) {
-        this.numberFormat = numberFormat;
-    }
-    
-    protected NumberTransformer getNumberTransformer() {
-        return this.numberTransformer;
-    }
-    
-    /**
-     * Converts a list of math nodes.
+     * Converts a list of MathML nodes into a list of corresponding list of strings.
+     * If there was an error during conversion of some input node, a {@code null}
+     * will be inserted to the list at the index of erroneous input node.
      * 
-     * @param nodeList 
+     * @param nodeList Input list of MathML nodes.
+     * @return List of converted strings.
      */
     public List<String> convert(final List<MathMLNode> nodeList, final Locale language) {
         final List<MathMLNode> checked = new ArrayList<MathMLNode>();
@@ -113,13 +88,26 @@ public class MathMLConverter {
         settings.setNumberTransformer(this.numberTransformer);
         final List<String> converted = new ArrayList<String>(checked.size());
         for (final MathMLNode root : checked) {
-//            settings.setUseContentMathML(this.chooseMathMLTypeToUse(root));
             MathMLNode nodeToProcess = this.getNodeForProcessing(root);
-            converted.add(Node.process(nodeToProcess, settings));
+            String result = null;
+            try {
+                result = Node.process(nodeToProcess, settings);
+            } catch (Throwable ex) {
+                logger.error("Error while processing input tree.", ex);
+            }
+            converted.add(result);
         }
         return converted;
     }
     
+    /**
+     * Converts a MathML node into string.
+     * If there was an error during conversion, {@code null} will be returned.
+     * 
+     * @param node Input node.
+     * @param language Language of conversion.
+     * @return Node converted to string.
+     */
     public String convert(final MathMLNode node, final Locale language) {
         if (!MathMLElement.MATH.equals(node.getType())) {
             throw new IllegalStateException(String.format("Expected [math] node, but got [%1$s].", node.getType().getElementName()));
@@ -129,32 +117,14 @@ public class MathMLConverter {
         ConverterSettings settings = new ConverterSettings();
         settings.setLocalization(this.currentLocalization);
         settings.setNumberTransformer(this.numberTransformer);
-//        settings.setUseContentMathML(this.chooseMathMLTypeToUse(node));
         MathMLNode nodeToProcess = this.getNodeForProcessing(node);
-        return Node.process(nodeToProcess, settings);
-    }
-    
-    private boolean chooseMathMLTypeToUse(final MathMLNode node) {
-        for (final MathMLNode child : node.getChildren()) {
-            if (MathMLElement.SEMANTICS.equals(child.getType())) {
-                for (final MathMLNode semanticsChild : child.getChildren()) {
-                    if (MathMLElement.ANNOTATION_XML.equals(semanticsChild.getType())) {
-                        for (final XmlAttribute attr : semanticsChild.getAttributes()) {
-                            if ("encoding".equals(attr.getKey()) && "MathML-Content".equals(attr.getValue())) {
-                                return true;
-                            }
-                        }
-                    }
-                }
-            } else if (MathMLElement.ANNOTATION_XML.equals(child.getType())) {
-                for (final XmlAttribute attr : child.getAttributes()) {
-                    if ("encoding".equals(attr.getKey()) && "MathML-Content".equals(attr.getValue())) {
-                        return true;
-                    }
-                }
-            }
+        String result = null;
+        try {
+            result = Node.process(nodeToProcess, settings);
+        } catch (Throwable ex) {
+            logger.error("Error while processing input tree.", ex);
         }
-        return false;
+        return result;
     }
     
     /**
