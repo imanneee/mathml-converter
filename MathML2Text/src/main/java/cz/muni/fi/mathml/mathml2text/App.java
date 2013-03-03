@@ -10,6 +10,7 @@ import org.joda.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
 import cz.muni.fi.mathml.mathml2text.converter.impl.XmlParserStAX;
 
 /**
@@ -56,12 +57,13 @@ public class App {
         final Instant start = Instant.now();
 
         final XmlParserStAX parser = new XmlParserStAX();
+        ConverterSettings.getInstance().setReplaceSpaces(true);
 
         File parse = parser.parse(input, new Locale(language));
         
         /**************************************************************/
         /*  You can instantiate parser from inside application and run the parse() methods.  */
-//        String out = parser.parse("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?><!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN\" \"http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd\"><m:math xmlns:m=\"http://www.w3.org/1998/Math/MathML\"><m:mrow><m:mo>(</m:mo><m:mi>x</m:mi><m:mo>+</m:mo><m:mn>5.2</m:mn><m:mo>)</m:mo>	</m:mrow></m:math>");
+//        String out = parser.parse("<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mfrac><mrow><mi>x</mi><mo>&#x2297;</mo><mn>5</mn></mrow><mrow><mi>x</mi><mo>*</mo><mn>3</mn></mrow></mfrac></mrow></math>", new Locale(language));
 //        System.out.println(out);
         
         final Instant end = Instant.now();

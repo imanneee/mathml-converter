@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.muni.fi.mathml.MathMLElement;
+import cz.muni.fi.mathml.mathml2text.Strings;
 import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
 import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
 import cz.muni.fi.mathml.mathml2text.converter.impl.Node;
@@ -55,7 +56,7 @@ public final class Apply {
         Operation operation = Operation.forSymbol(function);
         if (operation == null) {
             logger.info("Unknown operation [{}]", function);
-            return builder.toString();
+            return Strings.EMPTY;
         }
          
         String functionName = settings.getProperty(operation.getKey());

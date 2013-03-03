@@ -27,6 +27,34 @@ public final class ConverterSettings {
      * {@link NumberTransformer} instance.
      */
     private NumberTransformer numberTransformer;
+    /**
+     * Indicates whether spaces in strings received from localization file should
+     * be replaced with underscores. (open braces -> open_braces)
+     */
+    private boolean replaceSpaces;
+    /**
+     * Singleton instance.
+     */
+    private static final ConverterSettings INSTANCE = new ConverterSettings();
+    
+    /**
+     * Constructor.
+     * Inicializes this values:
+     * <ul>
+     *  <li>{@link #replaceSpaces} to false</li>
+     * </ul>
+     */
+    private ConverterSettings() {
+        this.replaceSpaces = false;
+    }
+    
+    /**
+     * Instance of this singleton class.
+     * @return Instance of this singleton class.
+     */
+    public static ConverterSettings getInstance() {
+        return INSTANCE;
+    }
     
     /**
      * Returns current {@link Properties} file used to access localized messages.
@@ -86,6 +114,30 @@ public final class ConverterSettings {
      * @return Localized message.
      */
     public String getProperty(final String key) {
-        return this.getLocalization().getProperty(key) + Strings.SPACE;
+        String result = this.getLocalization().getProperty(key);
+        if (this.isReplaceSpaces()) {
+            result = result.replace(" ", "_");
+        }
+        return result + Strings.SPACE;
     }
+
+    /**
+     * Indicates whether spaces in strings received from localization file should
+     * be replaced with underscores. (open braces -> open_braces)
+     * @return {@code true} if spaces should be replaced, {@code false} otherwise.
+     * @see #replaceSpaces
+     */
+    public boolean isReplaceSpaces() {
+        return this.replaceSpaces;
+    }
+
+    /**
+     * Sets the value that indicates whether spaces should be replaced or not.
+     * @param replaceSpaces Indicator whether spaces should be replaced or not.
+     * @see #replaceSpaces
+     */
+    public void setReplaceSpaces(final boolean replaceSpaces) {
+        this.replaceSpaces = replaceSpaces;
+    }
+    
 }

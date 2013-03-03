@@ -44,7 +44,7 @@ public class MathMLConverter {
      * Helper property for access to properties file for current localization.
      */
     private Properties currentLocalization;
-    
+
     /**
      * Returns localization properties for given locale.
      */
@@ -83,9 +83,13 @@ public class MathMLConverter {
         }
         this.numberTransformer = new NumberTransformer(language);
         this.currentLocalization = this.getLocalization(language);
-        ConverterSettings settings = new ConverterSettings();
-        settings.setLocalization(this.currentLocalization);
-        settings.setNumberTransformer(this.numberTransformer);
+        ConverterSettings settings = ConverterSettings.getInstance();
+        if (settings.getLocalization() == null) {
+            settings.setLocalization(this.currentLocalization);
+        }
+        if (settings.getNumberTransformer() == null) {
+            settings.setNumberTransformer(this.numberTransformer);
+        }
         final List<String> converted = new ArrayList<String>(checked.size());
         for (final MathMLNode root : checked) {
             MathMLNode nodeToProcess = this.getNodeForProcessing(root);
@@ -114,9 +118,13 @@ public class MathMLConverter {
         }
         this.numberTransformer = new NumberTransformer(language);
         this.currentLocalization = this.getLocalization(language);
-        ConverterSettings settings = new ConverterSettings();
-        settings.setLocalization(this.currentLocalization);
-        settings.setNumberTransformer(this.numberTransformer);
+        ConverterSettings settings = ConverterSettings.getInstance();
+        if (settings.getLocalization() == null) {
+            settings.setLocalization(this.currentLocalization);
+        }
+        if (settings.getNumberTransformer() == null) {
+            settings.setNumberTransformer(this.numberTransformer);
+        }
         MathMLNode nodeToProcess = this.getNodeForProcessing(node);
         String result = null;
         try {
