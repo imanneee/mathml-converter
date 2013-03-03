@@ -5,9 +5,10 @@ import org.slf4j.LoggerFactory;
 
 import cz.muni.fi.mathml.mathml2text.Strings;
 import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
-import cz.muni.fi.mathml.mathml2text.converter.impl.Operation;
 import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
 import cz.muni.fi.mathml.mathml2text.converter.impl.MathMLConverter;
+import cz.muni.fi.mathml.mathml2text.converter.impl.Operation;
+import cz.muni.fi.mathml.mathml2text.converter.impl.util.InputValueUtils;
 
 /**
  * Specific implementation of <code>&lt;mo&gt;</code> node.
@@ -35,8 +36,9 @@ public final class Mo {
         if (operator != null) {
             return settings.getProperty(operator.getKey());
         } else {
-            LoggerFactory.getLogger(MathMLConverter.class).warn("Operation [{}] not supported.", op);
+            final String htmlEntity = InputValueUtils.buildHtmlEntityCode(node.getValue());
+            LoggerFactory.getLogger(MathMLConverter.class).warn("Operation [{}] not supported.", htmlEntity);
+            return htmlEntity + Strings.SPACE;
         }
-        return Strings.EMPTY;
     }
 }
