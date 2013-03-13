@@ -1,6 +1,9 @@
 package cz.muni.fi.mathml.mathml2text.converter.impl;
 
 import java.util.Properties;
+import java.util.Set;
+
+import com.google.common.collect.Sets;
 
 import cz.muni.fi.mathml.mathml2text.Strings;
 import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberFormat;
@@ -33,6 +36,10 @@ public final class ConverterSettings {
      */
     private boolean replaceSpaces;
     /**
+     * Indicates whether input date should be canonicalized.
+     */
+    private boolean canonicalize;
+    /**
      * Singleton instance.
      */
     private static final ConverterSettings INSTANCE = new ConverterSettings();
@@ -41,11 +48,13 @@ public final class ConverterSettings {
      * Constructor.
      * Inicializes this values:
      * <ul>
-     *  <li>{@link #replaceSpaces} to false</li>
+     *  <li>{@link #replaceSpaces} to <code>false</code></li>
+     *  <li>{@link #canonicalize} to <code>true</code></li>
      * </ul>
      */
     private ConverterSettings() {
         this.replaceSpaces = false;
+        this.canonicalize = true;
     }
     
     /**
@@ -139,5 +148,28 @@ public final class ConverterSettings {
     public void setReplaceSpaces(final boolean replaceSpaces) {
         this.replaceSpaces = replaceSpaces;
     }
+
+    /**
+     * Indicates whether canonicalizion should be applied on input data.
+     * @return {@code true}, if canonicalizion should be applied, {@code false} otherwise.
+     */
+    public boolean isCanonicalize() {
+        return this.canonicalize;
+    }
+
+    /**
+     * Sets the value that indicates whether canonicalization should be applied.
+     * @param canonicalize Indicator whether canonicalization should be applied.
+     */
+    public void setCanonicalize(boolean canonicalize) {
+        this.canonicalize = canonicalize;
+    }
     
+    /**
+     * Returns set of language codes, that are supported by the converter.
+     * @return Set of language codes, that are supported by the converter. 
+     */
+    public Set<String> getSupportedLanguages() {
+        return Sets.newHashSet("en", "cs", "sk");
+    }
 }
