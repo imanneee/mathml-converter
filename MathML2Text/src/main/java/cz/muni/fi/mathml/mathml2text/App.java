@@ -58,6 +58,7 @@ public class App {
 
         final XmlParserStAX parser = new XmlParserStAX();
         ConverterSettings.getInstance().setReplaceSpaces(true);
+        ConverterSettings.getInstance().setCanonicalize(true);
 
         File parse = parser.parse(input, new Locale(language));
         
