@@ -18,6 +18,12 @@ import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberTransformer;
  *  <li>converting numbers.</li>
  * </ul>
  * 
+ * Default settings for conversion:
+ * <ul>
+ *  <li>replacing spaces with underscores - <code>false</code>,</li>
+ *  <li>input canonicalization - <code>true</code>.</li>
+ * </ul>
+ * 
  * @author Maros Kucbel
  * @date 2012-12-15T10:21:57+0100
  */
