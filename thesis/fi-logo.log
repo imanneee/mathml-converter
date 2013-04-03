@@ -1,0 +1,25 @@
+This is METAFONT, Version 2.718281 (TeX Live 2012/W32TeX) (base=mf 2012.10.7)  5 MAR 2013 17:23
+**\mode:=ljfour; \mag:=1; nonstopmode; input fi-logo;
+(d:/School/Diplomka/fi-logo.mf
+Missing dpi information. Assuming 300. [65] [66]
+(c:/texlive/2012/texmf-dist/fonts/source/public/cm/cmbase.mf) [1] [2] [3]
+[4] [5] [6] [7] [8] [10] [11] [12] [13] [14] [16] [17] [18] [19] [20] [21]
+[22] [23] [24] [25] [26] [31] [32] [33] [34] [35] [36] [37] [38] [39] [40]
+[41]
+> 0 SSE 1 ESE ENE 2 (ESE SSE SSW) WSW (WNW NNW NNE) ENE 3 NNE 4 5 (NNW WNW) WSW
+ 6 SSW 7 8 (WSW WNW) NNW 9 WNW WSW 10 0 (SSW)
+! Strange path (turning number is zero).
+<to be read again> 
+                   ;
+M_->...{z5-z6}..{z5-z6}diag_in(6r,5r,1,5l)--cycle;
+                                                  fi.if.serifs:serif(1,2,a,1...
+l.1388 M_(43,f[43],xpart e[43], ypart e[43])
+                                            ;
+The path doesn't have a counterclockwise orientation,
+so I'll probably have trouble drawing it.
+(See Chapter 27 of The METAFONTbook for more help.)
+
+[43] [44] [45] [46] [47] [48] [49] [50] [51] [52] [53] [60] [83] [76] [67]
+[73] [127] [126] [125] [124] [123] [122] [121] [120] [119] [118] )
+Font metrics written on fi-logo.tfm.
+Output written on fi-logo.600gf (63 characters, 23512 bytes).
