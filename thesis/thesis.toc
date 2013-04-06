@@ -5,26 +5,26 @@
 \contentsline {section}{\numberline {3.1}\slshape Structure}{4}{section.3.1}
 \contentsline {subsection}{\numberline {3.1.1}\rmfamily Presentation MathML}{5}{subsection.3.1.1}
 \contentsline {subsection}{\numberline {3.1.2}\rmfamily Content MathML}{6}{subsection.3.1.2}
-\contentsline {section}{\numberline {3.2}\slshape Possible Ambiguities}{6}{section.3.2}
-\contentsline {section}{\numberline {3.3}\slshape Creating MathML Markup}{7}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}\rmfamily \textlatin {\LaTeX }ML}{7}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}\rmfamily Tralix}{7}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}\rmfamily MaxTract}{7}{subsection.3.3.3}
-\contentsline {subsection}{\numberline {3.3.4}\rmfamily InftyReader}{7}{subsection.3.3.4}
-\contentsline {section}{\numberline {3.4}\slshape Canonicalization}{7}{section.3.4}
-\contentsline {section}{\numberline {3.5}\slshape Status Quo of Current Tools}{7}{section.3.5}
-\contentsline {subsection}{\numberline {3.5.1}\rmfamily MathPlayer}{7}{subsection.3.5.1}
-\contentsline {chapter}{\numberline {4}\bfseries Analysis and Solution Proposal}{8}{chapter.4}
-\contentsline {section}{\numberline {4.1}\slshape Recursive Approach}{8}{section.4.1}
-\contentsline {section}{\numberline {4.2}\slshape Division of Mathematical Operations}{8}{section.4.2}
-\contentsline {chapter}{\numberline {5}\bfseries Converter Implementation}{9}{chapter.5}
-\contentsline {section}{\numberline {5.1}\slshape Java and XML}{9}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}\rmfamily StAX}{9}{subsection.5.1.1}
-\contentsline {subsection}{\numberline {5.1.2}\rmfamily Custom XML Tree Representation}{9}{subsection.5.1.2}
-\contentsline {section}{\numberline {5.2}\slshape Presentation MathML}{9}{section.5.2}
-\contentsline {section}{\numberline {5.3}\slshape Content MathML}{9}{section.5.3}
-\contentsline {subsection}{\numberline {5.3.1}\rmfamily Element \texttt {apply}}{9}{subsection.5.3.1}
-\contentsline {chapter}{\numberline {6}\bfseries Results}{10}{chapter.6}
-\contentsline {section}{\numberline {6.1}\slshape Gensim}{10}{section.6.1}
-\contentsline {section}{\numberline {6.2}\slshape MREC Corpus}{10}{section.6.2}
-\contentsline {chapter}{\numberline {7}\bfseries Conclusion}{11}{chapter.7}
+\contentsline {section}{\numberline {3.2}\slshape Creating MathML Markup}{6}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\rmfamily \textlatin {\LaTeX }ML}{7}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}\rmfamily Tralics}{8}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}\rmfamily MaxTract}{8}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}\rmfamily INFTY Reader}{8}{subsection.3.2.4}
+\contentsline {section}{\numberline {3.3}\slshape Possible Ambiguities}{9}{section.3.3}
+\contentsline {section}{\numberline {3.4}\slshape Canonicalization}{9}{section.3.4}
+\contentsline {section}{\numberline {3.5}\slshape Status Quo of Current Tools}{9}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}\rmfamily MathPlayer}{9}{subsection.3.5.1}
+\contentsline {chapter}{\numberline {4}\bfseries Analysis and Solution Proposal}{10}{chapter.4}
+\contentsline {section}{\numberline {4.1}\slshape Recursive Approach}{10}{section.4.1}
+\contentsline {section}{\numberline {4.2}\slshape Division of Mathematical Operations}{10}{section.4.2}
+\contentsline {chapter}{\numberline {5}\bfseries Converter Implementation}{11}{chapter.5}
+\contentsline {section}{\numberline {5.1}\slshape Java and XML}{11}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}\rmfamily StAX}{11}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}\rmfamily Custom XML Tree Representation}{11}{subsection.5.1.2}
+\contentsline {section}{\numberline {5.2}\slshape Presentation MathML}{11}{section.5.2}
+\contentsline {section}{\numberline {5.3}\slshape Content MathML}{11}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}\rmfamily Element \texttt {apply}}{11}{subsection.5.3.1}
+\contentsline {chapter}{\numberline {6}\bfseries Results}{12}{chapter.6}
+\contentsline {section}{\numberline {6.1}\slshape Gensim}{12}{section.6.1}
+\contentsline {section}{\numberline {6.2}\slshape MREC Corpus}{12}{section.6.2}
+\contentsline {chapter}{\numberline {7}\bfseries Conclusion}{13}{chapter.7}
