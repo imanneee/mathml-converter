@@ -27,7 +27,10 @@
 \begin{document}
 
 \hyphenation{Math-ML}
-\hyphenation{spe-cia-li-zed}
+\hyphenation{spe-cial-ized}
+\hyphenation{style-sheet}
+\hyphenation{sche-ma-ta}
+\hyphenation{great-ly}
 
 
 \setlist[itemize,1]{leftmargin=10pt,itemindent=10pt}
@@ -110,20 +113,39 @@ Content MathML provides two ways of defining the operator. The first one is a se
 
 In MathML 3, a subset of Content MathML elements is defined: Strict Content MathML. This uses only minimal, but sufficient, amount of elements, most importantly allows only the usage of <csymbol> element for defining operators. Strict Content MathML is designed to be compatible with OpenMath standard.
 
-\section{Possible Ambiguities}
-1-2 pages
 \section{Creating MathML Markup}
 Creating MathML documents is very simple. All that is needed is a word processor available on every operating system. However, this approach is prone to errors, be it the wrong letter case or unclosed tags. Since MathML is an XML language, the usage of some sophisticated word processor that supports tags highlighting, code completion and XML validation will greatly improve the efficiency of creating MathML documents. But the whole process is still very time consuming and impractical. As is the case with most XML documents, even writing simple mathematical expressions takes up a lot of space and time. Fortunately there are many dedicated MathML editors, that provide some degree of abstraction from the actual MathML markup.
 
-Another way of creating MathML documents is a conversion from different formats. Among scientist, mathematicians particularly, \TeX is the format of choice. It then comes as no surprise that there are many sources of mathematical texts written in \TeX. However, not every publication comes with the source files. Often only print-ready PDF files are released. Also many academic writings, especially older ones, are available only in printed form. These have to be scanned using an Optical Character Recognition (OCR) software. 
+Another way of creating MathML documents is a conversion from different formats. Among scientist, mathematicians particularly, \TeX\ is the format of choice. It then comes as no surprise that there are many sources of mathematical texts written in \TeX. However, not every publication comes with the source files. Often only print-ready PDF files are released. Also many academic writings, especially older ones, are available only in printed form. These have to be scanned using an Optical Character Recognition (OCR) software. 
 
 \subsection{\LaTeX ML}
+The lack of a suitable tool for converting \LaTeX\ to XML prompted the participants of the Digital Library of Mathematical Functions project to develop their own solution. Main goals of \LaTeX ML design contain the aspiration to faithfully emulate \TeX\ behavior, the ease of extensibility and the preservation of both semantic and presentation aspects of original documents. To this end \LaTeX ML provides two main commands, \texttt{latexml} and \texttt{latexmlpost}. \texttt{latexml} converts the initial \TeX\ document to XML based on a set of \LaTeX ML-bindings files, that define the mapping of \TeX\ macros to XML.\texttt{latexmlpost} then processes resulting XML output by converting mathematics
+and graphics, cross-referencing and applying an \texttt{XSLT} stylesheet. 
 
-\subsection{Tralix}
+Both commands come with a multitude of parameters that allow users to customize the whole process, such as loading user-defined bindings or choosing the output format. Based on the requested output format, mathematics is converted to graphics (png images for HTML) or Presentation MathML in case of XHTML or HTML5. 
+
+\LaTeX ML is freely available online as an installation package for Linux systems as well as Windows and MacOS. An extensive and detailed manual is available online or as a PDF document.
+
+\subsection{Tralics}
+Tralics is a freeware software designed to translate \LaTeX sources into XML documents, that can be further converted into either PDF or HTML. The generated XML is conforming to the local ad-hoc DTD (a simplification of the TEI) with mathematical formulas conforming to the Presentation MathML 2.0 recommendations.
+
+Similarly to \LaTeX ML, Tralics provides many ways for customization of resulting documents, among them the possibility to change element and attribute names in the XML file. Besides Presentation MathML, mathematical formulae can be translated to \LaTeX -like   elements as well.
+
+Tralics is readily available online in the form of source files or binaries for Linux, Windows and MacOS operating systems. An extensive documentation regarding customization and usage is also available online. 
 
 \subsection{MaxTract}
+MaxTract is a tool that through spacial analysis of symbols and fonts in PDF document reverse-engineers its source files in the form of \LaTeX\ or XHTML + MathML documents. The conversion process requires valid PDF files to work correctly as it needs the information about symbols, font encoding and width of objects contained in the PDF file. PDF documents created via \LaTeX\ fulfill these requirements, therefore MaxTract is able to process most of the scientific and mathematical material.
 
-\subsection{InftyReader}
+
+\subsection{INFTY Reader}
+INFTY is an Optical Character Recognition (OCR) software especially created for mathematical documents. INFTY reads scanned pages (images) and yields their character recognition results in multiple formats, including \LaTeX\ and MathML. It does so in four steps: layout analysis, character recognition, structure analysis of mathematical expressions, and manual error correction (optional). 
+
+The most important phase, character recognition, is responsible for distinguishing mathematical expressions and running a character recognition engine originally developed for mathematical symbols together with non-specialized commercial OCR engine. 
+
+INFTY Reader is available free of charge for limited amount of time, then it is necessary to purchase a license key.
+
+\section{Possible Ambiguities}
+1-2 pages
 
 \section{Canonicalization}
 1-2 pages
