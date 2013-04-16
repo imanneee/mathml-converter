@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/W32TeX) (format=pdflatex 2012.10.7)  8 APR 2013 21:32
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/W32TeX) (format=pdflatex 2012.10.7)  16 APR 2013 22:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -614,26 +614,26 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 2.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 2.
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 27.
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 33.
 
 (c:/texlive/2012/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
-))
+) [1
+
+
+])
 \tf@toc=\write4
 \openout4 = `thesis.toc'.
 
- [1
-
-
-]
+ [2]
 Chapter 1.
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <12> not available
 (Font)              Font shape `T1/ppl/b/n' tried instead on input line 62.
-[2
+[3
 
 ]
 Chapter 2.
-[3
+[4
 
 ]
 Chapter 3.
@@ -643,7 +643,7 @@ Overfull \hbox (5.5795pt too wide) in paragraph at lines 71--72
 sta-cle. It was there-
  []
 
-[4
+[5
 
 ]
 LaTeX Font Info:    Try loading font information for OMS+ppl on input line 81.
@@ -652,51 +652,68 @@ File: omsppl.fd
 )
 LaTeX Font Info:    Font shape `OMS/ppl/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 81.
- [5]
+ [6]
 Overfull \hbox (4.9547pt too wide) in paragraph at lines 118--119
 \T1/ppl/m/n/10.95 sup-ports tags high-light-ing, code com-ple-tion and XML val-
 i-da-tion will greatly
  []
 
-[6]
+[7]
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <8> not available
 (Font)              Font shape `T1/ppl/b/n' tried instead on input line 124.
- [7] [8] [9]
+ [8] [9] [10]
 Chapter 4.
-[10
-
-]
-Chapter 5.
-LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 183.
 [11
 
 ]
+Overfull \hbox (11.75435pt too wide) in paragraph at lines 193--194
+[]\T1/ppl/m/n/10.95 XSLT em-ploys spe-cial stylesheets to trans-form doc-u-ment
+. XSLT stylesheets
+ []
+
+[12] [13]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <9> on input line 239.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 239.
+ [14]
+Overfull \hbox (0.23685pt too wide) in paragraph at lines 247--248
+\T1/ppl/m/n/10.95 The time and spa-cial re-quire-ments for mar-shalling and un-
+mar-shalling grow
+ []
+
+[15] [16]
+Chapter 5.
+LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10.95> not available
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 275.
+[17
+
+]
 Chapter 6.
-[12
+[18
 
 ]
 Chapter 7.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 192.
-[13
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 284.
+[19
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 192.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 284.
  (./thesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 192.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 192.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 284.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 284.
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 9DDDE2C3FE294E3D2777D90D3FFA4BC2;4309.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 192.
+(rerunfilecheck)             Checksum: 828D6951B374F627DE36B190BD7DB914;5167.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 284.
  ) 
 Here is how much of TeX's memory you used:
- 11105 strings out of 493488
- 154103 string characters out of 3144748
- 224193 words of memory out of 3000000
- 14235 multiletter control sequences out of 15000+200000
- 26462 words of font info for 51 fonts, out of 3000000 for 9000
+ 11146 strings out of 493488
+ 154584 string characters out of 3144748
+ 225307 words of memory out of 3000000
+ 14251 multiletter control sequences out of 15000+200000
+ 31154 words of font info for 60 fonts, out of 3000000 for 9000
  962 hyphenation exceptions out of 8191
- 29i,6n,32p,744b,418s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 29i,7n,32p,744b,442s stack positions out of 5000i,500n,10000p,200000b,50000s
 {c:/texlive/2012/texmf-dist/fonts/enc/dvips/base/8r.enc} <./fi-logo.514pk><c:
 /texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/
 2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2012/texmf
@@ -704,11 +721,12 @@ Here is how much of TeX's memory you used:
 ts/type1/urw/courier/ucrb8a.pfb><c:/texlive/2012/texmf-dist/fonts/type1/urw/cou
 rier/ucrr8a.pfb><c:/texlive/2012/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb
 ><c:/texlive/2012/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb><c:/texlive/20
-12/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb>
-Output written on thesis.pdf (18 pages, 144334 bytes).
+12/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb><c:/texlive/2012/texmf-dist/f
+onts/type1/urw/palatino/uplri8a.pfb>
+Output written on thesis.pdf (24 pages, 165903 bytes).
 PDF statistics:
- 342 PDF objects out of 1000 (max. 8388607)
- 259 compressed objects within 3 object streams
- 54 named destinations out of 1000 (max. 500000)
- 241 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 413 PDF objects out of 1000 (max. 8388607)
+ 322 compressed objects within 4 object streams
+ 72 named destinations out of 1000 (max. 500000)
+ 289 words of extra memory for PDF output out of 10000 (max. 10000000)
 

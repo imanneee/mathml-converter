@@ -163,7 +163,99 @@ Since the tool will be used on a corpus composed of thousands of mathematical do
 
 
 \section{Input Processing}
+The batch processing of a substantial amount of documents in a reasonably low time is one of the most important requirements of our conversion tool. Therefore the tool must be able to utilize the ability of modern processors to run applications in multiple threads at the same time. 
 
+\subsection{Multithreading}
+Performing conversion one document at a time, especially on a batch of a substantial amount of files, is utterly impractical. The application would run for hours or even days or weeks. Therefore it is necessary to run the conversions in parallel, in multiple threads. The number of disposable threads depends on the hardware equipment of the user's computer. It would be desirable to allow the user to set the number of threads available in the thread pool of the application.
+
+Another important factor of speeding up the conversion process represents the sharing of settings and resources among the threads. It lowers the time that each thread spends waiting for external resources, especially those residing on the hard-drive. This can be achieved by using an in memory cache.
+
+It is also essential to ensure that all threads work with the same settings. This can be accomplished by providing a single point of entry to the settings instance. A globally visible class (object) that implements the Singleton design pattern is the best solution for accessing conversion settings across the whole application.
+
+\subsection{Document Object Model}
+Document Object Model is one of the most wide-spread methods of representing and working with XML and (X)HTML documents. It retains the tree structure of the XML document and is composed of nodes. Node represent elements in the XML structure and form a hierarchical structure. 
+
+Each node, except the top one called root, has a parent. Nodes can have arbitrary amount of children or siblings (nodes with the same parent). This makes traversing the document structure very easy and logical. 
+
+A major drawback of using DOM lies in creating the node tree for the whole document. The input document may be very extensive, but contains only a few MathML expressions (pieces of MathML markup). We are only interested in these pieces and therefore a lot of information provided by DOM is redundant and will be discarded. Also the memory and time requirements needed for creating DOM in computing memory increase with the size of input documents.
+
+\subsection{XSL}
+Extensible Stylesheet Language (XSL) is a family of languages used to transform and render XML documents. It was created by the W3C consortium and consists of three languages:
+\begin{itemize}
+\item XSL Transformation,
+\item XSL Formatting Objects,
+\item XML Path Language.
+\end{itemize}
+
+\paragraph*{XSL Transformation (XSLT)} 
+XSLT is a language designed for transformation of XML documents into other XML documents, but can also be used to create different output formats, such as HTML, plain text XSL Formatting Objects. During this process the input documents stays unchanged, rather a new document is created. 
+
+XSLT employs special stylesheets to transform document. XSLT stylesheets consist of a set of templates. Each template defines a rule that describes how to process a node that matches the template selector (most commonly an XPath expression). 
+
+The transformation process follows a simple algorithm: load stylesheets and create \textit{source tree} from the input document; starting at the root node apply the best matching template; continue till there are nodes to process. This method of processing makes XSLT a declarative language.
+
+\paragraph*{XSL Formatting Objects (XSL-FO)}
+\label{xsl:xsl-fo}
+XSL-FO document describes what the resulting pages look like and where the various components go, but does not specify the layout. XSL-FO documents are often created by transforming ordinary XML documents using XSL Transformation. An application called FO processor then takes these documents and converts them into some readable form, most often a PDF or PS file. Several FO processor can be employed to achieve different results.
+
+\paragraph*{XML Path Language (XPath)}
+\label{xsl:xpath}
+XPath is a query language capable of selecting nodes in an XML documents. It also comes with a multitude of functions, such as string operations, date functions or operations with numbers. 
+
+XPath expression consists of three components: 
+\begin{itemize}
+\item an axis - navigation within the tree (parent, child, sibling, $\ldots$);
+\item a node test - match the node name to a pattern;
+\item zero or more predicates - restricting a node set based on conditions.
+\end{itemize}
+
+A disadvantage of XSL Transformations is the high time complexity. However modern XSLT processor employ optimization techniques and different tree representations which makes the transformation process perform better than general-purpose DOM implementations.
+
+\subsection{Streaming XML}
+Streaming approach of processing XML documents is event-based and sequential. It follows that there is no tree representation of the document created in the memory. In fact the memory requirements of streaming processing are minimal and often considered negligible. The streaming parser, after reporting an event, usually discards almost all of the information. However it keeps some of the data, for example a list of unclosed nodes in order to catch possible errors. 
+
+There is more than a dozen available events that can be reported by the parser, such as:
+\begin{itemize}
+\item document start and end,
+\item element start and end,
+\item element text content,
+\item comments.  
+\end{itemize}
+
+The parsing is unidirectional, the parser makes only one run through the document. Therefore every event is reported just once and there is no possibility of traversing the document structure. Hence the streaming processing comes into play when a single pass through the document is sufficient.
+
+Based on the method of reporting events, streaming parsers can be divided into two groups:
+\begin{itemize}
+\item push principle,
+\item pull principle.
+\end{itemize}
+
+\paragraph*{Push Principle} When utilizing the push method of streaming XML documents all events are pushed (reported) to the application as soon as they are encountered in the document. The application needs to implement event handlers that will react to individual events and process them accordingly.
+
+The industry standard for parsing based on push model is Simple API for XML (SAX) and has many implementations in multiple programming languages.
+
+\paragraph*{Pull Principle} Unlike push method, with pull method the application requests the next event when it is ready to process it. The structure of the code that uses pull method resembles structure of XML documents, making it more readable and understandable than applications that use push methods.
+
+There are various APIs that use pull method, among them XML Pull Parser (XPP)\footnote{\url{http://www.extreme.indiana.edu/xgws/xsoap/xpp/mxp1/index.html}}  and Streaming API for XML (StAX).
+
+\subsection{XML Data Binding} XML data binding refers to a process of mapping XML documents to objects in computer memory (deserialization). Objects in the application represent the types defined in the XML document (e.g. by XML Schema) and can be generated by various tools from XML Schema, minimizing the required for creating such objects (classes). 
+
+The process of mapping XML types onto application objects is called \textit{unmarshalling}. The reverse process, serialization of objects, is called \textit{marshalling}. 
+
+The obvious advantage of this method lies in the fact, that on application level we work only with objects and don't have to concern ourselves with XML specific issues. It makes the resulting code easily readable and comprehensive.
+
+Unfortunately the disadvantages of XML data binding are numerous. The time and spacial requirements for marshalling and unmarshalling grow substantially with the size of input document. Also the round-trip (unmarshalling the document and then marshalling it back) may not preserve the sibling order of elements, physical structure of documents (CDATA sections), comments and entity references or DTDs.
+
+Since MathML consists of hundreds of elements and each one has to be mapped to a class when using XML data binding method, writing the bindings by hand is out of a question. There is however an XML Schema of MathML available that could be used to generate said bindings. Unfortunately attempts of code generation from this schema failed. Moreover if MathML markup was embedded inside another XML markup, such as XHTML, the bindings for MathML only would not be sufficient. 
+
+\subsection{Proposed Solution}
+As we can see every method comes with many advantages as well as disadvantages making it the right choice in various situations. We will try to select one method, or a combination of two methods, best suited for our use case and requirements. 
+
+From the developer's point of view, the best solution would be to use XML data binding. However the above outlined disadvantages make it impossible to actually implement this method.
+
+The next best approach is using the DOM with its easy to traverse structure. But there remains the issue of memory and time requirements needed to create the model. Going by these requirements the streaming method wins as it is the fastest and most memory-efficient method.
+
+The optimal solution would be to pass through the document using the streaming method. But streaming method does not provide any means to look ahead or behind on elements that might be needed to process the current element. On the other hand the DOM method is well suited for accessing arbitrary elements in the document tree. Combining these two methods seems to be the right way to go. 
 
 \section{Recursive Approach}
 \section{Division of Mathematical Operations}
