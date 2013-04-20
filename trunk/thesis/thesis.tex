@@ -373,7 +373,9 @@ The optimal solution would be to pass through the document using the streaming m
 \end{algorithm}
 
 \section{Conversion}
-We are starting the conversion process with our customized DOM representation of the MathML markup. At the beginning of the conversion we need to determine whether the tree consist of only the Presentation markup, Content markup or both, since each requires a slightly different approach to the conversion. 
+We are starting the conversion process with our customized DOM representation of the MathML markup. At the beginning of the conversion we need to determine whether the tree consist of only the Presentation markup, Content markup or both, since each requires a slightly different approach to the conversion. In most cases the Presentation MathML resides directly in the \texttt{math} tree (is a direct descendant of \texttt{math} element) or in the element \texttt{semantics}, while the Content MathML is often found enclosed in the \texttt{annotation-xml} element with an attribute \texttt{encoding} set to the value \texttt{MathML-Content}. Or we can simply traverse the tree till we find an element from either the Presentation of Content MathML markup and continue based on our finding.
+
+The conversion process starts at the top level element, \texttt{math}, and then recursively continues to traverse the tree, converting the Presentation and Content elements based on their own specifics. Each converted node is marked as processed to prevent it to be processed twice, since in some cases the conversion requires to look ahead and jump out of the recursion pattern to process a sibling node (or any other node).
 
 \subsection{Presentation MathML}
 Every element of the Presentation MathML requires individual approach to processing. But there are still groups of elements with similar characteristics. 
@@ -416,11 +418,51 @@ The third group is composed of elements that specify only the layout of the sube
 \caption{Expression $\lim_{x \to 0}\sqrt{x}$ in Presentation MathML}
 \label{fig:mathmllimit}
 \end{figure}
-As we can see in figure \ref{fig:mathmllimit} the \texttt{munder} element has to be interpreted in the context of its child elements (especially the first child) and its first sibling element. Similar rules apply to elements \texttt{mover}, \texttt{munderover}, \texttt{msub}, \texttt{msup} and \texttt{msubsup}.
 
-The last group is formed by elements that have purely presentation function: spacing, padding, and so on. These can be ignored since they do not provide any information about the meaning of presented expressions.
+As we can see in figure \ref{fig:mathmllimit} the \texttt{munder} element has to be interpreted in the context of its child elements (especially the first child) and its first sibling element. Similar rules apply to elements \texttt{mover}, \texttt{munderover}, \texttt{msub}, \texttt{msup} and \texttt{msubsup}, that describe various mathematical constructs such as summations, integrals, products, logarithms and many more.
+
+The last group is formed by elements that have purely presentation function: spacing, padding, and so on. These can be ignored altogether since they do not provide any information about the meaning of presented expressions.
+
 
 \subsection{Content MathML}
+The cornerstone of the Content MathML is without a doubt the element \texttt{apply}, function application. It describes the application of its first child element on the rest of child elements, all of which can be \texttt{apply} elements themselves. The \texttt{apply} element will therefore serve as a hub, assigning the processing of expression or subexpression based on the operator (the first child element).
+
+To be able to convert the expression correctly we need a different approach than for the Presentation MathML, where the elements are ordered for display purposes and can be converted basically from top to bottom (with a few exceptions). In the Content MathML a function can be applied to multiple elements, but it will be declared only once as seen in figure \ref{fig:mathplus} (in the Presentation MathML the plus symbol would be declared twice, between $x$ and $y$, $y$ and $z$).
+
+\begin{figure}[!ht]
+\lstset{language=XML,frame=lines}
+\begin{lstlisting}
+<math>
+	<apply>
+		<plus/>
+		<ci>x</ci>
+		<ci>y</ci>
+		<ci>z</ci>
+	</apply>
+</math>
+\end{lstlisting}
+\caption{Expression $x+y+z$ in Content MathML}
+\label{fig:mathplus}
+\end{figure}
+
+Therefore we can not determine word order of the expression from the position of elements in the document (as is the case in the Presentation MathML), but we have to specify the desired word order for each operation separately. Fortunately operations can be sorted into logical groups based on the word order we use when presenting them.
+
+\begin{itemize}
+\item Infix form - the operator is used between pairs of inputs, starting with the first and the second input, then the second and the third and so on. These include operators for division ($x/y/z$), multiplication ($x\cdot y\cdot z$), comparison ($x=y=z, \geq, <$) and many more.
+
+\item  Prefix form - the operator is used at the beginning, preceding inputs. In this case the operator is used only once at the beginning, followed by converted inputs. Examples include absolute value ($|x|$), negation ($\neg$) or floor ($\lfloor x \rfloor$).
+
+\item Prefix form with multiple inputs - a special case of the prefix form, where there are multiple inputs. In this instance the operator is also used only once, but inputs have to be divided by commas, with the last two inputs divided by the word "and". Function $min(x,y,z)$ should be converted to string: minimum of $x$, $y$ and $z$. Another examples might be sets, lists, functions greatest common divisor, maximum or lowest common multiple.
+
+\item Quotient and remainder - $rem(x,y)$ should be converted to: reminder of $x$ divided by $y$. Similarly the quotient operator.
+
+\item Others - operators that do not belong to any of abovementioned categories or belong to more than one (like plus or minus, which can be used in both prefix and infix form) have to be treated in a separate way.
+\end{itemize}
+
+\subsection{Operators and Symbols}
+As we mentioned before many mathematical operations can be expressed using more than one operator or symbol. Our task lies in identifying operators and symbols belonging to each operation, creating a storage structure for this data and developing a method or methods for searching in this structure, i.e. finding an operation for a given operator. 
+
+Since all operators that denote the same operation are grouped together, we can easily unify the way each operation is converted.
 
 \chapter{Converter Implementation}
 \section{Java and XML}
