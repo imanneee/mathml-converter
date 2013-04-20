@@ -9,11 +9,36 @@
 \usepackage{url}
 \usepackage[plainpages=false, pdfpagelabels, unicode]{hyperref}
 \usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 
-\lstset{basicstyle=\ttfamily, breaklines=true, breakatwhitespace=false}
+\usepackage{color}
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
 
-%\newfloat{program}{ht}{kod}
-%\floatname{program}{Ukážka}
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  showstringspaces=false,
+  commentstyle=\color{gray}\upshape,
+  breaklines=true,
+  breakatwhitespace=false,
+  xleftmargin=.25in,
+  xrightmargin=.25in,
+  tabsize=5
+}
+
+\lstdefinelanguage{XML}
+{
+  morestring=[b]",
+  morestring=[s]{>}{<},
+  morecomment=[s]{<?}{?>},
+  stringstyle=\color{black},
+  identifierstyle=\color{darkblue},
+  keywordstyle=\color{cyan},
+  morekeywords={xmlns,version,type,cd}% list your attributes here
+}
 
 \thesistitle{Normative Textual Representation of Mathematical Formulae}
 \thesissubtitle{Master's thesis}
@@ -99,10 +124,28 @@ The other class of elments is layout schemata. This collection of elements is fu
 \item Elementary Math - notation for lower grades mathematics.
 \end{itemize}
 We can thought of the layout schemata as a form of expression constructors, that specify the way in which sub-expression are constructed into larger expressions, starting with tokens and ending with the math element. Therefore elements belonging to layout schemata class do not contain any characters, only other nested elements (layout schemata or tokens). 
-\\
-@todo image
 
-MathML also provides over fifty attributes for fine tuning of expressions, like setting colors, dimensions, alignments and many others.
+\begin{figure}[!ht]
+\lstset{language=XML,frame=lines}
+\begin{lstlisting}
+<math>
+	<mrow>
+		<mi>e</mi>
+		<mo>=</mo>
+		<mi>m</mi>
+		<mo>*</mo>
+		<msup>
+			<mi>c</mi>
+			<mn>2</mn>
+		</msup>
+	</mrow>
+</math>
+\end{lstlisting}
+\caption{Expression $e=m \cdot c^2$ in Presentation MathML}
+\label{fig:presentationmathml}
+\end{figure}
+
+Presentation MathML also provides over fifty attributes for fine tuning of expressions, like setting colors, dimensions, alignments and many others.
 
 \subsection{Content MathML}
 Mathematical notation, rigorous as it is, is still not standardized around the world and there are many different ways of writing mathematical expressions based on cultural customs. Even simple multiplication operation can be written as x*y, xy, x times y, x x y. In many situations there's no need to actually render the expression, only the underlying meaning is important. For this reason Content MathML provides a framework and a markup language that capture the semantics of mathematical expressions.
@@ -111,7 +154,53 @@ The structure of Content MathML tree is based on a very simple principle – app
 
 Content MathML provides two ways of defining the operator. The first one is a set of more than 100 elements, each corresponding to some mathematical operator. For example for the addition operator there is <plus>, for logical xor <xor> and so on. Then there is the second way, the element <csymbol>. This element contains a textual representation of the operator, that is bound to a definition in a content dictionary referenced by either the attribute cd or definitionURL. External content dictionaries are important for communication between agents and there exist several public repositories of mathematical definitions. Most notable is the OpenMath Society repository.
 
+\begin{figure}[!ht]
+\lstset{language=XML,frame=lines}
+\begin{lstlisting}
+<math>
+	<apply>
+		<eq/>
+		<ci>e</ci>
+		<apply>
+			<times/>
+			<ci>m</ci>
+			<apply>
+				<power/>
+				<ci>c</ci>
+				<cn>2</cn>
+			</apply>
+		</apply>
+	</apply>
+</math>
+\end{lstlisting}
+\caption{Expression $e=m \cdot c^2$ in Content MathML}
+\label{fig:presentationmathml}
+\end{figure}
+
 In MathML 3, a subset of Content MathML elements is defined: Strict Content MathML. This uses only minimal, but sufficient, amount of elements, most importantly allows only the usage of <csymbol> element for defining operators. Strict Content MathML is designed to be compatible with OpenMath standard.
+
+\begin{figure}[!ht]
+\lstset{language=XML,frame=lines}
+\begin{lstlisting}
+<math>
+	<apply>
+		<csymbol cd="dict">equals</csymbol>
+		<ci type="real">e</ci>
+		<apply>
+			<csymbol cd="dict">times</csymbol>
+			<ci type="real">m</ci>
+			<apply>
+				<csymbol cd="dict">power</csymbol>
+				<ci type="real">c</ci>
+				<cn type="integer">2</cn>
+			</apply>
+		</apply>
+	</apply>
+</math>
+\end{lstlisting}
+\caption{Expression $e=m \cdot c^2$ in Strict Content MathML}
+\label{fig:presentationmathml}
+\end{figure}
 
 \section{Creating MathML Markup}
 \label{sec:create-mathml}
@@ -130,7 +219,7 @@ Both commands come with a multitude of parameters that allow users to customize 
 \LaTeX ML is freely available online as an installation package for Linux systems as well as Windows and MacOS. An extensive and detailed manual is available online or as a PDF document.
 
 \subsection{Tralics}
-Tralics is a freeware software designed to translate \LaTeX sources into XML documents, that can be further converted into either PDF or HTML. The generated XML is conforming to the local ad-hoc DTD (a simplification of the TEI) with mathematical formulas conforming to the Presentation MathML 2.0 recommendations.
+Tralics\cite{tralics:grimm2003} is a freeware software designed to translate \LaTeX sources into XML documents, that can be further converted into either PDF or HTML. The generated XML is conforming to the local ad-hoc DTD (a simplification of the TEI) with mathematical formulas conforming to the Presentation MathML 2.0 recommendations.
 
 Similarly to \LaTeX ML, Tralics provides many ways for customization of resulting documents, among them the possibility to change element and attribute names in the XML file. Besides Presentation MathML, mathematical formulae can be translated to \LaTeX -like   elements as well.
 
@@ -255,10 +344,83 @@ From the developer's point of view, the best solution would be to use XML data b
 
 The next best approach is using the DOM with its easy to traverse structure. But there remains the issue of memory and time requirements needed to create the model. Going by these requirements the streaming method wins as it is the fastest and most memory-efficient method.
 
-The optimal solution would be to pass through the document using the streaming method. But streaming method does not provide any means to look ahead or behind on elements that might be needed to process the current element. On the other hand the DOM method is well suited for accessing arbitrary elements in the document tree. Combining these two methods seems to be the right way to go. 
+The optimal solution would be to pass through the document using the streaming method. But streaming method does not provide any means to look ahead or behind on elements that might be needed to process the current element. On the other hand the DOM method is well suited for accessing arbitrary elements in the document tree. So combining these two methods should lead to a satisfactory solution. 
 
-\section{Recursive Approach}
-\section{Division of Mathematical Operations}
+\paragraph*{Solution} The streaming processor traverses the document and every read event that is not a part of the MathML markup automatically writes to the output. As we can see, also the output document is being created dynamically. When the processor encounters a \texttt{math} node it creates a in-memory DOM-like representation of MathML tree. We use a customized DOM-like model, because we do not actually need all the information that full DOM implementations tend to provide (such as namespaces), a simpler implementation suffices. After the MathML model is created (\texttt{math} end element event gets registered) the conversion needs to take place immediately, so that the conversion result can be written to the output in the right place. This way all non-MathML related information is retained and written to the output and for every occurrence of MathML markup in the document a separate DOM-like representation is created and directly converted. See algorithm \ref{alg-processinput} for illustration. 
+
+\begin{algorithm}[!ht]
+\caption{Process input algorithm}
+\label{alg-processinput}
+\begin{algorithmic}[1]
+\Procedure{ProcessInput}{}
+	\State clear \texttt{tree}
+	\Comment{a DOM-like MathML tree} 
+	\While{next event exists}
+		\State \texttt{event} $\gets$ next event
+		\If{\texttt{event} is a start of \texttt{math} element}
+			\State \texttt{tree} $\gets$ create a new tree
+		\ElsIf{\texttt{event} is an end of \texttt{math} element}
+			\State convert \texttt{tree} and write the result to the output
+			\State clear \texttt{tree}			
+		\ElsIf{\texttt{event} is inside \texttt{math} element}	
+			\State insert a new node, value or attribute in the \texttt{tree}
+		\Else
+			\State write \texttt{event} to the output
+		\EndIf
+	\EndWhile
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\section{Conversion}
+We are starting the conversion process with our customized DOM representation of the MathML markup. At the beginning of the conversion we need to determine whether the tree consist of only the Presentation markup, Content markup or both, since each requires a slightly different approach to the conversion. 
+
+\subsection{Presentation MathML}
+Every element of the Presentation MathML requires individual approach to processing. But there are still groups of elements with similar characteristics. 
+
+The first group consists of token elements. The conversion is straightforward and depends only on the value of the element:
+\begin{itemize}
+\item \texttt{mn} - convert number to string or take the original value,
+\item \texttt{mi} - take the original value if it is in Latin script, otherwise convert the value if possible (e.g. Greek alphabet),
+\item \texttt{mo} - determine the operation defined by the \texttt{mo} element value ($\Sigma \rightarrow$ sum, $\int \rightarrow$ integral, $\ldots$).
+\end{itemize}
+It is important to remember that one mathematical operation can be expressed with various symbols and the conversion has to unify them into the same string representation.
+
+The second group contains element with specific purpose. In other words these elements clearly state (with their names) what is their intended function. The conversion uses this fact and is therefore very simple. For example:
+\begin{itemize}
+\item \texttt{mfrac} - fractions or binomial numbers,
+\item \texttt{msqrt} - square root,
+\item \texttt{mfenced} - subexpression is enclosed in parenthesis.
+\end{itemize}
+
+The third group is composed of elements that specify only the layout of the subexpression. To determine the exact function the author wanted to convey we need additional information provided by child elements and may also depend on sibling or parent elements. 
+\begin{figure}[!ht]
+\lstset{language=XML,frame=lines}
+\begin{lstlisting}
+<math>
+	<munder>
+		<mo>lim</mo>
+		<mrow>
+			<mi>x</mi>
+			<mo>&rarr;</mo>
+			<mn>0</mn>
+		</mrow>		
+	</munder>
+	<mrow>
+		<msqrt>
+			<mi>x</mi>
+		</msqrt>
+	</mrow>
+</math>
+\end{lstlisting}
+\caption{Expression $\lim_{x \to 0}\sqrt{x}$ in Presentation MathML}
+\label{fig:mathmllimit}
+\end{figure}
+As we can see in figure \ref{fig:mathmllimit} the \texttt{munder} element has to be interpreted in the context of its child elements (especially the first child) and its first sibling element. Similar rules apply to elements \texttt{mover}, \texttt{munderover}, \texttt{msub}, \texttt{msup} and \texttt{msubsup}.
+
+The last group is formed by elements that have purely presentation function: spacing, padding, and so on. These can be ignored since they do not provide any information about the meaning of presented expressions.
+
+\subsection{Content MathML}
 
 \chapter{Converter Implementation}
 \section{Java and XML}
@@ -280,5 +442,8 @@ The optimal solution would be to pass through the document using the streaming m
 
 \chapter{Conclusion}
 1 page
+
+\bibliographystyle{own}
+\bibliography{thesis}
 
 \end{document}
