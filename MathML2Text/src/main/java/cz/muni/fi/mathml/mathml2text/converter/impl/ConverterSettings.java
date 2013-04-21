@@ -55,12 +55,12 @@ public final class ConverterSettings {
      * Inicializes this values:
      * <ul>
      *  <li>{@link #replaceSpaces} to <code>false</code></li>
-     *  <li>{@link #canonicalize} to <code>true</code></li>
+     *  <li>{@link #canonicalize} to <code>false</code></li>
      * </ul>
      */
     private ConverterSettings() {
         this.replaceSpaces = false;
-        this.canonicalize = true;
+        this.canonicalize = false;
     }
     
     /**
