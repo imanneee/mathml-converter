@@ -84,6 +84,8 @@ public final class XmlParserStAX {
     
     private static final String CONVERTER_ELEMENT_NAME = "math";
     
+    private final MathMLCanonizer canonicalizer;
+    
     /**
      * Constructor.
      * {@link XMLInputFactory} is configured with values:
@@ -113,6 +115,11 @@ public final class XmlParserStAX {
             }
         });
         this.xmlOutputFactory = XMLOutputFactory.newInstance();
+        this.canonicalizer = new MathMLCanonizer()//
+                .addModule(new ElementMinimizer())//
+                .addModule(new MfencedReplacer())//
+                .addModule(new MrowNormalizer())//
+                .addModule(new OperatorNormalizer());
     }
     
     /**
@@ -479,12 +486,7 @@ public final class XmlParserStAX {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         try {
             logger.trace("Starting canonicalization.");
-            final MathMLCanonizer canonizer = new MathMLCanonizer()//
-                                                .addModule(new ElementMinimizer())//
-                                                .addModule(new MfencedReplacer())//
-                                                .addModule(new MrowNormalizer())//
-                                                .addModule(new OperatorNormalizer());
-            canonizer.canonicalize(input, output);
+            this.canonicalizer.canonicalize(input, output);
             logger.trace("Canonicalization completed.");
         } catch (JDOMException ex) {
             logger.error("Error while performing canonicalization.", ex);
