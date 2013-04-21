@@ -1,7 +1,9 @@
 package cz.muni.fi.mathml.mathml2text;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -21,11 +23,10 @@ import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
 import cz.muni.fi.mathml.mathml2text.converter.impl.XmlParserStAX;
 
 /**
- * App class containing main method.
- *
+ * Class containing runnable main method.
  */
 public class App {
-
+    /** Logger. */ 
     private static final Logger logger = LoggerFactory.getLogger(App.class);
     /**
      * Set of supported languages
@@ -41,14 +42,14 @@ public class App {
 
     public static void main(final String[] args) {
         if (args.length < 1) {
-            System.out.println("Please specify input file path.");
+            System.out.println("Please specify input file path. Use '-h' option to print help.");
             System.exit(1);
         }
         // default language is english
         String language = "en";
-        if ("--h".equals(args[0]) || "-h".equals(args[0]) || "-help".equals(args[0])) {
+        if ("--h".equals(args[0]) || "-h".equals(args[0]) || "-help".equals(args[0]) || "--help".equals(args[0])) {
             HelpFormatter helpFormatter = new HelpFormatter();
-            helpFormatter.printHelp("converter", createOptions());
+            helpFormatter.printHelp("converter [options] <file...>", createOptions());
             System.exit(0);
         }
         
@@ -68,35 +69,55 @@ public class App {
             if (line.hasOption("r")) {
                 ConverterSettings.getInstance().setReplaceSpaces(true);
             }
+            if (line.hasOption("threads")) {
+                String optionValue = line.getOptionValue("threads");
+                try {
+                    Integer value = Integer.valueOf(optionValue); 
+                    ConverterSettings.getInstance().setThreadCount(value);
+                } catch (final NumberFormatException ex) {
+                    logger.warn("Could not convert thread count [" + optionValue + "] to integer.");
+                }
+            }
+            String[] fileNames = line.getArgs();
+            final List<File> inputFiles = new ArrayList<File>(fileNames.length);
+            for (final String fileName : fileNames) {
+                inputFiles.add(new File(fileName));
+            }
+            final Instant start = Instant.now();
+
+            final XmlParserStAX parser = new XmlParserStAX();
+
+            List<File> parse = parser.parse(inputFiles, new Locale(language));
+            
+            final Instant end = Instant.now();
+            final Duration duration = new Duration(start, end);
+            System.out.println("\n" + duration.getMillis() + " ms");
         } catch (ParseException ex) {
             System.err.println("Error while parsing command line arguments: " + ex.getMessage());
             System.exit(1);
         }
-        File input = new File(args[args.length - 1]);
-        final Instant start = Instant.now();
-
-        final XmlParserStAX parser = new XmlParserStAX();
-
-        File parse = parser.parse(input, new Locale(language));
-
         /**
          * ***********************************************************
          */
         /*  You can instantiate parser from inside application and run the parse() methods.  */
 //        String out = parser.parse("<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mfrac><mrow><mi>x</mi><mo>&#x2297;</mo><mn>5</mn></mrow><mrow><mi>x</mi><mo>*</mo><mn>3</mn></mrow></mfrac></mrow></math>", new Locale(language));
 //        System.out.println(out);
-        final Instant end = Instant.now();
-        final Duration duration = new Duration(start, end);
-        System.out.println("\n" + duration.getMillis() + " ms");
     }
 
+    /**
+     * Create an {@link Options} instance that defines possible input parameters.
+     */
     private static Options createOptions() {
         final Options options = new Options();
-//        options.addOption("l", "language", true, "spedify language [en|sk|cz]");
         options.addOption(OptionBuilder.withLongOpt("language")
-                .withDescription("specify language")
+                .withDescription("specify language (defaults to en)")
                 .hasArg()
                 .withArgName("LANGUAGE")
+                .create());
+        options.addOption(OptionBuilder.withLongOpt("threads")//
+                .withDescription("specify number of threads for parallel conversion (defaults to 1)")//
+                .hasArg()//
+                .withArgName("NUMBER")//
                 .create());
         options.addOption("c", "canonicalize", false, "canonicalize input");
         options.addOption("r", "replace-spaces", false, "replace spaces with underscores");
