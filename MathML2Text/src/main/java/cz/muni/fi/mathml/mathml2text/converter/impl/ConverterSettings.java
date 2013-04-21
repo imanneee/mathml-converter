@@ -3,6 +3,7 @@ package cz.muni.fi.mathml.mathml2text.converter.impl;
 import java.util.Properties;
 import java.util.Set;
 
+import org.slf4j.LoggerFactory;
 import com.google.common.collect.Sets;
 
 import cz.muni.fi.mathml.mathml2text.Strings;
@@ -46,6 +47,10 @@ public final class ConverterSettings {
      */
     private boolean canonicalize;
     /**
+     * Number of threads that will be available for parallel conversion.
+     */
+    private int threadCount;
+    /**
      * Singleton instance.
      */
     private static final ConverterSettings INSTANCE = new ConverterSettings();
@@ -56,11 +61,13 @@ public final class ConverterSettings {
      * <ul>
      *  <li>{@link #replaceSpaces} to <code>false</code></li>
      *  <li>{@link #canonicalize} to <code>false</code></li>
+     *  <li>{@link #threadCount} to <code>1</code></li>
      * </ul>
      */
     private ConverterSettings() {
         this.replaceSpaces = false;
         this.canonicalize = false;
+        this.threadCount = 1;
     }
     
     /**
@@ -169,6 +176,30 @@ public final class ConverterSettings {
      */
     public void setCanonicalize(boolean canonicalize) {
         this.canonicalize = canonicalize;
+    }
+
+    /**
+     * Returns the number of threads that will be available for parallel conversion.
+     * Minimal value is 1.
+     * @return The number of threads that will be available for parallel conversion.
+     */
+    public int getThreadCount() {
+        return threadCount;
+    }
+
+    /**
+     * Sets the number of threads that will be available for parallel conversion.
+     * Minimal value is 1.
+     * @param threadCount The number of threads that will be available for parallel conversion.
+     */
+    public void setThreadCount(int threadCount) {
+        if (threadCount < 1) {
+            LoggerFactory.getLogger(ConverterSettings.class).warn(
+                    "The number of threads must be at least 1. Setting to 1.");
+            this.threadCount = 1;
+        } else {
+            this.threadCount = threadCount;
+        }
     }
     
     /**

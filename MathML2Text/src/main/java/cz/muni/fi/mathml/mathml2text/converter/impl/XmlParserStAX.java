@@ -9,7 +9,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import javax.annotation.Nonnull;
 import javax.xml.stream.XMLInputFactory;
@@ -265,6 +273,45 @@ public final class XmlParserStAX {
     }
     
     /**
+     * Concurrently converts all input files.
+     * For every file delegates to method {@link #parse(java.io.File, java.util.Locale) }.
+     * The number of possible concurrent conversion is determined with parameter
+     * {@link ConverterSettings#getThreadCount()}. 
+     * @param files List of input files.
+     * @param language Language of conversion.
+     * @return List of converted files.
+     * @throws UnsupportedLanguageException
+     */
+    public List<File> parse(@Nonnull final List<File> files, final Locale language) throws UnsupportedLanguageException {
+        final List<File> outputFiles = new ArrayList<File>(files.size());
+        final ExecutorService executorService = Executors.newFixedThreadPool(ConverterSettings.getInstance().getThreadCount());
+        final Collection<Callable<File>> callables = new ArrayList<Callable<File>>(files.size());
+        for (final File file : files) {
+            callables.add(new Callable<File>() {
+
+                @Override
+                public File call() throws Exception {
+                    return XmlParserStAX.this.parse(file, language);
+                }
+            });
+        }
+        try {
+            final List<Future<File>> futures = executorService.invokeAll(callables);
+            for (final Future<File> future : futures) {
+                final File result = future.get();
+                outputFiles.add(result);
+            }
+        } catch (final ExecutionException ex) {
+            logger.warn("The execution of a single callable resulted in an exception.", ex);
+        } catch (final InterruptedException ex) {
+            logger.warn("The execution was interrupted.", ex);
+        } finally {
+            executorService.shutdown();
+        }
+        return outputFiles;
+    }
+    
+    /**
      * Parses single file. For every occurrence of math element inside input 
      * XML file new {@link MathMLNode} tree is builded and subsequently converted
      * to string.
@@ -275,8 +322,9 @@ public final class XmlParserStAX {
      *  with converted string inside <code>&lt;mathconv&gt;</code> tag.
      * @throws UnsupportedLanguageException
      */
-    public File parse(@Nonnull final File file, final Locale language) {
+    public File parse(@Nonnull final File file, final Locale language) throws UnsupportedLanguageException {
         Validate.isTrue(file != null, "File for transformation should not be null.");
+        this.checkSupportedLanguages(language);
         
         XMLStreamReader reader;
         XMLStreamWriter writer;
