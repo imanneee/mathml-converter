@@ -10,30 +10,32 @@
 \contentsline {subsection}{\numberline {3.2.2}\rmfamily Tralics}{10}{subsection.3.2.2}
 \contentsline {subsection}{\numberline {3.2.3}\rmfamily MaxTract}{10}{subsection.3.2.3}
 \contentsline {subsection}{\numberline {3.2.4}\rmfamily INFTY Reader}{11}{subsection.3.2.4}
-\contentsline {section}{\numberline {3.3}\slshape Possible Ambiguities}{11}{section.3.3}
-\contentsline {section}{\numberline {3.4}\slshape Canonicalization}{11}{section.3.4}
-\contentsline {section}{\numberline {3.5}\slshape Status Quo of Current Tools}{11}{section.3.5}
-\contentsline {subsection}{\numberline {3.5.1}\rmfamily MathPlayer}{11}{subsection.3.5.1}
-\contentsline {chapter}{\numberline {4}\bfseries Analysis and Solution Proposal}{12}{chapter.4}
-\contentsline {section}{\numberline {4.1}\slshape Input Processing}{12}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}\rmfamily Multithreading}{12}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}\rmfamily Document Object Model}{13}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}\rmfamily XSL}{13}{subsection.4.1.3}
-\contentsline {subsection}{\numberline {4.1.4}\rmfamily Streaming XML}{14}{subsection.4.1.4}
-\contentsline {subsection}{\numberline {4.1.5}\rmfamily XML Data Binding}{16}{subsection.4.1.5}
-\contentsline {subsection}{\numberline {4.1.6}\rmfamily Proposed Solution}{16}{subsection.4.1.6}
-\contentsline {section}{\numberline {4.2}\slshape Conversion}{17}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}\rmfamily Presentation MathML}{18}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}\rmfamily Content MathML}{20}{subsection.4.2.2}
-\contentsline {subsection}{\numberline {4.2.3}\rmfamily Operators and Symbols}{21}{subsection.4.2.3}
-\contentsline {chapter}{\numberline {5}\bfseries Converter Implementation}{22}{chapter.5}
-\contentsline {section}{\numberline {5.1}\slshape Java and XML}{22}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}\rmfamily StAX}{22}{subsection.5.1.1}
-\contentsline {subsection}{\numberline {5.1.2}\rmfamily Custom XML Tree Representation}{22}{subsection.5.1.2}
-\contentsline {section}{\numberline {5.2}\slshape Presentation MathML}{22}{section.5.2}
-\contentsline {section}{\numberline {5.3}\slshape Content MathML}{22}{section.5.3}
-\contentsline {subsection}{\numberline {5.3.1}\rmfamily Element \texttt {apply}}{22}{subsection.5.3.1}
-\contentsline {chapter}{\numberline {6}\bfseries Results}{23}{chapter.6}
-\contentsline {section}{\numberline {6.1}\slshape Gensim}{23}{section.6.1}
-\contentsline {section}{\numberline {6.2}\slshape MREC Corpus}{23}{section.6.2}
-\contentsline {chapter}{\numberline {7}\bfseries Conclusion}{24}{chapter.7}
+\contentsline {section}{\numberline {3.3}\slshape Canonicalization}{11}{section.3.3}
+\contentsline {section}{\numberline {3.4}\slshape Status Quo of Current Tools}{11}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}\rmfamily DAISY}{11}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}\rmfamily MathPlayer}{12}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}\rmfamily AsTeR}{12}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.4}\rmfamily Web Browser Support}{13}{subsection.3.4.4}
+\contentsline {chapter}{\numberline {4}\bfseries Analysis and Solution Proposal}{14}{chapter.4}
+\contentsline {section}{\numberline {4.1}\slshape Input Processing}{14}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\rmfamily Multithreading}{14}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}\rmfamily Document Object Model}{15}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}\rmfamily XSL}{15}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}\rmfamily Streaming XML}{16}{subsection.4.1.4}
+\contentsline {subsection}{\numberline {4.1.5}\rmfamily XML Data Binding}{18}{subsection.4.1.5}
+\contentsline {subsection}{\numberline {4.1.6}\rmfamily Proposed Solution}{18}{subsection.4.1.6}
+\contentsline {section}{\numberline {4.2}\slshape Conversion}{19}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}\rmfamily Presentation MathML}{20}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}\rmfamily Content MathML}{22}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}\rmfamily Operators and Symbols}{23}{subsection.4.2.3}
+\contentsline {chapter}{\numberline {5}\bfseries Implementation}{24}{chapter.5}
+\contentsline {section}{\numberline {5.1}\slshape Java and XML}{24}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}\rmfamily StAX}{24}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}\rmfamily Custom XML Tree Representation}{24}{subsection.5.1.2}
+\contentsline {section}{\numberline {5.2}\slshape Presentation MathML}{24}{section.5.2}
+\contentsline {section}{\numberline {5.3}\slshape Content MathML}{24}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}\rmfamily Element \texttt {apply}}{24}{subsection.5.3.1}
+\contentsline {chapter}{\numberline {6}\bfseries Results}{25}{chapter.6}
+\contentsline {section}{\numberline {6.1}\slshape Gensim}{25}{section.6.1}
+\contentsline {section}{\numberline {6.2}\slshape MREC Corpus}{25}{section.6.2}
+\contentsline {chapter}{\numberline {7}\bfseries Conclusion}{26}{chapter.7}

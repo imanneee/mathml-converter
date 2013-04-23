@@ -236,14 +236,47 @@ The most important phase, character recognition, is responsible for distinguishi
 
 INFTY Reader is available free of charge for limited amount of time, then it is necessary to purchase a license key.
 
-\section{Possible Ambiguities}
-1-2 pages
-
 \section{Canonicalization}
-1-2 pages
+
+
 \section{Status Quo of Current Tools}
-2 pages total
+
+
+\subsection{DAISY}
+DAISY (Digital Accessible Information System) is a technical standard for digital audio books, periodicals and computerized text. It is specifically intended for people that have problems reading a printed text including blindness, dyslexia or impaired vision. DAISY is based on combination of XML and MP3 and has various functions that traditional audio books do not provide. These include line by line navigation, searching in the text, adding bookmarks or adjusting the speed of the speech. It also provides support for embedded content such as images, graphics and MathML. 
+
+DAISY books (books conforming to the DAISY standard) can be listened to on designated DAISY readers, computers with installed DAISY software, mobile phones or MP3 players. There are many implementation of software players, commercial, free or even open source. They range from standalone applications to addons to internet browsers (especially Mozilla Firefox). Some software players are capable of displaying HTML pages with embedded MathML markup and subsequently read the mathematical expressions (this functionality was tested on a commercial product Dolphin EasyReader that supports Czech language as well).   
+
 \subsection{MathPlayer}
+\label{mathml:mathplayer}
+MathPlayer is an application developed by Design Science\footnote{\url{http://www.dessci.com/en/products/mathplayer/}} that enables users of Microsoft Internet Explorer web browser to display mathematical equations written in MathML markup. It uses Microsoft's internal HTML engine (MSHTML) on which Internet Explorer is based. Also for any application that makes use of MSHTML to display formatted content MathPlayer is able to display MathML content. This may include email clients, alternative browsers or RSS readers. 
+
+Besides displaying MathML in the browser MathPlayer comes equipped with a wide range of MathML-related functions. It enables equations to be copied to the clipboard as MathML markup and pasted to any MathML-aware software, be it simple text editor or more sophisticated application. Drag-and-drop functionality is also supported. Another important feature of the MathPlayer is the ability to speak expressions on the web page.
+
+MathPlayer is shipped as a free to use software with English localization only, but is still a close source product with a license that limits its use to only computers owned by the user and also prohibits translation and reverse engineering of the application.
+
+\subsection{AsTeR}
+AsTeR (Audio System for Technical Readings)\cite{aster1994} is an exceptional piece of software developed by T.V. Raman as a part of his dissertation at Cornell University. AsTeR is capable of producing audio renderings of technical documents, even those containing higher mathematical expressions, written in \TeX\ or \LaTeX. However, processing different markup languages does not pose a problem for AsTeR. All that is required is a recognizer for given markup language. 
+
+The logical structure of the document is transformed to internal representation, which is then rendered in audio using a collection of rendering rules. This enables AsTeR to provide different views of the document; a user can listen to the whole document or select a portion of the document for listening. An important feature of AsTeR makes us of voice intonation to read long and complicated formuale. Such formulae are divided into logical parts (like a single summation or a numerator of a fraction) and read with different intonation than the surrounding part of the expression. 
+
+\subsection{Web Browser Support}
+MathML was designed as a standard for including mathematical formulae in web pages. It stands to reason that at the most well-known and wide-spread web browsers should have good support of MathML, at least the Presentation MathML. Unfortunately the situation is not that good, developers of these browsers are mainly focused on different areas and MathML stand very low on the ladder of priorities.
+
+\paragraph*{Mozilla Firefox} 
+Firefox has the best native support for MathML rendering out of the most popular web browsers and is capable of displaying most elements of the Presentation MathML. Firefox can be enhanced by an extension called FireMath that adds a rich MathML editor capable of generating complicated mathematical expressions quite easily and right into MathML markup.
+
+\paragraph*{Google Chrome and Safari}
+Both Google Chrome as well as Safari are based on the WebKit layout engine that has a development version of MathML. The support for MathML is available in latest versions of Safari (since version 5.1). Unfortunately Chrome does not have native support for MathML, but uses the combination HTML and CSS to render mathematical expression entered in MathML.
+
+\paragraph*{Internet Explorer}
+Internet Explorer does not have any native support for MathML, but MathML rendering capability and some additional functionality can be added by the MathPlayer extension, that is described in more detail in section \ref{mathml:mathplayer}.
+
+\paragraph*{Opera}
+Opera was one of the first browsers to include native support for MathML. The rendering of MathML is not as good as in Firefox, Opera has issues with positioning of elements in more complicated constructs. 
+
+\paragraph*{Browser for Hand-held Devices}
+At the time of writing this thesis none of the browsers for hand-held devices has a satisfactory native support for MathML. However they are capable of rendering expressions using CSS.
 
 \chapter{Analysis and Solution Proposal}
 The goal of this thesis is the development of a conversion tool, that will be able to process XML document or documents and transform each occurrence of MathML markup into the appropriate textual representation. For example $5 \times \alpha = x + 3$ should be transformed into "five times alpha equals x plus three". In case of a visual (not semantic) change of the operator the tool should produce the same result. In our example $5 \times \alpha = x + 3$, $5 \cdot \alpha = x + 3$ and $5\alpha = x + 3$ all have the same meaning, so all should be transformed into identical strings.
@@ -456,7 +489,7 @@ Therefore we can not determine word order of the expression from the position of
 
 \item Quotient and remainder - $rem(x,y)$ should be converted to: reminder of $x$ divided by $y$. Similarly the quotient operator.
 
-\item Others - operators that do not belong to any of abovementioned categories or belong to more than one (like plus or minus, which can be used in both prefix and infix form) have to be treated in a separate way.
+\item Others - operators that do not belong to any of abovementioned categories or belong to more than one (like plus or minus, which can be used in both the prefix and infix form) have to be treated in a separate way.
 \end{itemize}
 
 \subsection{Operators and Symbols}
@@ -464,7 +497,7 @@ As we mentioned before many mathematical operations can be expressed using more 
 
 Since all operators that denote the same operation are grouped together, we can easily unify the way each operation is converted.
 
-\chapter{Converter Implementation}
+\chapter{Implementation}
 \section{Java and XML}
 3-4 pages Options of working with XML in Java, selecting the most suitable and why
 \subsection{StAX}

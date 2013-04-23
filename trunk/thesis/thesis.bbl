@@ -5,4 +5,9 @@ Jos{\'e} Grimm.
 \newblock {Tralics, a \LaTeX to XML Translator}.
 \newblock {\em TUGboat}, 24(3):377--388, 2003.
 
+\bibitem{aster1994}
+TV~Raman.
+\newblock {\em {Audio System for Technical Readings}}.
+\newblock PhD thesis, Cornell University, 1994.
+
 \end{thebibliography}
