@@ -4,6 +4,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.slf4j.LoggerFactory;
+
 import com.google.common.collect.Sets;
 
 import cz.muni.fi.mathml.mathml2text.Strings;
@@ -50,6 +51,10 @@ public final class ConverterSettings {
      * Number of threads that will be available for parallel conversion.
      */
     private int threadCount;
+    /**
+     * Output directory path.
+     */
+    private String outputDirectory;
     /**
      * Singleton instance.
      */
@@ -200,6 +205,23 @@ public final class ConverterSettings {
         } else {
             this.threadCount = threadCount;
         }
+    }
+
+    /**
+     * Returns the output directory path.
+     * If the value is {@code null}, the output will be written to the input directory.
+     * @return Output directory path.
+     */
+    public String getOutputDirectory() {
+        return this.outputDirectory;
+    }
+
+    /**
+     * Sets the output directory path.
+     * @param outputDirectory Output directory path.
+     */
+    public void setOutputDirectory(String outputDirectory) {
+        this.outputDirectory = outputDirectory;
     }
     
     /**

@@ -111,16 +111,13 @@ public final class NumberTransformer {
             }
             builder.append(Strings.SPACE);
             
-            // if decimal part of the number starts with one or more zeroes
-            // we will write out leading zeroes and then append rest of the number
-            // for example: 0.0025 -> zero point zero zero twenty-five
-            while (decimalPartString.startsWith("0")) {
-                builder.append(this.getBundle().getString("ZERO"));
+            // the decimal part will be spelled one number at a time
+            // for example: 0.0025 -> zero point zero zero two five
+            while (decimalPartString.length() > 0) {
+                builder.append(this.translateNumber(Long.valueOf(decimalPartString.substring(0, 1))));
                 builder.append(Strings.SPACE);
                 decimalPartString = decimalPartString.substring(1);
             }
-            final String decimalPartResult = translateNumber(Long.valueOf(decimalPartString));
-            builder.append(decimalPartResult);
         }
         return builder.toString();
     }
@@ -198,6 +195,8 @@ public final class NumberTransformer {
                     ret.append(" ").append(this.getBundle().getString("MILLIONS_2")).append(" ");
                 }
                 number = number % 1000000;
+            } else {
+                throw new NumberFormatException("Number [" + number + "]is too big for NumberTransformer to convert.");
             }
 
         }

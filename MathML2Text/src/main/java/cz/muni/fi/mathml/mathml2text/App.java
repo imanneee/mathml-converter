@@ -14,6 +14,7 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Duration;
 import org.joda.time.Instant;
 import org.slf4j.Logger;
@@ -78,6 +79,13 @@ public class App {
                     logger.warn("Could not convert thread count [" + optionValue + "] to integer.");
                 }
             }
+            if (line.hasOption("output")) {
+                String outputDirectoryPath = line.getOptionValue("output");
+                if (outputDirectoryPath != null) {
+                    outputDirectoryPath = StringUtils.stripEnd(outputDirectoryPath, System.getProperty("file.separator"));
+                }
+                ConverterSettings.getInstance().setOutputDirectory(outputDirectoryPath);
+            }
             String[] fileNames = line.getArgs();
             final List<File> inputFiles = new ArrayList<File>(fileNames.length);
             for (final String fileName : fileNames) {
@@ -113,12 +121,17 @@ public class App {
                 .withDescription("specify language (defaults to en)")
                 .hasArg()
                 .withArgName("LANGUAGE")
-                .create());
+                .create("l"));
         options.addOption(OptionBuilder.withLongOpt("threads")//
                 .withDescription("specify number of threads for parallel conversion (defaults to 1)")//
                 .hasArg()//
                 .withArgName("NUMBER")//
-                .create());
+                .create("t"));
+        options.addOption(OptionBuilder.withLongOpt("output")//
+                .withDescription("output directory path")//
+                .hasArg()//
+                .withArgName("PATH")//
+                .create("o"));
         options.addOption("c", "canonicalize", false, "canonicalize input");
         options.addOption("r", "replace-spaces", false, "replace spaces with underscores");
         return options;
