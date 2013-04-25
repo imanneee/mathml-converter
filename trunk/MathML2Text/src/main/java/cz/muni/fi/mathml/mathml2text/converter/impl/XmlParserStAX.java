@@ -1,5 +1,6 @@
 package cz.muni.fi.mathml.mathml2text.converter.impl;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -11,13 +12,21 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+import java.util.zip.ZipFile;
 
 import javax.annotation.Nonnull;
 import javax.xml.stream.XMLInputFactory;
@@ -76,15 +85,15 @@ public final class XmlParserStAX {
     /**
      * Responsible for converting MathML tree to string.
      */
-    private MathMLConverter converter;
+    private final MathMLConverter converter;
     /**
      * Input factory for creating {@link XMLStreamReader} instance.
      */
-    private XMLInputFactory xmlInputFactory;
+    private final XMLInputFactory xmlInputFactory;
     /**
      * Output factory for creating {@link XMLStreamWriter} instance.
      */
-    private XMLOutputFactory xmlOutputFactory;
+    private final XMLOutputFactory xmlOutputFactory;
     
     private static final String CONVERTER_NAMESPACE_URI = "http://code.google.com/p/mathml-converter/";
     
@@ -93,6 +102,10 @@ public final class XmlParserStAX {
     private static final String CONVERTER_ELEMENT_NAME = "math";
     
     private final MathMLCanonizer canonicalizer;
+    
+    private final Set<File> originalInputFiles = new HashSet<File>();
+    
+    private final AtomicInteger atomicInteger = new AtomicInteger(0);
     
     /**
      * Constructor.
@@ -283,10 +296,15 @@ public final class XmlParserStAX {
      * @throws UnsupportedLanguageException
      */
     public List<File> parse(@Nonnull final List<File> files, final Locale language) throws UnsupportedLanguageException {
-        final List<File> outputFiles = new ArrayList<File>(files.size());
-        final ExecutorService executorService = Executors.newFixedThreadPool(ConverterSettings.getInstance().getThreadCount());
-        final Collection<Callable<File>> callables = new ArrayList<Callable<File>>(files.size());
+        final List<File> inputFiles = new ArrayList<File>();
         for (final File file : files) {
+            this.originalInputFiles.add(file);
+            inputFiles.addAll(this.findFiles(file));
+        }
+        final List<File> outputFiles = new ArrayList<File>(inputFiles.size());
+        final ExecutorService executorService = Executors.newFixedThreadPool(ConverterSettings.getInstance().getThreadCount());
+        final Collection<Callable<File>> callables = new ArrayList<Callable<File>>(inputFiles.size());
+        for (final File file : inputFiles) {
             callables.add(new Callable<File>() {
 
                 @Override
@@ -299,16 +317,28 @@ public final class XmlParserStAX {
             final List<Future<File>> futures = executorService.invokeAll(callables);
             for (final Future<File> future : futures) {
                 final File result = future.get();
-                outputFiles.add(result);
+//                outputFiles.add(result);
             }
+            logger.debug("Finished converting all files.");
         } catch (final ExecutionException ex) {
             logger.warn("The execution of a single callable resulted in an exception.", ex);
         } catch (final InterruptedException ex) {
             logger.warn("The execution was interrupted.", ex);
+        } catch (final CancellationException ex) {
+            logger.warn("The execution was cancelled.", ex);
         } finally {
-            executorService.shutdown();
+            for (final File file : files) {
+                this.originalInputFiles.remove(file);
+            }
+            try {
+                executorService.shutdownNow();
+            } catch (final Exception ex) {
+                logger.warn("Exception while shutting down the executor service.", ex);
+                executorService.shutdownNow();
+            }
         }
-        return outputFiles;
+//        return outputFiles;
+        return null;
     }
     
     /**
@@ -326,16 +356,42 @@ public final class XmlParserStAX {
         Validate.isTrue(file != null, "File for transformation should not be null.");
         this.checkSupportedLanguages(language);
         
+        int executionNumber = this.atomicInteger.incrementAndGet();
+        logger.debug("Processing file [" + executionNumber + "] [" + file.getPath() + "].");
+        
         XMLStreamReader reader;
         XMLStreamWriter writer;
-        String filePath = file.getPath();
-        String outputFilePath = filePath.substring(0, filePath.lastIndexOf('.'));
-        File outputFile = new File(outputFilePath + "-transformed.xml");
+        String outputFilePath;
+        if (StringUtils.isBlank(ConverterSettings.getInstance().getOutputDirectory())) {
+            String filePath = file.getPath();
+            outputFilePath = filePath.substring(0, filePath.lastIndexOf('.')) + "-transformed.xml";
+        } else {
+            String suffix = "";
+            for (final File f : this.originalInputFiles) {
+                if (file.getPath().startsWith(f.getPath())) {
+                    suffix = StringUtils.difference(f.getPath(), file.getPath());
+                    break;
+                }
+            }
+            if (StringUtils.isBlank(suffix)) {
+                suffix = file.getName();
+            }
+            if (!suffix.startsWith(System.getProperty("file.separator"))) {
+                suffix = System.getProperty("file.separator") + suffix;
+            }
+            outputFilePath = ConverterSettings.getInstance().getOutputDirectory() + suffix;
+            if (outputFilePath.endsWith("zip")) {
+                outputFilePath = outputFilePath.substring(0, outputFilePath.lastIndexOf("."));
+            }
+        }
+        
+        File outputFile = new File(outputFilePath);
+        outputFile.getParentFile().mkdirs();
         try {
             outputFile.createNewFile();
         } catch (IOException ex) {
             this.getLogger().warn("File [{}] already exists.", outputFile.getPath());
-                }
+        }
     
         /** root node */
         MathMLNode tree = null;
@@ -347,16 +403,22 @@ public final class XmlParserStAX {
         MathMLElement currentElement = null;
         
         try {
+            InputStream inputStream;
+            if (file.getName().endsWith("zip")) {
+                inputStream = this.unzip(file);
+            } else {
+                inputStream = new FileInputStream(file);
+            }
             // canonicalize
-            InputStream inputStream = ConverterSettings.getInstance().isCanonicalize()
-                                      ? this.canonicalize(new FileInputStream(file))
-                                      : new FileInputStream(file);
+            inputStream = ConverterSettings.getInstance().isCanonicalize()
+                          ? this.canonicalize(inputStream)
+                          : inputStream;
+            
             // create stream reader from input file
             reader = this.xmlInputFactory.createXMLStreamReader(inputStream, "UTF-8");
             OutputStream output = new FileOutputStream(outputFile);
             // create stream writer
             writer = this.xmlOutputFactory.createXMLStreamWriter(output, "UTF-8");
-//            writer = this.xmlOutputFactory.createXMLStreamWriter(System.out, "UTF-8");
             writer.writeStartDocument(reader.getEncoding(), reader.getVersion());
             
             // is this the root element
@@ -498,14 +560,15 @@ public final class XmlParserStAX {
                         break;
                 }
             }
+            inputStream.close();
             reader.close();
             writer.flush();
             writer.close();
             output.flush();
             output.close();
-            
+            logger.debug("Finished conversion of file [" + executionNumber + "] [" + file.getPath() + "]");
         } catch (final IOException ex) {
-            this.getLogger().error("Cannot load input file.", ex);
+            this.getLogger().error("Exception while working with input/output file.", ex);
         } catch (final XMLStreamException ex) {
             this.getLogger().error("Cannot open xml file for reading.", ex);
         }
@@ -545,6 +608,73 @@ public final class XmlParserStAX {
         }
         final InputStream result = new ByteArrayInputStream(output.toByteArray());
         return result;
+    }
+    
+    /**
+     * Find all child files of a given file.
+     * @param file Input file.
+     * @return Always returns nonnull list, if given file is a file (not a directory)
+     *  returns a list that contains only this file.
+     */
+    private List<File> findFiles(final File file) {
+        final List<File> files = new ArrayList<File>();
+        if (file.canRead()) {
+            if (file.isFile()) {
+                files.add(file);
+                return files;
+            } else {
+                for (final File child : file.listFiles()) {
+                    files.addAll(this.findFiles(child));
+                }
+            }
+        }
+        return files;
+    }
+    
+    /**
+     * Unzips a single file.
+     * 
+     * @param zipFile Input zipped file.
+     * @return {@link InputStream} containing unzipped file or {@code null} if there
+     * was an error during unzipping.
+     */
+    private InputStream unzip(final File zipFile) {
+        Validate.isTrue(zipFile.getName().endsWith("zip"), "Input file is not zipped.");
+        int bufferSize = 2048;
+
+        try {
+            ZipFile zip = new ZipFile(zipFile);
+            Enumeration zipFileEntries = zip.entries();
+            // Process each entry
+            while (zipFileEntries.hasMoreElements()) {
+                // grab a zip file entry
+                ZipEntry entry = (ZipEntry) zipFileEntries.nextElement();
+
+                if (!entry.isDirectory()) {
+
+                        final BufferedInputStream is = new BufferedInputStream(zip.getInputStream(entry));
+                        int currentByte;
+                        // establish buffer for writing file
+                        byte data[] = new byte[bufferSize];
+
+                        // write the current file to disk
+                        ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+                        // read and write until last byte is encountered
+                        while ((currentByte = is.read(data, 0, bufferSize)) != -1) {
+                            out.write(data, 0, currentByte);
+                        }
+                        is.close();
+                        return new ByteArrayInputStream(out.toByteArray());
+
+                }
+            }
+        } catch (final ZipException ex) {
+            logger.warn("Error while unzipping file.", ex);
+        } catch (final IOException ex) {
+            logger.warn("Error while unzipping file.", ex);
+        }
+        return null;
     }
     
 }
