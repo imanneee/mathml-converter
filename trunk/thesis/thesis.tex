@@ -174,7 +174,6 @@ Content MathML provides two ways of defining the operator. The first one is a se
 </math>
 \end{lstlisting}
 \caption{Expression $e=m \cdot c^2$ in Content MathML}
-\label{fig:presentationmathml}
 \end{figure}
 
 In MathML 3, a subset of Content MathML elements is defined: Strict Content MathML. This uses only minimal, but sufficient, amount of elements, most importantly allows only the usage of <csymbol> element for defining operators. Strict Content MathML is designed to be compatible with OpenMath standard.
@@ -199,7 +198,6 @@ In MathML 3, a subset of Content MathML elements is defined: Strict Content Math
 </math>
 \end{lstlisting}
 \caption{Expression $e=m \cdot c^2$ in Strict Content MathML}
-\label{fig:presentationmathml}
 \end{figure}
 
 \section{Creating MathML Markup}
@@ -371,6 +369,7 @@ Unfortunately the disadvantages of XML data binding are numerous. The time and s
 Since MathML consists of hundreds of elements and each one has to be mapped to a class when using XML data binding method, writing the bindings by hand is out of a question. There is however an XML Schema of MathML available that could be used to generate said bindings. Unfortunately attempts of code generation from this schema failed. Moreover if MathML markup was embedded inside another XML markup, such as XHTML, the bindings for MathML only would not be sufficient. 
 
 \subsection{Proposed Solution}
+\label{section:inputProcessingSolution}
 As we can see every method comes with many advantages as well as disadvantages making it the right choice in various situations. We will try to select one method, or a combination of two methods, best suited for our use case and requirements. 
 
 From the developer's point of view, the best solution would be to use XML data binding. However the above outlined disadvantages make it impossible to actually implement this method.
@@ -379,7 +378,7 @@ The next best approach is using the DOM with its easy to traverse structure. But
 
 The optimal solution would be to pass through the document using the streaming method. But streaming method does not provide any means to look ahead or behind on elements that might be needed to process the current element. On the other hand the DOM method is well suited for accessing arbitrary elements in the document tree. So combining these two methods should lead to a satisfactory solution. 
 
-\paragraph*{Solution} The streaming processor traverses the document and every read event that is not a part of the MathML markup automatically writes to the output. As we can see, also the output document is being created dynamically. When the processor encounters a \texttt{math} node it creates a in-memory DOM-like representation of MathML tree. We use a customized DOM-like model, because we do not actually need all the information that full DOM implementations tend to provide (such as namespaces), a simpler implementation suffices. After the MathML model is created (\texttt{math} end element event gets registered) the conversion needs to take place immediately, so that the conversion result can be written to the output in the right place. This way all non-MathML related information is retained and written to the output and for every occurrence of MathML markup in the document a separate DOM-like representation is created and directly converted. See algorithm \ref{alg-processinput} for illustration. 
+\paragraph*{Solution}\label{inputprocessing:solution} The streaming processor traverses the document and every read event that is not a part of the MathML markup automatically writes to the output. As we can see, also the output document is being created dynamically. When the processor encounters a \texttt{math} node it creates a in-memory DOM-like representation of MathML tree. We use a customized DOM-like model, because we do not actually need all the information that full DOM implementations tend to provide (such as namespaces), a simpler implementation suffices. After the MathML model is created (\texttt{math} end element event gets registered) the conversion needs to take place immediately, so that the conversion result can be written to the output in the right place. This way all non-MathML related information is retained and written to the output and for every occurrence of MathML markup in the document a separate DOM-like representation is created and directly converted. See algorithm \ref{alg-processinput} for illustration. 
 
 \begin{algorithm}[!ht]
 \caption{Process input algorithm}
@@ -495,25 +494,114 @@ Therefore we can not determine word order of the expression from the position of
 \subsection{Operators and Symbols}
 As we mentioned before many mathematical operations can be expressed using more than one operator or symbol. Our task lies in identifying operators and symbols belonging to each operation, creating a storage structure for this data and developing a method or methods for searching in this structure, i.e. finding an operation for a given operator. 
 
-Since all operators that denote the same operation are grouped together, we can easily unify the way each operation is converted.
+This way all operators that denote the same operation are grouped together and we can easily unify the way each operation is converted.
 
 \chapter{Implementation}
-\section{Java and XML}
-3-4 pages Options of working with XML in Java, selecting the most suitable and why
-\subsection{StAX}
-1-2 pages More details about StAX
-\subsection{Custom XML Tree Representation}
-1-2 pages Creating custom tree with similar structure as DOM but less additional info and therefore lower space and time requirements
+This chapter discribes various implementation aspects that occurred during the creation of the conversion application. The application is written in Java programming language, mainly because of personal preference of the author. Also the existence and availability of many frameworks and tools for Java language (for working with XML documents among others) are are a big advantage of using this language. 
 
-\section{Presentation MathML}
-4-5 pages Specifics of impementing converter for presentation MathML
-\section{Content MathML}
-4-5 pages Specifics of impementing converter for content MathML, possibly longer
-\subsection{Element \texttt{apply}}
+The application uses Apache Maven for build automation, distribution management and dependency management.
+
+The structure of the application can be seen on \textit{UML component diagram}.
+
+\section{Input Processing}
+As we outlined in section \ref{inputprocessing:solution}, the streaming approach with custom DOM-like internal representation of MathML tree is used. 
+
+In Java two major APIs\footnote{Application programming interface} for streaming processing of XML documents are popular among developers:
+\begin{itemize}
+\item SAX (Simple API for XML) - SAX implements the push principle, reporting events as it encounters them. From the point of view of this application a better approach would be
+\item StAX (Streaming API for XML) - pull principle; the application requests events from the StAX processor. 
+\end{itemize}
+
+This application uses default StAX implementation that is shipped with Java Standard Edition 6 runtime. StAX offers two ways of traversing documents: Cursor API and Iterator API. 
+
+\paragraph*{Cursor API} As the name suggests, the Cursor API provides a cursor with which we can run through the document one event (a more appropriate name might be an infoset element) at a time. The cursor always moves forwards, never backwards. Two main iterfaces are available: \texttt{XMLStremReader} for accessing all possible information retrievable from XML documents and \texttt{XMLStreamWriter} which in turn provides methods for outputting this information.
+
+\begin{figure}[!ht]
+\lstset{language=Java,frame=lines}
+\begin{lstlisting}
+public interface XMLStreamReader {
+	public int next();
+   public boolean hasNext();
+   public String getText();		
+  	public String getLocalName();
+  	public String getNamespaceURI();
+  	...
+} 
+
+public interface XMLStreamWriter {
+  	public void writeStartElement(String localName);
+  	public void writeEndElement();
+ 	public void writeCharacters(String text);
+	... 
+}
+\end{lstlisting}
+\caption{Example of methods in \texttt{XMLStreamReader} and \texttt{XMLStreamWriter} interfaces}
+\label{fig:staxcursorapi}
+\end{figure}
+
+\paragraph*{Iterator API} The Iterator API represents XML stream as a set of discrete event objects. Much like the Cursor API, the Iterator API provides two interfaces for reading and writing these event objects: \texttt{XMLEventReader} and \texttt{XMLEventWriter}. The \texttt{XMLEventReader} extends \texttt{java.util.Iterator} interface, which means, that values returned by \texttt{XMLEventReader} can be cached and work with standard Java Iterator.
+
+\begin{figure}[!ht]
+\lstset{language=Java,frame=lines}
+\begin{lstlisting}
+public interface XMLEventReader extends Iterator {
+  	public XMLEvent nextEvent();
+  	public boolean hasNext();
+  	public XMLEvent peek();
+  	...
+} 
+
+public interface XMLEventWriter {
+  public void flush();
+  public void close();
+  public void add(XMLEvent e);
+  public void add(Attribute attribute);
+  ...
+} 
+\end{lstlisting}
+\caption{Example of methods in \texttt{XMLEventReader} and \texttt{XMLEventWriter} interfaces}
+\label{fig:staxinterfaceapi}
+\end{figure}
+
+There are also other implementations available, Woodstox\footnote{\url{http://woodstox.codehaus.org}} or Aalto\footnote{\url{http://wiki.fasterxml.com/AaltoHome}}, that might provide better performance or have a possibility to set up the processor for specific use (i.e., for fast processing, low memory usage). 
+\\
+@todo Vymenit implementaciu a porovnat vysledky v poslednej kapitole
+
+\subsection{XML Parser}
+The class \texttt{XmlParserStAX} is responsible for processing input XML documents and at the same time creating output documents in the same run through the file. It also provides a method for processing strings. In this case the parser processes the document defined by this string the same way as any other input document, however the ouput contains only converted strings, without any of original documents elements outside MathML markup.
+\begin{figure}[!ht]
+\lstset{language=Java,frame=lines}
+\begin{lstlisting}
+public class XmlParserStAX {
+	public String parse(final String inputString, final Locale language);
+	public File parse(final File file, final Locale language);
+	public List<File> parse(final List<File> files, final Locale language);
+}
+\end{lstlisting}
+\caption{Public methods of \texttt{XmlParserStAX} class}
+\label{fig:xmlparserstax}
+\end{figure}
+
+The parser is capable of accepting a folder (instead of a document) and processing all files in this folder, recreating the same file structure in the path entered by the user. Also based on user preference, the canonicalization of the input document takes place inside these methods.
+
+
+\begin{itemize}
+\item Streaming pull vs push, specifically in Java, \textbf{StAX}, SAX
+
+	\begin{itemize}
+	\item \url{http://www.jcp.org/en/jsr/detail?id=173}
+	\item \url{http://javapapers.com/jee/java-stax/}
+	\end{itemize}
+
+\end{itemize}
 
 \chapter{Results}
-\section{Gensim}
 \section{MREC Corpus}
+\url{https://mir.fi.muni.cz/MREC/index.html}\\
+\\ \cite{mrec2011}
+\\
+\section{Changing StAX Implementation}
+
 
 \chapter{Conclusion}
 1 page
