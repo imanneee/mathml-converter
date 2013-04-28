@@ -2,6 +2,8 @@ package cz.muni.fi.mathml.mathml2text.converter.impl;
 
 import java.util.Collection;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.google.common.collect.ImmutableList;
 
 
@@ -16,332 +18,408 @@ public enum Operation {
     /**
      * Addition operator.
      */
-    ADD("plus", "+", "&plus;", "plus"),
+    ADD("plus", OperationType.INFIX_OR_PREFIX, "+", "&plus;", "plus"),
     /**
      * Subtraction operator.
      */
-    SUBTRACT("minus", "-", "&minus;", "minus"),
+    SUBTRACT("minus", OperationType.INFIX_OR_PREFIX, "-", "&minus;", "minus"),
     /**
      * Multiplication operator.
      */
-    MULTIPLY("times", "&times;", "*", "times", "&sdot;"),
+    MULTIPLY("times", OperationType.INFIX, "&times;", "*", "times", "&sdot;", "&#8901;", "&#x22C5;", "⋅", "&#8290;", "&#x2062;"),
     /**
      * Division operator.
      */
-    DIVIDE("divide", "/", "&divide;", "divide", ":"),
+    DIVIDE("divide", OperationType.INFIX, "/", "&divide;", "divide", ":"),
     /**
      * Equals.
      */
-    EQUALS("equals", "=", "eq"),
+    EQUALS("equals", OperationType.INFIX, "=", "eq"),
     /**
      * Logarithm.
      */
-    LOGARITHM("logarithm", "log"),
+    LOGARITHM("logarithm", OperationType.SPECIAL, "log"),
     /**
      * Natural logarithm.
      */
-    NATURAL_LOGARITHM("naturalLogarithm", "ln"),
+    NATURAL_LOGARITHM("naturalLogarithm", OperationType.SPECIAL, "ln"),
     /**
      * Square. (to the power of 2)
      */
-    SQUARE("square", "2"),
+    SQUARE("square", OperationType.SPECIAL, "2"),
     /**
      * Limit.
      */
-    LIMIT("limit", "lim"),
+    LIMIT("limit", OperationType.SPECIAL, "lim"),
     /**
      * A variable approaches a value.
      */
-    APPROACHES("approaches", "&rarr;", "rarr", "→"),
+    APPROACHES("approaches", OperationType.INFIX, "&rarr;", "rarr", "→"),
     /**
      * Integral.
      */
-    INTEGRAL("integral", "int", "&int;"),
+    INTEGRAL("integral", OperationType.SPECIAL, "int", "&int;"),
     /**
      * Differential of integral.
      */
-    DIFFERENTIAL("differential", "dd", "&dd;"),
+    DIFFERENTIAL("differential", OperationType.SPECIAL, "dd", "&dd;"),
     /**
      * Summation.
      */
-    SUMMATION("summation", "sum", "&sum;"),
+    SUMMATION("summation", OperationType.SPECIAL, "sum", "&sum;"),
     /**
      * Product.
      */
-    PRODUCT("product", "prod", "&prod;", "∏", "&amp;prod;"),
+    PRODUCT("product", OperationType.SPECIAL, "prod", "&prod;", "∏", "&amp;prod;"),
     /**
      * Sine.
      */
-    SIN("sin", "sin"),
+    SIN("sin", OperationType.PREFIX, "sin"),
     /**
      * Cosine.
      */
-    COS("cos", "cos"),
+    COS("cos", OperationType.PREFIX, "cos"),
     /**
      * Tangent
      */
-    TAN("tan", "tan"),
+    TAN("tan", OperationType.PREFIX, "tan"),
     /**
      * Secant.
      */
-    SEC("sec", "sec"),
+    SEC("sec", OperationType.PREFIX, "sec"),
     /**
      * Cosecant.
      */
-    CSC("csc", "csc"),
+    CSC("csc", OperationType.PREFIX, "csc"),
     /**
      * Cotangent.
      */
-    COT("cot", "cot"),
+    COT("cot", OperationType.PREFIX, "cot"),
     /**
      * Hyperbolic sine.
      */
-    SINH("sinh", "sinh"),
+    SINH("sinh", OperationType.PREFIX, "sinh"),
     /**
      * Hyperbolic cosine.
      */
-    COSH("cosh", "cosh"),
+    COSH("cosh", OperationType.PREFIX, "cosh"),
     /**
      * Hyperbolic tangent.
      */
-    TANH("tanh", "tanh"),
+    TANH("tanh", OperationType.PREFIX, "tanh"),
     /**
      * Hyperbolic secant.
      */
-    SECH("sech", "sech"),
+    SECH("sech", OperationType.PREFIX, "sech"),
     /**
      * Hyperbolic cosecant.
      */
-    CSCH("csch", "csch"),
+    CSCH("csch", OperationType.PREFIX, "csch"),
     /**
      * Hyperbolic cotangent.
      */
-    COTH("coth", "coth"),
+    COTH("coth", OperationType.PREFIX, "coth"),
     /**
      * Arcsine.
      */
-    ARCSIN("arcsin", "arcsin"),
+    ARCSIN("arcsin", OperationType.PREFIX, "arcsin"),
     /**
      * Arccosine.
      */
-    ARCCOS("arccos", "arccos"),
+    ARCCOS("arccos", OperationType.PREFIX, "arccos"),
     /**
      * Arctangent.
      */
-    ARCTAN("arctan", "arctan"),
+    ARCTAN("arctan", OperationType.PREFIX, "arctan"),
     /**
      * Inverse hyperbolic cosine.
      */
-    ARCCOSH("arccosh", "arccosh"),
+    ARCCOSH("arccosh", OperationType.PREFIX, "arccosh"),
     /**
      * Arccotangent.
      */
-    ARCCOT("arccot", "arccot"),
+    ARCCOT("arccot", OperationType.PREFIX, "arccot"),
     /**
      * Inverse hyperbolic tangent.
      */
-    ARCCOTH("arccoth", "arccoth"),
+    ARCCOTH("arccoth", OperationType.PREFIX, "arccoth"),
     /**
      * Inverse cosecant.
      */
-    ARCCSC("arccsc", "arccsc"),
+    ARCCSC("arccsc", OperationType.PREFIX, "arccsc"),
     /**
      * Inverse hyperbolic cosecant.
      */
-    ARCCSCH("arccsch", "arccsch"),
+    ARCCSCH("arccsch", OperationType.PREFIX, "arccsch"),
     /**
      * Inverse secant.
      */
-    ARCSEC("arcsec", "arcsec"),
+    ARCSEC("arcsec", OperationType.PREFIX, "arcsec"),
     /**
      * Inverse hyperbolic secant.
      */
-    ARCSECH("arcsech", "arcsech"),
+    ARCSECH("arcsech", OperationType.PREFIX, "arcsech"),
     /**
      * Inverse hyperbolic sine.
      */
-    ARCSINH("arcsinh", "arcsinh"),
+    ARCSINH("arcsinh", OperationType.PREFIX, "arcsinh"),
     /**
      * Inverse hyperbolic tangent.
      */
-    ARCTANH("arctanh", "arctanh"),
+    ARCTANH("arctanh", OperationType.PREFIX, "arctanh"),
     /**
      * Not equal.
      */
-    NOT_EQUAL_TO("neq", "neq", "&neq;"),
+    NOT_EQUAL_TO("neq", OperationType.INFIX, "neq", "&neq;"),
     /**
      * Greater than.
      */
-    GREATER_THAN("gt", "gt", "&gt;"),
+    GREATER_THAN("gt", OperationType.INFIX, "gt", "&gt;"),
     /**
      * Lower than.
      */
-    LOWER_THAN("lt", "lt", "&lt;"),
+    LOWER_THAN("lt", OperationType.INFIX, "lt", "&lt;"),
     /**
      * Greater than or equal to.
      */
-    GREATER_THAN_OR_EQUAL_TO("geq", "geq", "&geq;"),
+    GREATER_THAN_OR_EQUAL_TO("geq", OperationType.INFIX, "geq", "&geq;"),
     /**
      * Lower than or equal to.
      */
-    LOWER_THAN_OR_EQUAL_TO("leq", "leq", "&leq;"),
+    LOWER_THAN_OR_EQUAL_TO("leq", OperationType.INFIX, "leq", "&leq;"),
     /**
      * Equivalence.
      */
-    EQUIVALENT_TO("equivalent", "equivalent", "&hArr;"),
+    EQUIVALENT_TO("equivalent", OperationType.INFIX, "equivalent", "&hArr;", "⇔"),
     /**
      * Approximation.
      */
-    APPROXIMATELY("approx", "approx"),
+    APPROXIMATELY("approx", OperationType.INFIX, "approx", "≈"),
     /**
      * Logical and.
      */
-    AND("and", "and"),
+    AND("and", OperationType.INFIX, "and"),
     /**
      * Logical or.
      */
-    OR("or", "or"),
+    OR("or", OperationType.INFIX, "or"),
     /**
      * Logical xor.
      */
-    XOR("xor", "xor"),
+    XOR("xor", OperationType.INFIX, "xor"),
     /**
      * Logical implication.
      */
-    IMPLIES("implies", "implies"),
+    IMPLIES("implies", OperationType.INFIX, "implies"),
     /**
      * Factor of.
      */
-    FACTOR_OF("factorof", "factorof"),
+    FACTOR_OF("factorof", OperationType.INFIX, "factorof"),
     /**
      * Union of sets.
      */
-    UNION("union", "union"),
+    UNION("union", OperationType.INFIX, "union"),
     /**
      * Intersection of sets.
      */
-    INTERSECT("intersect", "intersect"),
+    INTERSECT("intersect", OperationType.INFIX, "intersect"),
     /**
      * Set inclusion.
      */
-    IN("in", "in", "∈", "&isin;"),
+    IN("in", OperationType.INFIX, "in", "∈", "&isin;"),
     /**
      * Negated set inclusion.
      */
-    NOTIN("notin", "notin"),
+    NOTIN("notin", OperationType.INFIX, "notin"),
     /**
      * Subset.
      */
-    SUBSET("subset", "subset", "⊂", "&sub;"),
+    SUBSET("subset", OperationType.INFIX, "subset", "⊂", "&sub;"),
     /**
      * Proper subset.
      */
-    PRSUBSET("prsubset", "prsubset"),
+    PRSUBSET("prsubset", OperationType.INFIX, "prsubset"),
     /**
      * Negated subset.
      */
-    NOTSUBSET("notsubset", "notsubset"),
+    NOTSUBSET("notsubset", OperationType.INFIX, "notsubset"),
     /**
      * Negated proper subset.
      */
-    NOTPRSUBSET("notprsubset", "notprsubset"),
+    NOTPRSUBSET("notprsubset", OperationType.INFIX, "notprsubset"),
     /**
      * Set difference.
      */
-    SETDIFF("setdiff", "setdiff"),
+    SETDIFF("setdiff", OperationType.INFIX, "setdiff"),
     /**
      * Logical negation.
      */
-    NOT("not", "not"),
+    NOT("not", OperationType.PREFIX, "not"),
     /**
      * Absolute value.
      */
-    ABSOLUTE_VALUE("abs", "abs"),
+    ABSOLUTE_VALUE("abs", OperationType.PREFIX, "abs"),
     /**
      * Function that rounds down to the nearest integer.
      */
-    FLOOR("floor", "floor"),
+    FLOOR("floor", OperationType.PREFIX, "floor"),
     /**
      * Function that rounds up to the nearest integer.
      */
-    CEILING("ceiling", "ceiling"),
+    CEILING("ceiling", OperationType.PREFIX, "ceiling"),
     /**
      * Exponentiation with base <i>e</i>.
      */
-    EXPONENTIAL("exp", "exp"),
+    EXPONENTIAL("exp", OperationType.SPECIAL, "exp"),
     /**
      * Set cardinality.
      */
-    CARDINALITY("card", "card"),
+    CARDINALITY("card", OperationType.SPECIAL, "card"),
     /**
      * Remainder.
      */
-    REMAINDER("rem", "rem"),
+    REMAINDER("rem", OperationType.SPECIAL, "rem"),
     /**
      * Integer division operator.
      */
-    QUOTIENT("quotient", "quotient"),
+    QUOTIENT("quotient", OperationType.SPECIAL, "quotient"),
     /**
      * Exponentiation.
      */
-    EXPONENTIATION("power", "power"),
+    EXPONENTIATION("power", OperationType.SPECIAL, "power"),
     /**
      * Root extraction.
      */
-    ROOT("root", "root"),
+    ROOT("root", OperationType.SPECIAL, "root"),
     /**
      * Open parentheses.
      */
-    OPEN_BRACES("open_braces", "("),
+    OPEN_BRACES("open_braces", OperationType.SPECIAL, "("),
     /**
      * Close parentheses.
      */
-    CLOSE_BRACES("close_braces", ")"),
+    CLOSE_BRACES("close_braces", OperationType.SPECIAL, ")"),
     /**
      * Superscript.
      */
-    SUPERSCRIPT("superscript", "superscript"),
+    SUPERSCRIPT("superscript", OperationType.SPECIAL, "superscript"),
     /**
      * Subscript.
      */
-    SUBSCRIPT("subscript", "subscript"),
+    SUBSCRIPT("subscript", OperationType.SPECIAL, "subscript"),
     /**
      * Some files use ci instead of csymbol to express function.
      */
-    CI("ci"),
+    CI("ci", OperationType.SPECIAL),
     /**
      * Assign value to variable.
      */
-    ASSIGN("assign", ":="),
+    ASSIGN("assign", OperationType.SPECIAL, ":="),
     /**
      * Tilde above a letter.
      */
-    TILDE("tilde", "~"),
+    TILDE("tilde", OperationType.EVERY_ARGUMENT, "~", "&#126;", "&#x007E;", "&#x7E;"),
     /**
      * Dash above a letter.
      */
-    DASHED("dashed", "¯"),
+    DASHED("dashed", OperationType.EVERY_ARGUMENT, "¯"),
     /**
      * Interval.
      */
-    INTERVAL("interval", "interval"),
+    INTERVAL("interval", OperationType.SPECIAL, "interval"),
     /**
      * Function composition.
      */
-    COMPOSE("compose", "compose"),
+    COMPOSE("compose", OperationType.SPECIAL, "compose"),
     /**
      * Vector (a matrix with one column).
      */
-    VECTOR("vector", "vector"),
+    VECTOR("vector", OperationType.SPECIAL, "vector"),
     /**
      * Direct sum.
      */
-    DIRECT_SUM("direct_sum", "&oplus;", "⊕");
+    DIRECT_SUM("direct_sum", OperationType.SPECIAL, "&oplus;", "⊕"),
+    /**
+     * Plus minus.
+     */
+    PLUS_MINUS("plus_minus", OperationType.INFIX, "&plusmn;", "±"),
+    /**
+     * Almost equal.
+     */
+    SIMEQ("simeq", OperationType.INFIX, "≃"),
+    /**
+     * Roughly similar.
+     */
+    SIM("sim", OperationType.INFIX, "∼", "&#8764;", "&#x223C;", "&sim;"),
+    /**
+     * Far greater than.
+     */
+    FAR_GT("far_gt", OperationType.INFIX, "≫"),
+    /**
+     * Far lower than.
+     */
+    FAR_LT("far_lt", OperationType.INFIX, "≪"),
+    /**
+     * Comma.
+     */
+    COMMA("comma", OperationType.INFIX, ",", "&#44;"),
+    /**
+     * Dot.
+     */
+    DOT("dot", OperationType.INFIX, ".", "&#46;"),
+    /**
+     * Proportional to.
+     */
+    PROPORTIONAL_TO("proportional_to", OperationType.INFIX, "∝", "&#8733;", "&#x221D;", "&prop;", "prop"),
+    /**
+     * Less than or equivalent to.
+     */
+    LT_EQUIV("lt_equiv", OperationType.INFIX, "≲", "&#8818;", "&#x2272;"),
+    /**
+     * Greater than or equivalent to.
+     */
+    GT_EQUIV("gt_equiv", OperationType.INFIX, "≳", "&#8819;", "&#x2273;"),
+    /**
+     * Identical to.
+     */
+    IDENTICAL("identical_to", OperationType.INFIX, "≡", "&#8801;", "&#x2261;"),
+    /**
+     * Set.
+     */
+    SET("set", OperationType.PREFIX_MULTI, "set"),
+    /**
+     * List.
+     */
+    LIST("list", OperationType.PREFIX_MULTI, "list"),
+    /**
+     * Prime - minutes, feet.
+     */
+    PRIME("prime", OperationType.INFIX, "&#8242;", "&#x2032;"),
+    /**
+     * Double prime - seconds, inches.
+     */
+    DOUBLE_PRIME("double_prime", OperationType.INFIX, "&#8243;", "&#x2033;"),
+    /**
+     * A dot above a letter.
+     */
+    DOT_ABOVE("dot_above", OperationType.EVERY_ARGUMENT, "&#729;", "&#x2D9;", "˙"),
+    /**
+     * An up pointing arrowhead above a letter.
+     */
+    UP_ARROWHEAD("up_arrowhead", OperationType.EVERY_ARGUMENT, "&#8963;", "&#x2303;", "⌃"),
+    /**
+     * Empty or {@code null} function.
+     */
+    EMPTY("empty", OperationType.INFIX);
     
     /**
      * Localization key for this operation.
      */
     private final String key;
+    /**
+     * Type of the operation.
+     */
+    private final OperationType type;
     /**
      * Possible symbols for this operation.
      */
@@ -351,8 +429,9 @@ public enum Operation {
      * @param key Localization key.
      * @param symbols Possible symbols.
      */
-    private Operation(final String key, final String... symbols) {
+    private Operation(final String key, final OperationType type, final String... symbols) {
         this.key = key;
+        this.type = type;
         final ImmutableList.Builder<String> builder = new ImmutableList.Builder<String>();
         builder.add(symbols);
         this.symbols = builder.build();
@@ -364,6 +443,14 @@ public enum Operation {
      */
     public String getKey() {
         return this.key;
+    }
+    
+    /**
+     * Returns the type of the operation.
+     * @return Type of the operation.
+     */
+    public OperationType getType() {
+        return this.type;
     }
     
     /**
@@ -380,6 +467,9 @@ public enum Operation {
      * @return Operation for symbol.
      */
     public static Operation forSymbol(final String symbol) {
+        if (StringUtils.isBlank(symbol)) {
+            return Operation.EMPTY;
+        }
         for (final Operation operation : Operation.values()) {
             if (operation.getSymbols().contains(symbol)) {
                 return operation;

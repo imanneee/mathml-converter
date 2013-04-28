@@ -1,5 +1,8 @@
 package cz.muni.fi.mathml.mathml2text.converter.impl.content;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +25,8 @@ import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberFormat;
  */
 public final class Apply {
 
+    //@todo sum, product
+    
     private static final Logger logger = LoggerFactory.getLogger(Apply.class);
     
     public static String process(final MathMLNode node, final ConverterSettings settings) {
@@ -35,6 +40,7 @@ public final class Apply {
             function = firstChild.getValue();
         } else if (MathMLElement.APPLY.equals(firstChild.getType())) {
             // or another function can be used in apply
+            //@todo maybe do not return but process other children (can there be any?)
             builder.append(Node.process(firstChild, settings));
             builder.append(settings.getProperty("applied_to"));
             for (int index = 1; index < node.getChildren().size(); ++index) {
@@ -50,12 +56,33 @@ public final class Apply {
         }
         // mark first child as processed to prevent its conversion at later time
         firstChild.setProcessed();
+        
+        // if the function is defined by cn or ci element but has no arguments
+        // return just the function (this is probably due to the not-so-correct
+        // conversion of LaTeX files to MathML)
+        if ((MathMLElement.CN.getElementName().equals(function) 
+                || MathMLElement.CI.getElementName().equals(function)) 
+                && node.getChildren().size() == 1) {
+            //@todo some apply elements have only one child - cn/ci - what to do?
+            builder.append(Node.process(firstChild, settings));
+            return builder.toString();
+        }
+        
         // find operation for given function, if no function was defined or 
         // operation is not defined in enumeration return current content in
         // StringBuilder
         Operation operation = Operation.forSymbol(function);
         if (operation == null) {
-            logger.info("Unknown operation [{}]", function);
+            if (function == null) {
+                logger.debug("Function is null. First child: [{}]", firstChild.getType().getElementName());
+                return Strings.EMPTY;
+            }
+            List<Integer> chars = new ArrayList<Integer>();
+            for (int i = 0; i < function.length(); ++i) {
+                chars.add((int)function.charAt(i));
+            }
+            String join = StringUtils.join(chars, ",");
+            logger.info("Unknown operation [{}] [{}]", function, join);
             return Strings.EMPTY;
         }
          
@@ -64,7 +91,71 @@ public final class Apply {
             logger.info("Unknown function [{}]", function);
         }
         
-        // process based on operation
+        if ((Operation.ADD.equals(operation) || Operation.SUBTRACT.equals(operation)) 
+                && node.getChildren().size() == 1) {
+            // standalone plus or minus sign
+            builder.append(functionName);
+            return builder.toString();
+        }
+        
+        // process operation based on its type
+        switch (operation.getType()) {
+            case INFIX: {
+                if (node.getChildren().size() == 1) {
+                    logger.debug(String.format("Infix operator [{}] has no arguments.", operation.getKey()));
+                    builder.append(functionName);
+                    return builder.toString();
+                }
+                builder.append(Node.process(node.getChildren().get(1), settings));
+                int count = node.getChildren().size();
+                for (int index = 2; index < count; ++index) {
+                    builder.append(functionName);
+                    builder.append(Node.process(node.getChildren().get(index), settings));
+                }
+                return builder.toString();
+            }
+            case PREFIX: {
+                builder.append(functionName);
+                builder.append(Node.process(node.getChildren().get(1), settings));
+                return builder.toString();
+            }
+            case PREFIX_MULTI: {
+                builder.append(Node.process(node.getChildren().get(1), settings));
+                int count = node.getChildren().size();
+                for (int index = 2; index < count; ++index) {
+                    builder.append(functionName);
+                    builder.append(Node.process(node.getChildren().get(index), settings));
+                }
+                return builder.toString();
+            }
+            case EVERY_ARGUMENT: {
+                for (int index = 1; index < node.getChildren().size(); ++index) {
+                    builder.append(Node.process(node.getChildren().get(index), settings));
+                    builder.append(settings.getProperty("with"));
+                    builder.append(functionName);
+                }
+            }
+            case INFIX_OR_PREFIX: {
+                // based on the number of children the operation is either in prefix form (number == 2)
+                // or in infix form (number > 2)
+                if (node.getChildren().size() == 2) {
+                    builder.append(functionName);
+                    builder.append(Node.process(node.getChildren().get(1), settings));
+                    return builder.toString();
+                } else {
+                    builder.append(Node.process(node.getChildren().get(1), settings));
+                    int count = node.getChildren().size();
+                    for (int index = 2; index < count; ++index) {
+                        builder.append(functionName);
+                        builder.append(Node.process(node.getChildren().get(index), settings));
+                    }
+                    return builder.toString();
+                }
+            }
+            default: break;
+        }
+        
+        // all other operations have to be processed individually
         switch (operation) {
             case SUPERSCRIPT: case SUBSCRIPT: case APPROACHES: {
                 builder.append(Node.process(node.getChildren().get(1), settings));
@@ -121,21 +212,6 @@ public final class Apply {
                 }
                 return builder.toString();
             }
-            case SUBTRACT: {
-                if (node.getChildren().size() == 2) {
-                    // unary function (minus one, etc)
-                    builder.append(functionName);
-                    builder.append(Node.process(node.getChildren().get(1), settings));
-                    return builder.toString();
-                } else {
-                    break;
-                }
-            }
-            case TILDE: case DASHED: {
-                builder.append(Node.process(node.getChildren().get(1), settings));
-                builder.append(functionName);
-                return builder.toString();
-            }
             case INTERVAL: {
                 builder.append(functionName);
                 builder.append(settings.getProperty("from"));
@@ -145,6 +221,10 @@ public final class Apply {
                 return builder.toString();
             }
             case COMPOSE: {
+                if (node.getChildren().size() < 2) {
+                    // nothing to compose
+                    return builder.toString();
+                }
                 builder.append(functionName);
                 builder.append(Node.process(node.getChildren().get(1), settings));
                 for (int index = 2; index < node.getChildren().size(); ++index) {
@@ -171,13 +251,6 @@ public final class Apply {
             default: // do nothing
         }
         
-        if (Operation.SUBTRACT.equals(operation) && node.getChildren().size() == 2) {
-            // unary function (minus one, etc)
-            builder.append(functionName);
-            builder.append(Node.process(node.getChildren().get(1), settings));
-            return builder.toString();
-        }
-
         // try to corresponding element to given function, if none is found
         // try a look up for operation
         // this is done to simplify number of cases needed for processing, 

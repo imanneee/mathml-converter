@@ -104,8 +104,9 @@
     <entry key="superscript">with upper index</entry>
     <entry key="assign">assign to</entry>
     <entry key="value">value</entry>
-    <entry key="tilde">wiggled</entry>
-    <entry key="dashed">dashed</entry>
+    <entry key="sim">is roughly similar</entry>
+    <entry key="dashed">dash</entry>
+    <entry key="tilde">tilde</entry>
     <entry key="interval">interval</entry>
     <entry key="compose">the composition of</entry>
     <entry key="vector">vector with</entry>
@@ -137,5 +138,22 @@
     <entry key="psi">psi</entry>
     <entry key="omega">omega</entry>
     <entry key="direct_sum">direct sum</entry>
+    <entry key="plus_minus">plus-minus</entry>
+    <entry key="simeq">is similar to</entry>
+    <entry key="far_gt">is far greater than</entry>
+    <entry key="far_lt">is far lower than</entry>
+    <entry key="comma">comma</entry>
+    <entry key="dot">dot</entry>
+    <entry key="proportional_to">is proportional to</entry>
+    <entry key="lt_equiv">is less than or equivalent to</entry>
+    <entry key="gt_equiv">is greater than or equivalent to</entry>
+    <entry key="identical_to">is identical to</entry>
+    <entry key="set">set with elements</entry>
+    <entry key="list">list with elements</entry>
+    <entry key="prime">prime</entry>
+    <entry key="double_prime">double prime</entry>
+    <entry key="dot_above">dot above</entry>
+    <entry key="up_arrowhead">up arrowhead</entry>
+    <entry key="with">with</entry>
     <entry key=""></entry>
 </properties>
