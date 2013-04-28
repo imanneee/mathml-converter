@@ -104,8 +104,9 @@
     <entry key="superscript">s horním indexem</entry>
     <entry key="assign">přiřaď do</entry>
     <entry key="value">hodnotu</entry>
-    <entry key="tilde">s vlnkou</entry>
-    <entry key="dashed">s čárou</entry>
+    <entry key="sim">je zhruba stejný</entry>
+    <entry key="dashed">čára</entry>
+    <entry key="tilde">vlnka</entry>
     <entry key="interval">interval</entry>
     <entry key="compose">kompozice ze</entry>
     <entry key="vector">vektor s</entry>
@@ -136,5 +137,20 @@
     <entry key="chi">chí</entry>
     <entry key="psi">psí</entry>
     <entry key="omega">Ó mega</entry>
+    <entry key="far_gt">is far greater than</entry>
+    <entry key="far_lt">is far lower than</entry>
+    <entry key="comma">comma</entry>
+    <entry key="dot">dot</entry>
+    <entry key="proportional_to">is proportional to</entry>
+    <entry key="lt_equiv">is less than or equivalent to</entry>
+    <entry key="gt_equiv">is greater than or equivalent to</entry>
+    <entry key="identical_to">is identical to</entry>
+    <entry key="set">set with elements</entry>
+    <entry key="list">list with elements</entry>
+    <entry key="prime">prime</entry>
+    <entry key="double_prime">double prime</entry>
+    <entry key="dot_above">dot above</entry>
+    <entry key="up_arrowhead">up arrowhead</entry>
+    <entry key="with">with</entry>
     <entry key=""></entry>
 </properties>

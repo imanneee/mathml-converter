@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import cz.muni.fi.mathml.mathml2text.Strings;
 import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
 import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
-import cz.muni.fi.mathml.mathml2text.converter.impl.MathMLConverter;
 import cz.muni.fi.mathml.mathml2text.converter.impl.Operation;
 import cz.muni.fi.mathml.mathml2text.converter.impl.util.InputValueUtils;
 
@@ -37,7 +36,7 @@ public final class Mo {
             return settings.getProperty(operator.getKey());
         } else {
             final String htmlEntity = InputValueUtils.buildHtmlEntityCode(node.getValue());
-            LoggerFactory.getLogger(MathMLConverter.class).warn("Operation [{}] not supported.", htmlEntity);
+            LoggerFactory.getLogger(Mo.class).warn("Operation [{}] not supported. Original operator [{}].", htmlEntity, op);
             return htmlEntity + Strings.SPACE;
         }
     }

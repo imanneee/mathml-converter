@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import cz.muni.fi.mathml.mathml2text.Strings;
 import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
 import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
-import cz.muni.fi.mathml.mathml2text.converter.impl.MathMLConverter;
 
 /**
  * Specific implementation of <code>&lt;mn&gt;</code> node.
@@ -29,10 +28,17 @@ public final class Mn {
             throw new IllegalStateException("[mi] node should have its value set.");
         }
         try {
+            String strippedValue = node.getValue().trim();
+            for (final Character c : Strings.VALUE_EMPTY_CHARS) {
+                strippedValue = strippedValue.replace(c.toString(), Strings.EMPTY);
+//                strippedValue = StringUtils.strip(strippedValue, c.toString());
+            } 
             final String number = settings.getNumberTransformer().transform(node.getValue());
             return number + Strings.SPACE;
         } catch (final NumberFormatException ex) {
-            LoggerFactory.getLogger(MathMLConverter.class).warn(String.format("Cannot transform string [%1$s] to number.", node.getValue()), ex);
+            LoggerFactory.getLogger(Mn.class).warn(String.format("Cannot transform string [%1$s] to number.", node.getValue()), ex);
+        } catch (final NullPointerException ex) {
+            LoggerFactory.getLogger(Mn.class).warn(String.format("Cannot transform string [%1$s] to number.", node.getValue()), ex);
         }
         return Strings.EMPTY;
     }
