@@ -5,6 +5,14 @@ Jos{\'e} Grimm.
 \newblock {Tralics, a \LaTeX to XML Translator}.
 \newblock {\em TUGboat}, 24(3):377--388, 2003.
 
+\bibitem{mrec2011}
+Martin L{\'\i}{\v{s}}ka, Petr Sojka, Michal R{\r{u}}{\v{z}}i{\v{c}}ka, and Petr
+  Mravec.
+\newblock {Web Interface and Collection for Mathematical Retrieval: WebMIaS and
+  MREC}.
+\newblock {\em Towards a Digital Mathematics Library. Bertinoro, Italy, July
+  20-21st, 2011}, pages 77--84, 2011.
+
 \bibitem{aster1994}
 TV~Raman.
 \newblock {\em {Audio System for Technical Readings}}.
