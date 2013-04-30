@@ -5,33 +5,35 @@
 \contentsline {section}{\numberline {3.1}\slshape Structure}{5}{section.3.1}
 \contentsline {subsection}{\numberline {3.1.1}\rmfamily Presentation MathML}{6}{subsection.3.1.1}
 \contentsline {subsection}{\numberline {3.1.2}\rmfamily Content MathML}{7}{subsection.3.1.2}
-\contentsline {section}{\numberline {3.2}\slshape Creating MathML Markup}{8}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}\rmfamily \textlatin {\LaTeX }ML}{9}{subsection.3.2.1}
+\contentsline {section}{\numberline {3.2}\slshape Creating MathML Markup}{9}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\rmfamily \textlatin {\LaTeX }ML}{10}{subsection.3.2.1}
 \contentsline {subsection}{\numberline {3.2.2}\rmfamily Tralics}{10}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}\rmfamily MaxTract}{10}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.3}\rmfamily MaxTract}{11}{subsection.3.2.3}
 \contentsline {subsection}{\numberline {3.2.4}\rmfamily INFTY Reader}{11}{subsection.3.2.4}
-\contentsline {section}{\numberline {3.3}\slshape Canonicalization}{11}{section.3.3}
-\contentsline {section}{\numberline {3.4}\slshape Status Quo of Current Tools}{11}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}\rmfamily DAISY}{11}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.2.5}\rmfamily \textlatin {T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\spacefactor \@m }4ht}{11}{subsection.3.2.5}
+\contentsline {section}{\numberline {3.3}\slshape Canonicalization}{12}{section.3.3}
+\contentsline {section}{\numberline {3.4}\slshape Status Quo of Current Tools}{12}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}\rmfamily DAISY}{12}{subsection.3.4.1}
 \contentsline {subsection}{\numberline {3.4.2}\rmfamily MathPlayer}{12}{subsection.3.4.2}
-\contentsline {subsection}{\numberline {3.4.3}\rmfamily AsTeR}{12}{subsection.3.4.3}
-\contentsline {subsection}{\numberline {3.4.4}\rmfamily Web Browser Support}{13}{subsection.3.4.4}
-\contentsline {chapter}{\numberline {4}\bfseries Analysis and Solution Proposal}{14}{chapter.4}
-\contentsline {section}{\numberline {4.1}\slshape Input Processing}{14}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}\rmfamily Multithreading}{14}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}\rmfamily Document Object Model}{15}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}\rmfamily XSL}{15}{subsection.4.1.3}
-\contentsline {subsection}{\numberline {4.1.4}\rmfamily Streaming XML}{16}{subsection.4.1.4}
-\contentsline {subsection}{\numberline {4.1.5}\rmfamily XML Data Binding}{18}{subsection.4.1.5}
-\contentsline {subsection}{\numberline {4.1.6}\rmfamily Proposed Solution}{18}{subsection.4.1.6}
-\contentsline {section}{\numberline {4.2}\slshape Conversion}{19}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}\rmfamily Presentation MathML}{20}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}\rmfamily Content MathML}{22}{subsection.4.2.2}
-\contentsline {subsection}{\numberline {4.2.3}\rmfamily Operators and Symbols}{23}{subsection.4.2.3}
-\contentsline {chapter}{\numberline {5}\bfseries Implementation}{24}{chapter.5}
-\contentsline {section}{\numberline {5.1}\slshape Input Processing}{24}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}\rmfamily XML Parser}{26}{subsection.5.1.1}
-\contentsline {chapter}{\numberline {6}\bfseries Results}{28}{chapter.6}
-\contentsline {section}{\numberline {6.1}\slshape MREC Corpus}{28}{section.6.1}
-\contentsline {section}{\numberline {6.2}\slshape Changing StAX Implementation}{28}{section.6.2}
-\contentsline {chapter}{\numberline {7}\bfseries Conclusion}{29}{chapter.7}
+\contentsline {subsection}{\numberline {3.4.3}\rmfamily AsTeR}{13}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.4}\rmfamily MathTalk}{13}{subsection.3.4.4}
+\contentsline {subsection}{\numberline {3.4.5}\rmfamily Web Browser Support}{14}{subsection.3.4.5}
+\contentsline {chapter}{\numberline {4}\bfseries Analysis and Solution Proposal}{15}{chapter.4}
+\contentsline {section}{\numberline {4.1}\slshape Input Processing}{15}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\rmfamily Multithreading}{15}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}\rmfamily Document Object Model}{16}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}\rmfamily XSL}{16}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}\rmfamily Streaming XML}{17}{subsection.4.1.4}
+\contentsline {subsection}{\numberline {4.1.5}\rmfamily XML Data Binding}{19}{subsection.4.1.5}
+\contentsline {subsection}{\numberline {4.1.6}\rmfamily Proposed Solution}{19}{subsection.4.1.6}
+\contentsline {section}{\numberline {4.2}\slshape Conversion}{20}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}\rmfamily Presentation MathML}{21}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}\rmfamily Content MathML}{23}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}\rmfamily Operators and Symbols}{24}{subsection.4.2.3}
+\contentsline {chapter}{\numberline {5}\bfseries Implementation}{25}{chapter.5}
+\contentsline {section}{\numberline {5.1}\slshape Input Processing}{25}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}\rmfamily XML Parser}{27}{subsection.5.1.1}
+\contentsline {chapter}{\numberline {6}\bfseries Results}{29}{chapter.6}
+\contentsline {section}{\numberline {6.1}\slshape MREC Corpus}{29}{section.6.1}
+\contentsline {section}{\numberline {6.2}\slshape Changing StAX Implementation}{29}{section.6.2}
+\contentsline {chapter}{\numberline {7}\bfseries Conclusion}{30}{chapter.7}
