@@ -16,6 +16,7 @@
 \definecolor{gray}{rgb}{0.4,0.4,0.4}
 \definecolor{darkblue}{rgb}{0.0,0.0,0.6}
 \definecolor{cyan}{rgb}{0.0,0.6,0.6}
+\definecolor{lightgray}{rgb}{0.9,0.9,0.9}
 
 \lstset{
   basicstyle=\ttfamily,
@@ -24,9 +25,11 @@
   commentstyle=\color{gray}\upshape,
   breaklines=true,
   breakatwhitespace=false,
-  xleftmargin=.25in,
-  xrightmargin=.25in,
-  tabsize=5
+  xleftmargin=.15in,
+  xrightmargin=.15in,
+  tabsize=5,
+  framexleftmargin=0.1in,
+  framexrightmargin=0.1in
 }
 
 \lstdefinelanguage{XML}
@@ -91,33 +94,33 @@ Estimated length is 30-40 pages of text, which will be supplemented with samples
 \chapter{Motivation}
 
 \chapter{Mathematical Markup Language - MathML}
-World Wide Web pages and their main publishing language, HTML, provide many ways to present desired information to the user. However, presenting mathematics is not so easy and straightforward. There aren't any special tags in the HTML specification for including mathematics. In most cases mathematical equations are presented in the form of an image. On one hand this approach renders the equation the same way in every web browser, on the other hand there is no way to copy the equation for further use, not to mention editing the equation. 
+World Wide Web pages and their main publishing language, HTML\footnote{HyperText Markup Language}, provide many ways to present desired information to the user. However, presenting mathematics is not so easy and straightforward. There aren't any special tags in the HTML specification for including mathematics. In most cases mathematical equations are presented in the form of an image. On one hand this approach renders the equation the same way in every web browser, on the other hand there is no way to copy the equation for further use, not to mention editing the equation. 
 
-MathML was specifically created to circumvent this obstacle. It was therefore designed to be used in web pages alongside HTML. It follows that MathML is an application of XML with special set of tags used to capture the content, structure and even presentation details of mathematical equations. We will take closer look at how this is achieved in the following sections. In April 1998 MathML became the recommendation of the W3C working group for including mathematics into web pages.
+MathML\footnote{\url{http://www.w3.org/Math/}} was specifically created to circumvent this obstacle. It was therefore designed to be used in web pages alongside HTML. It follows that MathML is an application of XML with special set of tags used to capture the content, structure and even presentation details of mathematical equations. We will take closer look at how this is achieved in the following sections. In April 1998 MathML became the recommendation of the W3C working group\footnote{The World Wide Web Consortium (W3C) is the main international standards organization for the World Wide Web} for including mathematics into web pages.
 
 \section{Structure}
-MathML as an application of XML consists of a tree of nodes. Each node is either empty, has textual value or has a list of descendant nodes. To provide additional information, a node can have an arbitrary amount of attributes, key – value pairs. Each MathML tree has to have a root node named math that belongs to the MathML namespace. Also it is important not to forget to include XML declaration and MathML doctype declaration. 
+MathML as an application of XML consists of a tree of nodes. Each node is either empty, has textual value or has a list of descendant nodes. To provide additional information, a node can have an arbitrary amount of attributes, key – value pairs. Each MathML tree has to have a root node named \texttt{math} that belongs to the MathML namespace. Also it is important not to forget to include XML declaration and MathML doctype declaration. 
 
 MathML comes two distinct sets of tags. For the visual form of equations there are Presentation MathML tags, Content MathML tags focus on the semantics and meaning of formulas. Presentation tags are being used primarily by web browsers to display mathematical expressions to the users, Content tags are important for further processing of expressions by specialized mathematical programs.
 
 \subsection{Presentation MathML}
 The main focus of the Presentation MathML is displaying the equation. For this purpose there are around thirty elements, all starting with the prefix “m”. Elements are divided into two classes, first of which is called tokens. It consist of elements that represent individual content and do not contain other nested elements. These include: 
 \begin{itemize}
-\item <mi>x</mi> - identifiers,
-\item <mn>2</mn> - numbers,
-\item <mo>+</mo> - operators, fences, separators,
-\item <mtext>free text</mtext> - text.
+\item \texttt{<mi>x</mi>} - identifiers,
+\item \texttt{<mn>2</mn>} - numbers,
+\item \texttt{<mo>+</mo>} - operators, fences, separators,
+\item \texttt{<mtext>}free text\texttt{</mtext>} - text.
 \end{itemize}
-The content of the token can of course be expressed in more than one character (<mo>sin</mo>) or with an XML and HTML character entities, for example \texttt{\&\#62;} and \texttt{\&gt;} have the same meaning as \texttt{>}, greater than. It is completely up to the user which notation he will choose.
+The content of the token can of course be expressed in more than one character (\texttt{<mo>sin</mo>}) or with an XML and HTML character entities, for example \texttt{\&\#62;} and \texttt{\&gt;} have the same meaning as \texttt{>}, greater than. It is completely up to the user which notation he will choose.
 
-Even though nesting other elements in tokens is not allowed, there are exceptions. For example HTML5 allows almost any HTML inline tags inside the mtext element. So <mtext><b>free</b> text</mtext> would be rendered with the bold word free.
-The other class of elments is layout schemata. This collection of elements is further divided into following groups:
+Even though nesting other elements in tokens is not allowed, there are exceptions. For example HTML5 allows almost any HTML inline tags inside the \texttt{mtext} element. So \texttt{<mtext>}<b>free</b> text\texttt{</mtext>} would be rendered with the bold word free.
+The other class of elements is layout schemata. This collection of elements is further divided into following groups:
 \begin{itemize}
 \item General Layout
 	\begin{itemize}
-	\item <mrow> - general horizontal grouping,
-	\item <mfrac> - fractions and binomial numbers,
-	\item <msqrt>, <mroot> - radicals
+	\item \texttt{<mrow>} - general horizontal grouping,
+	\item \texttt{<mfrac>} - fractions and binomial numbers,
+	\item \texttt{<msqrt>}, \texttt{<mroot>} - radicals
 	\end{itemize}
 \item Script and Limit - superscripts, subscripts, 
 \item Tabular Math - tables and matrices,
@@ -148,11 +151,11 @@ We can thought of the layout schemata as a form of expression constructors, that
 Presentation MathML also provides over fifty attributes for fine tuning of expressions, like setting colors, dimensions, alignments and many others.
 
 \subsection{Content MathML}
-Mathematical notation, rigorous as it is, is still not standardized around the world and there are many different ways of writing mathematical expressions based on cultural customs. Even simple multiplication operation can be written as x*y, xy, x times y, x x y. In many situations there's no need to actually render the expression, only the underlying meaning is important. For this reason Content MathML provides a framework and a markup language that capture the semantics of mathematical expressions.
+Mathematical notation, rigorous as it is, is still not standardized around the world and there are many different ways of writing mathematical expressions based on cultural customs. Even simple multiplication operation can be written as $x*y$, $xy$, $x\ times\ y$, $x \times y$. In many situations there's no need to actually render the expression, only the underlying meaning is important. For this reason Content MathML provides a framework and a markup language that capture the semantics of mathematical expressions.
 
-The structure of Content MathML tree is based on a very simple principle – applying an operator to sub-expressions. For example the quotient x/y can be thought of as applying the division operator to two arguments x and y. It follows that the cornerstone of Content MathML is the function application element <apply>.  The first child of the <apply> element signifies the operator, which can be an <apply> element again, and the rest of the <apply> element direct descendants are arguments to which the operator is applied. Token elements <ci> and <cn> are available to represent numbers and variables respectively. 
+The structure of Content MathML tree is based on a very simple principle – applying an operator to sub-expressions. For example the quotient $x/y$ can be thought of as applying the division operator to two arguments $x$ and $y$. It follows that the cornerstone of Content MathML is the function application element \texttt{<apply>}.  The first child of the \texttt{<apply>} element signifies the operator, which can be an \texttt{<apply>} element again, and the rest of the \texttt{<apply>} element direct descendants are arguments to which the operator is applied. Token elements \texttt{<ci>} and \texttt{<cn>} are available to represent numbers and variables respectively. 
 
-Content MathML provides two ways of defining the operator. The first one is a set of more than 100 elements, each corresponding to some mathematical operator. For example for the addition operator there is <plus>, for logical xor <xor> and so on. Then there is the second way, the element <csymbol>. This element contains a textual representation of the operator, that is bound to a definition in a content dictionary referenced by either the attribute cd or definitionURL. External content dictionaries are important for communication between agents and there exist several public repositories of mathematical definitions. Most notable is the OpenMath Society repository.
+Content MathML provides two ways of defining the operator. The first one is a set of more than 100 elements, each corresponding to some mathematical operator. For example for the addition operator there is \texttt{<plus>}, for logical xor \texttt{<xor>} and so on. Then there is the second way, the element \texttt{<csymbol>}. This element contains a textual representation of the operator, that is bound to a definition in a content dictionary referenced by either the attribute \texttt{cd} or \texttt{definitionURL}. External content dictionaries are important for communication between agents and there exist several public repositories of mathematical definitions. Most notable is the OpenMath Society repository.
 
 \begin{figure}[!ht]
 \lstset{language=XML,frame=lines}
@@ -176,7 +179,7 @@ Content MathML provides two ways of defining the operator. The first one is a se
 \caption{Expression $e=m \cdot c^2$ in Content MathML}
 \end{figure}
 
-In MathML 3, a subset of Content MathML elements is defined: Strict Content MathML. This uses only minimal, but sufficient, amount of elements, most importantly allows only the usage of <csymbol> element for defining operators. Strict Content MathML is designed to be compatible with OpenMath standard.
+In MathML 3, a subset of Content MathML elements is defined: Strict Content MathML. This uses only minimal, but sufficient, amount of elements, most importantly allows only the usage of \texttt{<csymbol>} element for defining operators. Strict Content MathML is designed to be compatible with OpenMath standard.
 
 \begin{figure}[!ht]
 \lstset{language=XML,frame=lines}
@@ -206,10 +209,10 @@ Creating MathML documents is very simple. All that is needed is a word processor
 
 Multiple software products designated for working with mathematical expressions provide an option to output the results of calculations in MathML format. These include popular web service Wolfram Alpha, Mathematica, Maple or Matlab. MathML can also be used as a data exchange format or input format for aforementioned programs.
 
-Another way of creating MathML documents is a conversion from different formats. Among scientist, mathematicians particularly, \TeX\ is the format of choice. It then comes as no surprise that there are many sources of mathematical texts written in \TeX. However, not every publication comes with the source files. Often only print-ready PDF files are released. Also many academic writings, especially older ones, are available only in printed form. These have to be scanned using an Optical Character Recognition (OCR) software. 
+Another way of creating MathML documents is a conversion from different formats. Among scientist, mathematicians particularly, \TeX\ is the format of choice. It then comes as no surprise that there are many sources of mathematical texts written in \TeX. However, not every publication comes with the source files. Often only print-ready PDF files are released\cite{baker2011towards}. Also many academic writings, especially older ones, are available only in printed form. These have to be scanned using an Optical Character Recognition (OCR) software. 
 
 \subsection{\LaTeX ML}
-The lack of a suitable tool for converting \LaTeX\ to XML prompted the participants of the Digital Library of Mathematical Functions project to develop their own solution. Main goals of \LaTeX ML design contain the aspiration to faithfully emulate \TeX\ behavior, the ease of extensibility and the preservation of both semantic and presentation aspects of original documents. To this end \LaTeX ML provides two main commands, \texttt{latexml} and \texttt{latexmlpost}. \texttt{latexml} converts the initial \TeX\ document to XML based on a set of \LaTeX ML-bindings files, that define the mapping of \TeX\ macros to XML.\texttt{latexmlpost} then processes resulting XML output by converting mathematics
+The lack of a suitable tool for converting \LaTeX\ to XML prompted the participants of the Digital Library of Mathematical Functions project to develop their own solution. Main goals of \LaTeX ML\cite{latexml:miller2013} design contain the aspiration to faithfully emulate \TeX\ behavior, the ease of extensibility and the preservation of both semantic and presentation aspects of original documents. To this end \LaTeX ML provides two main commands, \texttt{latexml} and \texttt{latexmlpost}. \texttt{latexml} converts the initial \TeX\ document to XML based on a set of \LaTeX ML-bindings files, that define the mapping of \TeX\ macros to XML. \texttt{latexmlpost} then processes resulting XML output by converting mathematics
 and graphics, cross-referencing and applying an \texttt{XSLT} stylesheet. 
 
 Both commands come with a multitude of parameters that allow users to customize the whole process, such as loading user-defined bindings or choosing the output format. Based on the requested output format, mathematics is converted to graphics (png images for HTML) or Presentation MathML in case of XHTML or HTML5. 
@@ -217,23 +220,27 @@ Both commands come with a multitude of parameters that allow users to customize 
 \LaTeX ML is freely available online as an installation package for Linux systems as well as Windows and MacOS. An extensive and detailed manual is available online or as a PDF document.
 
 \subsection{Tralics}
-Tralics\cite{tralics:grimm2003} is a freeware software designed to translate \LaTeX sources into XML documents, that can be further converted into either PDF or HTML. The generated XML is conforming to the local ad-hoc DTD (a simplification of the TEI) with mathematical formulas conforming to the Presentation MathML 2.0 recommendations.
+Tralics\cite{tralics:grimm2003}\cite{dml:Grimm2010} is a freeware software designed to translate \LaTeX sources into XML documents, that can be further converted into either PDF or HTML. The generated XML is conforming to the local ad-hoc DTD (a simplification of the TEI) with mathematical formulas conforming to the Presentation MathML 2.0 recommendations.
 
 Similarly to \LaTeX ML, Tralics provides many ways for customization of resulting documents, among them the possibility to change element and attribute names in the XML file. Besides Presentation MathML, mathematical formulae can be translated to \LaTeX -like   elements as well.
 
 Tralics is readily available online in the form of source files or binaries for Linux, Windows and MacOS operating systems. An extensive documentation regarding customization and usage is also available online. 
 
 \subsection{MaxTract}
-MaxTract is a tool that through spacial analysis of symbols and fonts in PDF document reverse-engineers its source files in the form of \LaTeX\ or XHTML + MathML documents. The conversion process requires valid PDF files to work correctly as it needs the information about symbols, font encoding and width of objects contained in the PDF file. PDF documents created via \LaTeX\ fulfill these requirements, therefore MaxTract is able to process most of the scientific and mathematical material.
+MaxTract\cite{baker2012maxtract} is a tool that through spacial analysis of symbols and fonts in PDF document reverse-engineers its source files in the form of \LaTeX\ or XHTML + MathML documents. The conversion process requires valid PDF files to work correctly as it needs the information about symbols, font encoding and width of objects contained in the PDF file. PDF documents created via \LaTeX\ fulfill these requirements, therefore MaxTract is able to process most of the scientific and mathematical material.
 
 
 \subsection{INFTY Reader}
-INFTY is an Optical Character Recognition (OCR) software especially created for mathematical documents. INFTY reads scanned pages (images) and yields their character recognition results in multiple formats, including \LaTeX\ and MathML. It does so in four steps: layout analysis, character recognition, structure analysis of mathematical expressions, and manual error correction (optional). 
+INFTY\cite{suzuki2003infty} is an Optical Character Recognition (OCR) software especially created for mathematical documents. INFTY reads scanned pages (images) and yields their character recognition results in multiple formats, including \LaTeX\ and MathML. It does so in four steps: layout analysis, character recognition, structure analysis of mathematical expressions, and manual error correction (optional). 
 
 The most important phase, character recognition, is responsible for distinguishing mathematical expressions and running a character recognition engine originally developed for mathematical symbols together with non-specialized commercial OCR engine. 
 
 INFTY Reader is available free of charge for limited amount of time, then it is necessary to purchase a license key.
 
+\subsection{\TeX 4ht}
+\TeX 4ht\cite{tex4ht:gurari2004} is a system for producing structured output in a markup language from sources written in the \TeX -based family of languages. It is highly extensible and configurable, most common configurations include the conversion from \LaTeX to HTML with MathML, braille or DocBook targets.
+
+The conversion is invoked by running the \texttt{htlatex} command. To the user the process seems similar to producing standard DVI or PDF outputs. \TeX 4ht uses hooks within the \LaTeX\ constructs and associates configurations to them. By modifying default configuration files, the user can change the resulting HTML document to his liking. \TeX 4ht comes with the support of Cascading style sheets\footnote{\url{http://www.w3schools.com/css/}}, which provides further possibilities of customizing the output files. 
 \section{Canonicalization}
 
 
@@ -257,6 +264,9 @@ MathPlayer is shipped as a free to use software with English localization only, 
 AsTeR (Audio System for Technical Readings)\cite{aster1994} is an exceptional piece of software developed by T.V. Raman as a part of his dissertation at Cornell University. AsTeR is capable of producing audio renderings of technical documents, even those containing higher mathematical expressions, written in \TeX\ or \LaTeX. However, processing different markup languages does not pose a problem for AsTeR. All that is required is a recognizer for given markup language. 
 
 The logical structure of the document is transformed to internal representation, which is then rendered in audio using a collection of rendering rules. This enables AsTeR to provide different views of the document; a user can listen to the whole document or select a portion of the document for listening. An important feature of AsTeR makes us of voice intonation to read long and complicated formuale. Such formulae are divided into logical parts (like a single summation or a numerator of a fraction) and read with different intonation than the surrounding part of the expression. 
+
+\subsection{MathTalk}
+MathTalk\footnote{\url{http://www.mathtalk.com/index.htm}}\cite{mathtalk:stevens1994mathtalk} is a commercial text-to-software that enables visually impaired people to read algebra notation in a quick manner. MathTalk was designed and created as a part of doctoral dissertation of R. D. Stevens\cite{mathtalk:stevens1996principles} and employs the use of prosody in the synthetic voice to decrease the mental workload of the listener. MathTalk enables the users to browse the document and change the speed of reading which gives them comfortable control of the reading process.
 
 \subsection{Web Browser Support}
 MathML was designed as a standard for including mathematical formulae in web pages. It stands to reason that at the most well-known and wide-spread web browsers should have good support of MathML, at least the Presentation MathML. Unfortunately the situation is not that good, developers of these browsers are mainly focused on different areas and MathML stand very low on the ladder of priorities.
@@ -512,17 +522,21 @@ In Java two major APIs\footnote{Application programming interface} for streaming
 \item StAX (Streaming API for XML) - pull principle; the application requests events from the StAX processor. 
 \end{itemize}
 
-This application uses default StAX implementation that is shipped with Java Standard Edition 6 runtime. StAX offers two ways of traversing documents: Cursor API and Iterator API. 
+This application uses default StAX implementation that is shipped with Java Standard Edition 6 runtime. There are also other implementations available, such as Woodstox\footnote{\url{http://woodstox.codehaus.org}} or Aalto\footnote{\url{http://wiki.fasterxml.com/AaltoHome}}, and they might provide better performance. These alternative implementations have a possibility to set up the processor for specific use (i.e., for fast processing, low memory usage). 
+\\
+@todo Vymenit implementaciu a porovnat vysledky v poslednej kapitole 
 
-\paragraph*{Cursor API} As the name suggests, the Cursor API provides a cursor with which we can run through the document one event (a more appropriate name might be an infoset element) at a time. The cursor always moves forwards, never backwards. Two main iterfaces are available: \texttt{XMLStremReader} for accessing all possible information retrievable from XML documents and \texttt{XMLStreamWriter} which in turn provides methods for outputting this information.
+StAX offers two ways of traversing documents: Cursor API and Iterator API. 
+
+\paragraph*{Cursor API} As the name suggests, the Cursor API provides a cursor with which we can run through the document one event (a more appropriate name might be an infoset element) at a time. The cursor always moves forwards, never backwards. Two main interfaces are available: \texttt{XMLStremReader} for accessing all possible information retrievable from XML documents and \texttt{XMLStreamWriter} which in turn provides methods for outputting this information. 
 
 \begin{figure}[!ht]
-\lstset{language=Java,frame=lines}
+\lstset{language=Java,frame=shadowbox,backgroundcolor=\color{lightgray}}
 \begin{lstlisting}
 public interface XMLStreamReader {
 	public int next();
-   public boolean hasNext();
-   public String getText();		
+   	public boolean hasNext();
+   	public String getText();		
   	public String getLocalName();
   	public String getNamespaceURI();
   	...
@@ -535,14 +549,14 @@ public interface XMLStreamWriter {
 	... 
 }
 \end{lstlisting}
-\caption{Example of methods in \texttt{XMLStreamReader} and \texttt{XMLStreamWriter} interfaces}
+\caption{Example of methods in \texttt{XMLStreamReader} and \texttt{XMLStreamWriter} interfaces of the Cursor API}
 \label{fig:staxcursorapi}
 \end{figure}
 
 \paragraph*{Iterator API} The Iterator API represents XML stream as a set of discrete event objects. Much like the Cursor API, the Iterator API provides two interfaces for reading and writing these event objects: \texttt{XMLEventReader} and \texttt{XMLEventWriter}. The \texttt{XMLEventReader} extends \texttt{java.util.Iterator} interface, which means, that values returned by \texttt{XMLEventReader} can be cached and work with standard Java Iterator.
 
 \begin{figure}[!ht]
-\lstset{language=Java,frame=lines}
+\lstset{language=Java,frame=shadowbox,backgroundcolor=\color{lightgray}}
 \begin{lstlisting}
 public interface XMLEventReader extends Iterator {
   	public XMLEvent nextEvent();
@@ -552,25 +566,23 @@ public interface XMLEventReader extends Iterator {
 } 
 
 public interface XMLEventWriter {
-  public void flush();
-  public void close();
-  public void add(XMLEvent e);
-  public void add(Attribute attribute);
-  ...
+  	public void flush();
+  	public void close();
+  	public void add(XMLEvent e);
+  	public void add(Attribute attribute);
+  	...
 } 
 \end{lstlisting}
-\caption{Example of methods in \texttt{XMLEventReader} and \texttt{XMLEventWriter} interfaces}
+\caption{Example of methods in \texttt{XMLEventReader} and \texttt{XMLEventWriter} interfaces of the Iterator API}
 \label{fig:staxinterfaceapi}
 \end{figure}
 
-There are also other implementations available, Woodstox\footnote{\url{http://woodstox.codehaus.org}} or Aalto\footnote{\url{http://wiki.fasterxml.com/AaltoHome}}, that might provide better performance or have a possibility to set up the processor for specific use (i.e., for fast processing, low memory usage). 
-\\
-@todo Vymenit implementaciu a porovnat vysledky v poslednej kapitole
+\paragraph*{Comparison} The Cursor API is generally faster and more memory efficient than the Iterator API. On the other hand subclasses of the \texttt{XMLEvent} of the Iterator API can be passed into collections or otherwise used even after the parser has moved on to subsequent events. Our application has very little use of this functionality and does not need to modify the input stream (which the Iterator API enables). However, it benefits from the Cursor API's memory and time efficiency.
 
 \subsection{XML Parser}
-The class \texttt{XmlParserStAX} is responsible for processing input XML documents and at the same time creating output documents in the same run through the file. It also provides a method for processing strings. In this case the parser processes the document defined by this string the same way as any other input document, however the ouput contains only converted strings, without any of original documents elements outside MathML markup.
+The class \texttt{XmlParserStAX} is responsible for processing input XML documents and at the same time creating output documents in the same run through the file. It also provides a method for processing string input and producing string output. In this case the parser processes the document defined by this string the same way as any other input document, however the output contains only converted strings, without any of original documents elements outside the MathML markup.
 \begin{figure}[!ht]
-\lstset{language=Java,frame=lines}
+\lstset{language=Java,frame=shadowbox,backgroundcolor=\color{lightgray}}
 \begin{lstlisting}
 public class XmlParserStAX {
 	public String parse(final String inputString, final Locale language);
@@ -582,8 +594,7 @@ public class XmlParserStAX {
 \label{fig:xmlparserstax}
 \end{figure}
 
-The parser is capable of accepting a folder (instead of a document) and processing all files in this folder, recreating the same file structure in the path entered by the user. Also based on user preference, the canonicalization of the input document takes place inside these methods.
-
+The parser is capable of accepting a folder as an input (instead of a document) and processing all files in this folder, preserving the file structure on the path entered by the user. 
 
 \begin{itemize}
 \item Streaming pull vs push, specifically in Java, \textbf{StAX}, SAX

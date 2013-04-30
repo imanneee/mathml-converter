@@ -1,9 +1,35 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{baker2011towards}
+Josef~B Baker, Alan~P Sexton, and Volker Sorge.
+\newblock T{owards reverse engineering of PDF documents}.
+\newblock {\em Towards a Digital Mathematics Library. Bertinoro, Italy, July
+  20-21st, 2011}, pages 65--75, 2011.
+\newblock \url{http://dml.cz/dmlcz/702603}.
+
+\bibitem{baker2012maxtract}
+Josef~B Baker, Alan~P Sexton, and Volker Sorge.
+\newblock {MaxTract: Converting PDF to$\backslash$ mbox$\backslash$ LaTeX,
+  MathML and Text}.
+\newblock In {\em Intelligent Computer Mathematics}, pages 422--426. Springer,
+  2012.
 
 \bibitem{tralics:grimm2003}
 Jos{\'e} Grimm.
 \newblock {Tralics, a \LaTeX to XML Translator}.
 \newblock {\em TUGboat}, 24(3):377--388, 2003.
+
+\bibitem{dml:Grimm2010}
+Jos{\'e} Grimm.
+\newblock {Producing MathML with Tralics.}
+\newblock In Petr Sojka, editor, {\em {Proceedings of DML 2010}}, pages
+  105--117, Paris, France, July 2010. {Masaryk University}.
+\newblock \url{http://dml.cz/dmlcz/702579}.
+
+\bibitem{tex4ht:gurari2004}
+Eitan~M Gurari.
+\newblock {TEX4ht: HTML Production}.
+\newblock {\em TUG-boat}, 25(1):39--47, 2004.
 
 \bibitem{mrec2011}
 Martin L{\'\i}{\v{s}}ka, Petr Sojka, Michal R{\r{u}}{\v{z}}i{\v{c}}ka, and Petr
@@ -13,9 +39,35 @@ Martin L{\'\i}{\v{s}}ka, Petr Sojka, Michal R{\r{u}}{\v{z}}i{\v{c}}ka, and Petr
 \newblock {\em Towards a Digital Mathematics Library. Bertinoro, Italy, July
   20-21st, 2011}, pages 77--84, 2011.
 
+\bibitem{latexml:miller2013}
+Bruce Miller.
+\newblock {LaTeXML: A \LaTeX to xml converter}.
+\newblock {\em Web Manual at http://dlmf.nist.gov/LaTeXML/, seen April 2013},
+  2013.
+
 \bibitem{aster1994}
 TV~Raman.
 \newblock {\em {Audio System for Technical Readings}}.
 \newblock PhD thesis, Cornell University, 1994.
+
+\bibitem{mathtalk:stevens1994mathtalk}
+Robert Stevens and Alistair Edwards.
+\newblock {Mathtalk: The design of an interface for reading algebra using
+  speech}.
+\newblock In {\em {Computers for Handicapped Persons}}, pages 313--320.
+  Springer, 1994.
+
+\bibitem{mathtalk:stevens1996principles}
+Robert~David Stevens.
+\newblock {\em Principles for the design of auditory interfaces to present
+  complex information to blind people}.
+\newblock PhD thesis, University of York, 1996.
+
+\bibitem{suzuki2003infty}
+Masakazu Suzuki, Fumikazu Tamari, Ryoji Fukuda, Seiichi Uchida, and Toshihiro
+  Kanahori.
+\newblock {INFTY: an integrated OCR system for mathematical documents}.
+\newblock In {\em Proceedings of the 2003 ACM symposium on Document
+  engineering}, pages 95--104. ACM, 2003.
 
 \end{thebibliography}
