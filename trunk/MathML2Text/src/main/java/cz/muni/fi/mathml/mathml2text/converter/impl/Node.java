@@ -1,7 +1,6 @@
 package cz.muni.fi.mathml.mathml2text.converter.impl;
 
-import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
-import cz.muni.fi.mathml.mathml2text.Strings;
+import cz.muni.fi.mathml.mathml2text.converter.Strings;
 import cz.muni.fi.mathml.mathml2text.converter.impl.content.Apply;
 import cz.muni.fi.mathml.mathml2text.converter.impl.content.Ci;
 import cz.muni.fi.mathml.mathml2text.converter.impl.content.Cn;
@@ -15,6 +14,7 @@ import cz.muni.fi.mathml.mathml2text.converter.impl.presentation.Msub;
 import cz.muni.fi.mathml.mathml2text.converter.impl.presentation.Msup;
 import cz.muni.fi.mathml.mathml2text.converter.impl.presentation.Munder;
 import cz.muni.fi.mathml.mathml2text.converter.impl.presentation.Munderover;
+import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
 
 /**
  * General MathML node.

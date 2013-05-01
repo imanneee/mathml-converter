@@ -14,9 +14,9 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.muni.fi.mathml.MathMLElement;
-import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
-import cz.muni.fi.mathml.mathml2text.converter.XmlAttribute;
+import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLElement;
+import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.tree.XmlAttribute;
 import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberTransformer;
 
 /**

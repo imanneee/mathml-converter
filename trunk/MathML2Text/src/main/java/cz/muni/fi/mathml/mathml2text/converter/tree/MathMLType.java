@@ -1,4 +1,4 @@
-package cz.muni.fi.mathml;
+package cz.muni.fi.mathml.mathml2text.converter.tree;
 
 /**
  * Enumeration of values used to sort MathML elements into groups based on

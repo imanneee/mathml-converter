@@ -2,11 +2,11 @@ package cz.muni.fi.mathml.mathml2text.converter.impl.presentation;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
-import cz.muni.fi.mathml.mathml2text.Strings;
-import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.Strings;
 import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
-import cz.muni.fi.mathml.mathml2text.converter.impl.Operation;
-import cz.muni.fi.mathml.mathml2text.converter.impl.Symbol;
+import cz.muni.fi.mathml.mathml2text.converter.impl.operation.Operation;
+import cz.muni.fi.mathml.mathml2text.converter.impl.operation.Symbol;
+import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
 
 /**
  * Specific implementation of <code>&lt;mi&gt;</code> node.
