@@ -7,13 +7,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.muni.fi.mathml.MathMLElement;
-import cz.muni.fi.mathml.mathml2text.Strings;
-import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.Strings;
 import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
 import cz.muni.fi.mathml.mathml2text.converter.impl.Node;
-import cz.muni.fi.mathml.mathml2text.converter.impl.Operation;
+import cz.muni.fi.mathml.mathml2text.converter.impl.operation.Operation;
 import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberFormat;
+import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLElement;
+import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
 
 /**
  * Specific implementation of <code>&lt;apply&gt;</code> node.

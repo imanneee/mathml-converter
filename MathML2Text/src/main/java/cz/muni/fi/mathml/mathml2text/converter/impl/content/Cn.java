@@ -2,10 +2,10 @@ package cz.muni.fi.mathml.mathml2text.converter.impl.content;
 
 import org.slf4j.LoggerFactory;
 
-import cz.muni.fi.mathml.mathml2text.Strings;
-import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
-import cz.muni.fi.mathml.mathml2text.converter.XmlAttribute;
+import cz.muni.fi.mathml.mathml2text.converter.Strings;
 import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
+import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.tree.XmlAttribute;
 
 /**
  * Specific implementation of <code>&lt;cn&gt;</code> node.

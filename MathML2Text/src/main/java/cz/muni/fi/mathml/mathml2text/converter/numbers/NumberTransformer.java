@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.muni.fi.mathml.mathml2text.Strings;
+import cz.muni.fi.mathml.mathml2text.converter.Strings;
 
 /**
  * Transforms all numbers (arabic numerals) in input data to their written form.

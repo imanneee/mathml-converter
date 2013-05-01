@@ -1,4 +1,4 @@
-package cz.muni.fi.mathml.mathml2text.converter;
+package cz.muni.fi.mathml.mathml2text.converter.tree;
 
 /**
  * Immutable attribute of a node.

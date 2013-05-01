@@ -1,4 +1,4 @@
-package cz.muni.fi.mathml.mathml2text.converter;
+package cz.muni.fi.mathml.mathml2text.converter.tree;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,7 +8,6 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import cz.muni.fi.mathml.MathMLElement;
 
 /**
  * DOM-like representation of MathML document tree.

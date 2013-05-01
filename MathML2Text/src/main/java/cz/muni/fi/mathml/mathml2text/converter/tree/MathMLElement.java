@@ -1,4 +1,4 @@
-package cz.muni.fi.mathml;
+package cz.muni.fi.mathml.mathml2text.converter.tree;
 
 /**
  * Enumeration of MathML elements.

@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Sets;
 
-import cz.muni.fi.mathml.mathml2text.Strings;
+import cz.muni.fi.mathml.mathml2text.converter.Strings;
 import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberFormat;
 import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberTransformer;
 

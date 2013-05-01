@@ -3,11 +3,11 @@ package cz.muni.fi.mathml.mathml2text.converter.impl.presentation;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.LoggerFactory;
 
-import cz.muni.fi.mathml.MathMLElement;
-import cz.muni.fi.mathml.mathml2text.converter.MathMLNode;
 import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
 import cz.muni.fi.mathml.mathml2text.converter.impl.Node;
-import cz.muni.fi.mathml.mathml2text.converter.impl.Operation;
+import cz.muni.fi.mathml.mathml2text.converter.impl.operation.Operation;
+import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLElement;
+import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
 
 /**
  * Specific implementation of <code>&lt;munderover&gt;</code> 
