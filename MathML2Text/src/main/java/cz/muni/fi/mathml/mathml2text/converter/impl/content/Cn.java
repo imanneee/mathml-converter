@@ -35,11 +35,10 @@ public final class Cn {
             }
         }
         try {
-            String strippedValue = node.getValue().trim();
-            for (final Character c : Strings.VALUE_EMPTY_CHARS) {
-                strippedValue = strippedValue.replace(c.toString(), Strings.EMPTY);
-//                strippedValue = StringUtils.strip(strippedValue, c.toString());
-            } 
+        String strippedValue = node.getValue().trim();
+        for (final Character c : Strings.VALUE_EMPTY_CHARS) {
+            strippedValue = strippedValue.replace(c.toString(), Strings.EMPTY);
+        } 
             final String number = settings.getNumberTransformer().transform(strippedValue);
             return number + Strings.SPACE;
         } catch (final NumberFormatException ex) {

@@ -28,5 +28,6 @@ public final class Strings {
         VALUE_EMPTY_CHARS.add(Character.valueOf((char) 8194));
         VALUE_EMPTY_CHARS.add(Character.valueOf((char) 8195));
         VALUE_EMPTY_CHARS.add(Character.valueOf((char) 8196));
+        VALUE_EMPTY_CHARS.add(Character.valueOf((char) 8197));
     }
 }

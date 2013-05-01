@@ -26,7 +26,7 @@ public enum Operation {
     /**
      * Multiplication operator.
      */
-    MULTIPLY("times", OperationType.INFIX, "&times;", "*", "times", "&sdot;", "&#8901;", "&#x22C5;", "⋅", "&#8290;", "&#x2062;"),
+    MULTIPLY("times", OperationType.INFIX, "&times;", "*", "times", "&sdot;", "&#8901;", "&#x22C5;", "⋅", "&#8290;", "&#x2062;", "⁢"),
     /**
      * Division operator.
      */
@@ -300,6 +300,30 @@ public enum Operation {
      */
     CLOSE_BRACES("close_braces", OperationType.SPECIAL, ")"),
     /**
+     * Open angle braces.
+     */
+    LEFT_ANGLE_BRACKET("left_angle_bracket", OperationType.SPECIAL, "⟨", "&#10216;", "&#x27E8;"),
+    /**
+     * Close angle braces.
+     */
+    RIGHT_ANGLE_BRACKET("right_angle_bracket", OperationType.SPECIAL, "⟩", "&#10217;", "&#x27E9;"),
+    /**
+     * Open square braces.
+     */
+    LEFT_SQUARE_BRACKET("left_square_bracket", OperationType.SPECIAL, "[", "&#91;", "&#x005B;"),
+    /**
+     * Close square braces.
+     */
+    RIGHT_SQUARE_BRACKET("right_square_bracket", OperationType.SPECIAL, "]", "&#93;", "&#x005D;"),
+    /**
+     * Open curly braces.
+     */
+    LEFT_CURLY_BRACKET("left_curly_bracket", OperationType.SPECIAL, "{", "&#125;", "&#x007D;"),
+    /**
+     * Close curly braces.
+     */
+    RIGHT_CURLY_BRACKET("right_curly_bracket", OperationType.SPECIAL, "}", "&#102177;", "&#x27E9;"),
+    /**
      * Superscript.
      */
     SUPERSCRIPT("superscript", OperationType.SPECIAL, "superscript"),
@@ -343,6 +367,10 @@ public enum Operation {
      * Plus minus.
      */
     PLUS_MINUS("plus_minus", OperationType.INFIX, "&plusmn;", "±"),
+    /**
+     * Minus plus
+     */
+    MINUS_PLUS("minus_plus", OperationType.INFIX, "$#8723;", "&#x2213;", "∓"),
     /**
      * Almost equal.
      */
@@ -394,11 +422,11 @@ public enum Operation {
     /**
      * Prime - minutes, feet.
      */
-    PRIME("prime", OperationType.INFIX, "&#8242;", "&#x2032;"),
+    PRIME("prime", OperationType.INFIX, "&#8242;", "&#x2032;", "&prime;"),
     /**
      * Double prime - seconds, inches.
      */
-    DOUBLE_PRIME("double_prime", OperationType.INFIX, "&#8243;", "&#x2033;"),
+    DOUBLE_PRIME("double_prime", OperationType.INFIX, "&#8243;", "&#x2033;", "&Prime;"),
     /**
      * A dot above a letter.
      */
@@ -407,6 +435,22 @@ public enum Operation {
      * An up pointing arrowhead above a letter.
      */
     UP_ARROWHEAD("up_arrowhead", OperationType.EVERY_ARGUMENT, "&#8963;", "&#x2303;", "⌃"),
+    /**
+     * Orthogonal to.
+     */
+    PERPENDICULAR("perpendicular", OperationType.INFIX, "&#10178;", "&#x27C2;", "⟂"),
+    /**
+     * Diaeresis above a letter.
+     */
+    DIAERESIS("diaeresis", OperationType.EVERY_ARGUMENT, "¨", "&#168;", "&#x00A8;"),
+    /**
+     * Partial differentiation.
+     */
+    PARTIALDIFF("partialdiff", OperationType.PREFIX, "partialdiff"),
+    /**
+     * Factorial.
+     */
+    FACTORIAL("factorial", OperationType.PREFIX, "factorial"),
     /**
      * Empty or {@code null} function.
      */

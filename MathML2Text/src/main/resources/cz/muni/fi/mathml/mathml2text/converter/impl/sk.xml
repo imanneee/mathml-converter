@@ -14,6 +14,12 @@
     <entry key="choose">nad</entry>
     <entry key="open_braces">otvor zátvorku</entry>
     <entry key="close_braces">zavri zátvorku</entry>
+    <entry key="left_angle_bracket">open angle braces</entry>
+    <entry key="right_angle_bracket">close angle braces</entry>
+    <entry key="left_square_bracket">open square braces</entry>
+    <entry key="right_square_bracket">close square braces</entry>
+    <entry key="left_curly_bracket">open curly braces</entry>
+    <entry key="right_curly_bracket">close curly braces</entry>
     <entry key="square_root">druhá odmocnina z</entry>
     <entry key="root">odmocnina z</entry>
     <entry key="logarithm">logaritmus so základom</entry>
@@ -139,6 +145,7 @@
     <entry key="omega">omega</entry>
     <entry key="direct_sum">direct sum</entry>
     <entry key="plus_minus">plus-minus</entry>
+    <entry key="minus_plus">minus-plus</entry>
     <entry key="simeq">similar to</entry>
     <entry key="far_gt">is far greater than</entry>
     <entry key="far_lt">is far lower than</entry>
@@ -155,5 +162,9 @@
     <entry key="dot_above">dot above</entry>
     <entry key="up_arrowhead">up arrowhead</entry>
     <entry key="with">with</entry>
+    <entry key="perpendicular">is orthogonal to</entry>
+    <entry key="diaeresis">diaeresis</entry>
+    <entry key="partialdiff">partial differentiation of function</entry>
+    <entry key="factorial">factorial of</entry>
     <entry key=""></entry>
 </properties>
