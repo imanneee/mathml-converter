@@ -50,6 +50,14 @@ TV~Raman.
 \newblock {\em {Audio System for Technical Readings}}.
 \newblock PhD thesis, Cornell University, 1994.
 
+\bibitem{lambda:schweikhardt2006lambda}
+Waltraud Schweikhardt, Cristian Bernareggi, Nadine Jessel, Benoit Encelle, and
+  Margarethe Gut.
+\newblock {LAMBDA: A European system to access mathematics with Braille and
+  audio synthesis}.
+\newblock In {\em {Computers Helping People with Special Needs}}, pages
+  1223--1230. Springer, 2006.
+
 \bibitem{mathtalk:stevens1994mathtalk}
 Robert Stevens and Alistair Edwards.
 \newblock {Mathtalk: The design of an interface for reading algebra using
