@@ -31,7 +31,6 @@ public final class Mn {
             String strippedValue = node.getValue().trim();
             for (final Character c : Strings.VALUE_EMPTY_CHARS) {
                 strippedValue = strippedValue.replace(c.toString(), Strings.EMPTY);
-//                strippedValue = StringUtils.strip(strippedValue, c.toString());
             } 
             final String number = settings.getNumberTransformer().transform(node.getValue());
             return number + Strings.SPACE;

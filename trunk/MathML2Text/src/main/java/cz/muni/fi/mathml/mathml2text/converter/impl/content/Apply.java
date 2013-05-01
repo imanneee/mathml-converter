@@ -102,7 +102,7 @@ public final class Apply {
         switch (operation.getType()) {
             case INFIX: {
                 if (node.getChildren().size() == 1) {
-                    logger.debug(String.format("Infix operator [{}] has no arguments.", operation.getKey()));
+                    logger.debug("Infix operator [{}] has no arguments.", operation.getKey());
                     builder.append(functionName);
                     return builder.toString();
                 }

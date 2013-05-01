@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -89,18 +90,19 @@ public final class NumberTransformer {
     public String transformNumber(final String numberAsString) throws NumberFormatException {
         final StringBuilder builder = new StringBuilder();
         
-        final Double number = Double.valueOf(numberAsString);
+        final String[] numbersArray = numberAsString.split("\\.");
+        
         // divide number into integral and decimal parts
-        final long integralPartNumber = (long) Math.floor(number);
-        String decimalPartString = String.valueOf(number).split("\\.")[1];
-        final long decimalPartNumber = Long.valueOf(decimalPartString);
+        String integralPartString = StringUtils.isNotBlank(numbersArray[0]) ? numbersArray[0] : "0";
+        final long integralPartNumber = Long.valueOf(integralPartString);
+        String decimalPartString = numbersArray.length > 1 ? numbersArray[1] : null;
 
         final String integralPartResult = translateNumber(integralPartNumber);
         
         
         builder.append(integralPartResult);
         builder.append(Strings.SPACE);
-        if (decimalPartNumber != 0) {
+        if (decimalPartString != null) {
             // if number is a decimal number append decimal deliminator
             if (integralPartNumber == 1 || integralPartNumber == -1) {
                 builder.append(this.getBundle().getString("POINT1"));

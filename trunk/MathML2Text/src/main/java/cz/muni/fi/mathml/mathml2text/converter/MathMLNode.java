@@ -21,7 +21,7 @@ import cz.muni.fi.mathml.MathMLElement;
  */
 public final class MathMLNode {
     /**
-     * Name of this node.
+     * Type of this node.
      */
     private MathMLElement type;
     /**
@@ -37,7 +37,7 @@ public final class MathMLNode {
      */
     private MathMLNode parent;
     /**
-     * Was this node already processed? Usefull when you have to "look ahead" and process
+     * Was this node already processed? Useful when you have to "look ahead" and process
      * element sooner.
      */
     private boolean processed = false;

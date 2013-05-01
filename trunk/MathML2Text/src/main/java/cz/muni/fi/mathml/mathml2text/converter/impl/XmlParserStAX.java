@@ -70,6 +70,8 @@ import cz.muni.fi.mir.mathmlcanonicalization.modules.OperatorNormalizer;
  *              but instead of to file, the result will be written as string
  *              and outputted.
  *          </li>
+ *      </ol>
+ *  </li>
  * </ul>
  * 
  * @todo extract interface
@@ -649,24 +651,21 @@ public final class XmlParserStAX {
             while (zipFileEntries.hasMoreElements()) {
                 // grab a zip file entry
                 ZipEntry entry = (ZipEntry) zipFileEntries.nextElement();
-
                 if (!entry.isDirectory()) {
+                    final BufferedInputStream is = new BufferedInputStream(zip.getInputStream(entry));
+                    int currentByte;
+                    // establish buffer for writing file
+                    byte data[] = new byte[bufferSize];
 
-                        final BufferedInputStream is = new BufferedInputStream(zip.getInputStream(entry));
-                        int currentByte;
-                        // establish buffer for writing file
-                        byte data[] = new byte[bufferSize];
+                    // write the current file to disk
+                    ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-                        // write the current file to disk
-                        ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-                        // read and write until last byte is encountered
-                        while ((currentByte = is.read(data, 0, bufferSize)) != -1) {
-                            out.write(data, 0, currentByte);
-                        }
-                        is.close();
-                        return new ByteArrayInputStream(out.toByteArray());
-
+                    // read and write until last byte is encountered
+                    while ((currentByte = is.read(data, 0, bufferSize)) != -1) {
+                        out.write(data, 0, currentByte);
+                    }
+                    is.close();
+                    return new ByteArrayInputStream(out.toByteArray());
                 }
             }
         } catch (final ZipException ex) {
