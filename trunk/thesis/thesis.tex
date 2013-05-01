@@ -11,6 +11,7 @@
 \usepackage{enumitem}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+\usepackage[english]{varioref}
 
 \usepackage{color}
 \definecolor{gray}{rgb}{0.4,0.4,0.4}
@@ -59,6 +60,7 @@
 \hyphenation{style-sheet}
 \hyphenation{sche-ma-ta}
 \hyphenation{great-ly}
+\hyphenation{mark-up}
 
 
 \setlist[itemize,1]{leftmargin=10pt,itemindent=10pt}
@@ -98,7 +100,7 @@ World Wide Web pages and their main publishing language, HTML\footnote{HyperText
 
 MathML\footnote{\url{http://www.w3.org/Math/}} was specifically created to circumvent this obstacle. It was therefore designed to be used in web pages alongside HTML. It follows that MathML is an application of XML with special set of tags used to capture the content, structure and even presentation details of mathematical equations. We will take closer look at how this is achieved in the following sections. In April 1998 MathML became the recommendation of the W3C working group\footnote{The World Wide Web Consortium (W3C) is the main international standards organization for the World Wide Web} for including mathematics into web pages.
 
-\section{Structure}
+\section{Structure of MathML}
 MathML as an application of XML consists of a tree of nodes. Each node is either empty, has textual value or has a list of descendant nodes. To provide additional information, a node can have an arbitrary amount of attributes, key – value pairs. Each MathML tree has to have a root node named \texttt{math} that belongs to the MathML namespace. Also it is important not to forget to include XML declaration and MathML doctype declaration. 
 
 MathML comes two distinct sets of tags. For the visual form of equations there are Presentation MathML tags, Content MathML tags focus on the semantics and meaning of formulas. Presentation tags are being used primarily by web browsers to display mathematical expressions to the users, Content tags are important for further processing of expressions by specialized mathematical programs.
@@ -241,18 +243,21 @@ INFTY Reader is available free of charge for limited amount of time, then it is 
 \TeX 4ht\cite{tex4ht:gurari2004} is a system for producing structured output in a markup language from sources written in the \TeX -based family of languages. It is highly extensible and configurable, most common configurations include the conversion from \LaTeX to HTML with MathML, braille or DocBook targets.
 
 The conversion is invoked by running the \texttt{htlatex} command. To the user the process seems similar to producing standard DVI or PDF outputs. \TeX 4ht uses hooks within the \LaTeX\ constructs and associates configurations to them. By modifying default configuration files, the user can change the resulting HTML document to his liking. \TeX 4ht comes with the support of Cascading style sheets\footnote{\url{http://www.w3schools.com/css/}}, which provides further possibilities of customizing the output files. 
+
 \section{Canonicalization}
 
 
-\section{Status Quo of Current Tools}
+\chapter{Status Quo of Current Tools}
+Making mathematical content available to visually impaired users or those with dyslexia has been a focus of many projects and researches over the last two decades. As a result several products (commercial or open source) have been developed that help the users with working with mathematical formulae; by providing text-to-speech solutions, easy to use and comfortable editors, support for browsing and searching documents that contain mathematical equations.
 
+In this chapter we will present some solutions that are unique in this field and had impact on another similar products, either by the theoretical research, that fuels such solutions or by general aspects that make them stand out. 
 
-\subsection{DAISY}
+\section{DAISY}
 DAISY (Digital Accessible Information System) is a technical standard for digital audio books, periodicals and computerized text. It is specifically intended for people that have problems reading a printed text including blindness, dyslexia or impaired vision. DAISY is based on combination of XML and MP3 and has various functions that traditional audio books do not provide. These include line by line navigation, searching in the text, adding bookmarks or adjusting the speed of the speech. It also provides support for embedded content such as images, graphics and MathML. 
 
 DAISY books (books conforming to the DAISY standard) can be listened to on designated DAISY readers, computers with installed DAISY software, mobile phones or MP3 players. There are many implementation of software players, commercial, free or even open source. They range from standalone applications to addons to internet browsers (especially Mozilla Firefox). Some software players are capable of displaying HTML pages with embedded MathML markup and subsequently read the mathematical expressions (this functionality was tested on a commercial product Dolphin EasyReader that supports Czech language as well).   
 
-\subsection{MathPlayer}
+\section{MathPlayer}
 \label{mathml:mathplayer}
 MathPlayer is an application developed by Design Science\footnote{\url{http://www.dessci.com/en/products/mathplayer/}} that enables users of Microsoft Internet Explorer web browser to display mathematical equations written in MathML markup. It uses Microsoft's internal HTML engine (MSHTML) on which Internet Explorer is based. Also for any application that makes use of MSHTML to display formatted content MathPlayer is able to display MathML content. This may include email clients, alternative browsers or RSS readers. 
 
@@ -260,15 +265,22 @@ Besides displaying MathML in the browser MathPlayer comes equipped with a wide r
 
 MathPlayer is shipped as a free to use software with English localization only, but is still a close source product with a license that limits its use to only computers owned by the user and also prohibits translation and reverse engineering of the application.
 
-\subsection{AsTeR}
+\section{AsTeR}
 AsTeR (Audio System for Technical Readings)\cite{aster1994} is an exceptional piece of software developed by T.V. Raman as a part of his dissertation at Cornell University. AsTeR is capable of producing audio renderings of technical documents, even those containing higher mathematical expressions, written in \TeX\ or \LaTeX. However, processing different markup languages does not pose a problem for AsTeR. All that is required is a recognizer for given markup language. 
 
 The logical structure of the document is transformed to internal representation, which is then rendered in audio using a collection of rendering rules. This enables AsTeR to provide different views of the document; a user can listen to the whole document or select a portion of the document for listening. An important feature of AsTeR makes us of voice intonation to read long and complicated formuale. Such formulae are divided into logical parts (like a single summation or a numerator of a fraction) and read with different intonation than the surrounding part of the expression. 
 
-\subsection{MathTalk}
+\section{MathTalk}
 MathTalk\footnote{\url{http://www.mathtalk.com/index.htm}}\cite{mathtalk:stevens1994mathtalk} is a commercial text-to-software that enables visually impaired people to read algebra notation in a quick manner. MathTalk was designed and created as a part of doctoral dissertation of R. D. Stevens\cite{mathtalk:stevens1996principles} and employs the use of prosody in the synthetic voice to decrease the mental workload of the listener. MathTalk enables the users to browse the document and change the speed of reading which gives them comfortable control of the reading process.
 
-\subsection{Web Browser Support}
+\section{Lambda}
+Lambda\cite{lambda:schweikhardt2006lambda} (Linear Access to Mathematic for Braille Device and Audio-synthesis) aims at solving the problem of mathematics text management by blind users. It consists of two sections: the Lambda code and the editor.
+
+The Lambda code directly derives from MathML, it is automatically convertible into equivalent MathML and through it into the most popular mathematical formats. The Lambda code was designed to have explicit meaning with no ambiguities; to provide full Braille output of mathematical equations; to preserve peculiarities of national Braille; to have a compact linear representation (to minimize the movement while reading Braille).
+
+The Lambda editor allows to write and manipulate mathematical expressions. It is essentially a text editor designed to read and write Lambda code. Mathematical elements are grouped into blocks, that can be collapsed or expanded for easier reading. Blocks can also be deleted or copied to a different place in the document. The output of the Lambda editor can be written (displayed) in Braille, spoken by speech synthesis or both at the same time. The speech synthesis exploits the block structure which enables it to change the speech speed and insert brakes to better communicate the meaning of the mathematical formula. 
+
+\section{Web Browser Support}
 MathML was designed as a standard for including mathematical formulae in web pages. It stands to reason that at the most well-known and wide-spread web browsers should have good support of MathML, at least the Presentation MathML. Unfortunately the situation is not that good, developers of these browsers are mainly focused on different areas and MathML stand very low on the ladder of priorities.
 
 \paragraph*{Mozilla Firefox} 
@@ -278,7 +290,7 @@ Firefox has the best native support for MathML rendering out of the most popular
 Both Google Chrome as well as Safari are based on the WebKit layout engine that has a development version of MathML. The support for MathML is available in latest versions of Safari (since version 5.1). Unfortunately Chrome does not have native support for MathML, but uses the combination HTML and CSS to render mathematical expression entered in MathML.
 
 \paragraph*{Internet Explorer}
-Internet Explorer does not have any native support for MathML, but MathML rendering capability and some additional functionality can be added by the MathPlayer extension, that is described in more detail in section \ref{mathml:mathplayer}.
+Internet Explorer does not have any native support for MathML, but MathML rendering capability and some additional functionality can be added by the MathPlayer extension, that is described in more detail in section \ref{mathml:mathplayer}. However MathPlayer's support only extends to Internet Explorer 8, support in version 9 is rather spotty and in version 10 it does not work at all.
 
 \paragraph*{Opera}
 Opera was one of the first browsers to include native support for MathML. The rendering of MathML is not as good as in Firefox, Opera has issues with positioning of elements in more complicated constructs. 
@@ -437,7 +449,7 @@ The second group contains element with specific purpose. In other words these el
 \item \texttt{mfenced} - subexpression is enclosed in parenthesis.
 \end{itemize}
 
-The third group is composed of elements that specify only the layout of the subexpression. To determine the exact function the author wanted to convey we need additional information provided by child elements and may also depend on sibling or parent elements. 
+The third group is composed of elements that specify only the layout of the subexpression. To determine the exact function the author wanted to convey we need additional information provided by child elements and in some cases it may also depend on sibling or parent elements. 
 \begin{figure}[!ht]
 \lstset{language=XML,frame=lines}
 \begin{lstlisting}
@@ -467,6 +479,7 @@ The last group is formed by elements that have purely presentation function: spa
 
 
 \subsection{Content MathML}
+\label{analysis-content}
 The cornerstone of the Content MathML is without a doubt the element \texttt{apply}, function application. It describes the application of its first child element on the rest of child elements, all of which can be \texttt{apply} elements themselves. The \texttt{apply} element will therefore serve as a hub, assigning the processing of expression or subexpression based on the operator (the first child element).
 
 To be able to convert the expression correctly we need a different approach than for the Presentation MathML, where the elements are ordered for display purposes and can be converted basically from top to bottom (with a few exceptions). In the Content MathML a function can be applied to multiple elements, but it will be declared only once as seen in figure \ref{fig:mathplus} (in the Presentation MathML the plus symbol would be declared twice, between $x$ and $y$, $y$ and $z$).
@@ -507,11 +520,59 @@ As we mentioned before many mathematical operations can be expressed using more 
 This way all operators that denote the same operation are grouped together and we can easily unify the way each operation is converted.
 
 \chapter{Implementation}
-This chapter discribes various implementation aspects that occurred during the creation of the conversion application. The application is written in Java programming language, mainly because of personal preference of the author. Also the existence and availability of many frameworks and tools for Java language (for working with XML documents among others) are are a big advantage of using this language. 
+This chapter describes various implementation aspects that occurred during the creation of the conversion application. The application is written in Java programming language, mainly because of personal preference of the author. Also the existence and availability of many frameworks and tools for Java language (for working with XML documents among others) are are a big advantage of using this language. 
 
 The application uses Apache Maven for build automation, distribution management and dependency management.
 
 The structure of the application can be seen on \textit{UML component diagram}.
+
+\section{DOM-like Representation of MathML}
+For this application a fully-fledged DOM representation of MathML markup is not required. The information this model provides wastes resources (time and memory) and most of it would be discarded. However we need a structure that will be provide a comfortable traversal; moving from parent to children and vice versa.
+
+We have therefore implemented a simplified DOM tree, with just the information we actually need. Since we only use it to build a DOM representation of MathML markup, every node in this tree has a special property, that denotes its type - name of the element and part of MathML it belongs to (Presentation or Content). It is implemented as an enumeration, which makes it easier to process elements in the \texttt{switch} statement.
+
+Besides the type property our simplified DOM model contains a list of children, pointer to the parent, a text value, a list of XML attributes (key-value pairs) and a attribute that signifies whether this node has already been processed (we want to process each node only once). The whole structure can be seen in figure~\vref{fig:customdom}.
+
+\begin{figure}[!ht]
+\lstset{language=Java,frame=single,backgroundcolor=\color{lightgray}}
+\begin{lstlisting}
+public final class MathMLNode {
+    /**
+     * Type of this node.
+     */
+    private MathMLElement type;
+    /**
+     * List of all children of this node. Empty if 
+     * there are none. In this case value must be 
+     * set.
+     */
+    private List<MathMLNode> children = new ArrayList<MathMLNode>();
+    /**
+     * Text value of this node. {@code null} if 
+     * there are some child nodes.
+     */
+    private String value;
+    /**
+     * Parent node.
+     */
+    private MathMLNode parent;
+    /**
+     * Was this node already processed? Useful when 
+     * you have to "look ahead" and process
+     * element sooner.
+     */
+    private boolean processed = false;
+    /**
+     * Set of attributes.
+     */
+    private Set<XmlAttribute> attributes = new HashSet<XmlAttribute>();
+    
+    ... getters
+    ... setters
+\end{lstlisting}
+\caption{Simplified DOM for internal representation of MathML markup}
+\label{fig:customdom}
+\end{figure}
 
 \section{Input Processing}
 As we outlined in section \ref{inputprocessing:solution}, the streaming approach with custom DOM-like internal representation of MathML tree is used. 
@@ -519,19 +580,17 @@ As we outlined in section \ref{inputprocessing:solution}, the streaming approach
 In Java two major APIs\footnote{Application programming interface} for streaming processing of XML documents are popular among developers:
 \begin{itemize}
 \item SAX (Simple API for XML) - SAX implements the push principle, reporting events as it encounters them. From the point of view of this application a better approach would be
-\item StAX (Streaming API for XML) - pull principle; the application requests events from the StAX processor. 
+\item StAX (Streaming API for XML) - pull principle; the application requests events from the StAX processor. (StAX is a specification defined by the JSR 173\footnote{\url{http://www.jcp.org/en/jsr/detail?id=173}}.)
 \end{itemize}
 
 This application uses default StAX implementation that is shipped with Java Standard Edition 6 runtime. There are also other implementations available, such as Woodstox\footnote{\url{http://woodstox.codehaus.org}} or Aalto\footnote{\url{http://wiki.fasterxml.com/AaltoHome}}, and they might provide better performance. These alternative implementations have a possibility to set up the processor for specific use (i.e., for fast processing, low memory usage). 
-\\
-@todo Vymenit implementaciu a porovnat vysledky v poslednej kapitole 
 
 StAX offers two ways of traversing documents: Cursor API and Iterator API. 
 
 \paragraph*{Cursor API} As the name suggests, the Cursor API provides a cursor with which we can run through the document one event (a more appropriate name might be an infoset element) at a time. The cursor always moves forwards, never backwards. Two main interfaces are available: \texttt{XMLStremReader} for accessing all possible information retrievable from XML documents and \texttt{XMLStreamWriter} which in turn provides methods for outputting this information. 
 
 \begin{figure}[!ht]
-\lstset{language=Java,frame=shadowbox,backgroundcolor=\color{lightgray}}
+\lstset{language=Java,frame=single,backgroundcolor=\color{lightgray}}
 \begin{lstlisting}
 public interface XMLStreamReader {
 	public int next();
@@ -556,7 +615,7 @@ public interface XMLStreamWriter {
 \paragraph*{Iterator API} The Iterator API represents XML stream as a set of discrete event objects. Much like the Cursor API, the Iterator API provides two interfaces for reading and writing these event objects: \texttt{XMLEventReader} and \texttt{XMLEventWriter}. The \texttt{XMLEventReader} extends \texttt{java.util.Iterator} interface, which means, that values returned by \texttt{XMLEventReader} can be cached and work with standard Java Iterator.
 
 \begin{figure}[!ht]
-\lstset{language=Java,frame=shadowbox,backgroundcolor=\color{lightgray}}
+\lstset{language=Java,frame=single,backgroundcolor=\color{lightgray}}
 \begin{lstlisting}
 public interface XMLEventReader extends Iterator {
   	public XMLEvent nextEvent();
@@ -580,9 +639,9 @@ public interface XMLEventWriter {
 \paragraph*{Comparison} The Cursor API is generally faster and more memory efficient than the Iterator API. On the other hand subclasses of the \texttt{XMLEvent} of the Iterator API can be passed into collections or otherwise used even after the parser has moved on to subsequent events. Our application has very little use of this functionality and does not need to modify the input stream (which the Iterator API enables). However, it benefits from the Cursor API's memory and time efficiency.
 
 \subsection{XML Parser}
-The class \texttt{XmlParserStAX} is responsible for processing input XML documents and at the same time creating output documents in the same run through the file. It also provides a method for processing string input and producing string output. In this case the parser processes the document defined by this string the same way as any other input document, however the output contains only converted strings, without any of original documents elements outside the MathML markup.
+The class \texttt{XmlParserStAX} is responsible for processing input XML documents using the StAX Cursor API and at the same time creating output documents in the same run through the file. The internal processing follows steps outlined in algorithm~\vref{alg-processinput}. The parser also provides a method for processing string input and producing string output. In this case the parser processes the document defined by this string the same way as any other input document, however the output contains only converted strings, without any of original documents elements outside the MathML markup.
 \begin{figure}[!ht]
-\lstset{language=Java,frame=shadowbox,backgroundcolor=\color{lightgray}}
+\lstset{language=Java,frame=single,backgroundcolor=\color{lightgray}}
 \begin{lstlisting}
 public class XmlParserStAX {
 	public String parse(final String inputString, final Locale language);
@@ -596,15 +655,57 @@ public class XmlParserStAX {
 
 The parser is capable of accepting a folder as an input (instead of a document) and processing all files in this folder, preserving the file structure on the path entered by the user. 
 
-\begin{itemize}
-\item Streaming pull vs push, specifically in Java, \textbf{StAX}, SAX
+A thread pool of a user-specified size is initialized at the beginning and for every file from the input a \texttt{java.util.concurrent.Callable} instance is created. Using the \texttt{java.util.concurrent.ExecutorService} with our thread pool these callables are concurrently invoked (whenever there is an free thread in the thread pool next callable is invoked).  
 
-	\begin{itemize}
-	\item \url{http://www.jcp.org/en/jsr/detail?id=173}
-	\item \url{http://javapapers.com/jee/java-stax/}
-	\end{itemize}
+\section{Conversion}
+When the parser creates a complete DOM-like tree, it immediately initializes the conversion of that tree by calling the \texttt{convert(tree, language)} method of the \texttt{MathMLConverter} class. The converter then decides which element of the input tree will be used as the root element of the conversion. In case that the tree contains Content MathML markup, this markup has precedence over the Presentation markup. 
 
-\end{itemize}
+The converter consists of several classes that represent elements of MathML markup; a separate class for each element of the Presentation MathML markup and three classes (\texttt{Apply}, \texttt{Cn}, \texttt{Ci}) for the Content MathML markup. Every class has only one static method, \texttt{process(node, settings)}, that is called whenever the traversal of the input tree encounters corresponding element. The run through the tree is done via the class \texttt{Node} and its static method \texttt{process(node, settings)}. This method works as a switch for every type of node and delegates the processing to a specific class. It also marks each encountered node as processed (see figure \ref{fig:converter-node} for illustration). The resulting string is gradually built from partial results of individual nodes.
+
+\begin{figure}[!ht]
+\lstset{language=Java,frame=single,backgroundcolor=\color{lightgray}}
+\begin{lstlisting}
+public class Node {
+	public static String process(final MathMLNode node, final ConverterSettings settings) {
+		final StringBuilder builder = new StringBuilder();
+        switch (node.getType()) {
+            ...
+            case MN: {
+                builder.append(Mn.process(node, settings));
+                break;
+            }
+            case MFRAC: {    
+                builder.append(Mfrac.process(node, settings));
+                break;
+            }
+            ...
+        }
+        node.setProcessed();
+    }    
+}
+\end{lstlisting}
+\caption{Excerpt from the \texttt{Node} class}
+\label{fig:converter-node}
+\end{figure}
+
+Before we get to the explanation of the conversion inside these classes, we have to define how mathematical operators and operations are defined in the application. The \texttt{Operation} class is an enumeration of all operations known to this application. Each operation is assigned a unique key, that is also used to retrieve appropriate textual representation of this operation from the localization files. Next there is a type of the operation as defined in section \ref{analysis-content}. The last property is an array of possible operators or symbols that might be used to represent this operation in documents. These can be standard HTML character entities entered by their name (\texttt{\&minus;}) or unicode code point (decimal or hexadecimal) or a name of the corresponding element in the Content MathML markup as seen in figure \ref{fig:converter-operation}.
+
+\begin{figure}[!ht]
+\lstset{language=Java,frame=single,backgroundcolor=\color{lightgray}}
+\begin{lstlisting}[mathescape=true]
+public enum Operation {
+	MINUS_PLUS("minus_plus", OperationType.INFIX,$~~$"&#8723;", "&#x2213;", "$\mp$");
+}
+\end{lstlisting}
+\caption{An example of an operation}
+\label{fig:converter-operation}
+\end{figure}
+
+The conversion of Presentation MathML elements is very simple and derives from the names of respective nodes. We offer special treatment for layout elements (such as \texttt{munder}, \texttt{msup}, $\ldots$) and distinguish a few notable operations, that occur often in mathematical texts, like limits, integrals or summations. 
+
+On the other hand the conversion of Content MathML elements is more complicated. Everything important is happening inside the class \texttt{Apply}. The first child of the \texttt{apply} element denotes the operation. The operation can be defined by the appropriate Content MathML element, in which case we use the element name to retrieve the operation from the enumeration; by the \texttt{csymbol} element, then the value of the element is used; or by another \texttt{apply} element, for which we invoke the \texttt{Node.process()} method. 
+
+When we have determined the exact operation, we proceed by processing it based on its type, i.e. based on its word order when spoken. Operations that have a type \texttt{OperationType.SPECIAL} have to be processed individually.
 
 \chapter{Results}
 \section{MREC Corpus}
