@@ -2,9 +2,7 @@ package cz.muni.fi.mathml.mathml2text.converter.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
@@ -14,10 +12,10 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberTransformer;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLElement;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
 import cz.muni.fi.mathml.mathml2text.converter.tree.XmlAttribute;
-import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberTransformer;
 
 /**
  * Transformer of {@link MathMLNode} trees into string representations.
@@ -60,48 +58,6 @@ public class MathMLConverter {
             }
         }
         return this.localizationMap.get(locale);
-    }
-    
-    /**
-     * Converts a list of MathML nodes into a list of corresponding list of strings.
-     * If there was an error during conversion of some input node, a {@code null}
-     * will be inserted to the list at the index of erroneous input node.
-     * 
-     * @param nodeList Input list of MathML nodes.
-     * @return List of converted strings.
-     */
-    public List<String> convert(final List<MathMLNode> nodeList, final Locale language) {
-        final List<MathMLNode> checked = new ArrayList<MathMLNode>();
-        // check whether every root of tree is of type math
-        //@todo for perfomance optimization, delete this check
-        for (final MathMLNode node : nodeList) {
-            if (MathMLElement.MATH.equals(node.getType())) {
-                checked.add(node);
-            } else {
-                logger.debug(String.format("Expected [math] node, but got [%1$s].", node.getType().getElementName()));
-            }
-        }
-        this.numberTransformer = new NumberTransformer(language);
-        this.currentLocalization = this.getLocalization(language);
-        ConverterSettings settings = ConverterSettings.getInstance();
-        if (settings.getLocalization() == null) {
-            settings.setLocalization(this.currentLocalization);
-        }
-        if (settings.getNumberTransformer() == null) {
-            settings.setNumberTransformer(this.numberTransformer);
-        }
-        final List<String> converted = new ArrayList<String>(checked.size());
-        for (final MathMLNode root : checked) {
-            MathMLNode nodeToProcess = this.getNodeForProcessing(root);
-            String result = null;
-            try {
-                result = Node.process(nodeToProcess, settings);
-            } catch (Throwable ex) {
-                logger.error("Error while processing input tree.", ex);
-            }
-            converted.add(result);
-        }
-        return converted;
     }
     
     /**

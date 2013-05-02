@@ -100,7 +100,7 @@
     <entry key="floor">dolní celá část</entry>
     <entry key="ceiling">horní celá část</entry>
     <entry key="exp">exponenciál ze</entry>
-    <entry key="naturalLogarithm">prirozený logaritmus ze</entry>
+    <entry key="natural_logarithm">prirozený logaritmus ze</entry>
     <entry key="card">mohutnost</entry>
     <entry key="rem">zvyšek ze</entry>
     <entry key="quotient">podíl ze</entry>
@@ -166,5 +166,9 @@
     <entry key="diaeresis">diaeresis</entry>
     <entry key="partialdiff">partial differentiation of function</entry>
     <entry key="factorial">factorial of</entry>
+    <entry key="domain">domain</entry>
+    <entry key="where">where</entry>
+    <entry key="with_parameters">with parameters</entry>
+    <entry key="direct_product">direct product</entry>
     <entry key=""></entry>
 </properties>
