@@ -50,6 +50,9 @@ public final class Apply {
         } else if (MathMLElement.CI.equals(firstChild.getType()) && node.getChildren().size() > 1) {
             // function can be defined in ci
             function = firstChild.getValue();
+        } else if (MathMLElement.MTEXT.equals(firstChild.getType())) {
+            // ignore
+            return Strings.EMPTY;
         } else {
             // if nothing else holds true, we will assume that first child is function definition
             function = firstChild.getType().getElementName();
@@ -83,7 +86,17 @@ public final class Apply {
             }
             String join = StringUtils.join(chars, ",");
             logger.info("Unknown operation [{}] [{}]", function, join);
-            return Strings.EMPTY;
+            
+            // treat this function as user defined (not a well known mathematical operation)
+            // all other child elements of current apply element are considered parameters of this function
+            builder.append(function);
+            builder.append(Strings.SPACE);
+            builder.append(settings.getProperty("with_parameters"));
+            for (int index = 1; index < node.getChildren().size(); ++index) {
+                builder.append(Node.process(node.getChildren().get(index), settings));
+            }
+            
+            return builder.toString();
         }
          
         String functionName = settings.getProperty(operation.getKey());
@@ -120,10 +133,16 @@ public final class Apply {
                 return builder.toString();
             }
             case PREFIX_MULTI: {
+                builder.append(functionName);
+                builder.append(settings.getProperty("of"));
                 builder.append(Node.process(node.getChildren().get(1), settings));
                 int count = node.getChildren().size();
                 for (int index = 2; index < count; ++index) {
-                    builder.append(functionName);
+                    if (index == count - 1) {
+                        builder.append(settings.getProperty("and"));
+                    } else {
+                        builder.append(", ");
+                    }
                     builder.append(Node.process(node.getChildren().get(index), settings));
                 }
                 return builder.toString();
@@ -248,7 +267,64 @@ public final class Apply {
                 builder.append(settings.getProperty("vector_end"));
                 return builder.toString();
             }
-            default: // do nothing
+            case INTEGRAL: case SUMMATION: case PRODUCT: {
+                // if there is only one other child element of apply, there are no limits
+                final MathMLNode secondChild = node.getChildren().get(1);
+                if (node.getChildren().size() == 2) {
+                    builder.append(functionName);
+                    builder.append(settings.getProperty("of"));
+                    builder.append(Node.process(secondChild, settings));
+                    return builder.toString();
+                }
+                
+                if (MathMLElement.DOMAIN_OF_APPLICATION.equals(secondChild.getType())) {
+                    builder.append(functionName);
+                    builder.append(settings.getProperty("over"));
+                    builder.append(settings.getProperty("domain"));
+                    builder.append(Node.process(secondChild, settings)); // domain
+                    builder.append(settings.getProperty("of"));
+                    builder.append(Node.process(node.getChildren().get(2), settings)); // function
+                } else if (MathMLElement.BVAR.equals(secondChild.getType())) {
+                    if (MathMLElement.LOWLIMIT.equals(node.getChildren().get(2).getType())) {
+                        builder.append(functionName);
+                        builder.append(settings.getProperty("over"));
+                        builder.append(Node.process(secondChild, settings));
+                        builder.append(settings.getProperty("from"));
+                        builder.append(Node.process(node.getChildren().get(2), settings)); // lowlimit
+                        builder.append(settings.getProperty("to"));
+                        builder.append(Node.process(node.getChildren().get(3), settings)); // uplimit
+                        builder.append(settings.getProperty("of"));
+                        builder.append(Node.process(node.getChildren().get(4), settings)); // function
+                    } else if (MathMLElement.CONDITION.equals(node.getChildren().get(2).getType())) {
+                        builder.append(functionName);
+                        builder.append(settings.getProperty("over"));
+                        builder.append(Node.process(secondChild, settings));
+                        builder.append(settings.getProperty("where"));
+                        builder.append(Node.process(node.getChildren().get(2), settings)); // condition
+                        builder.append(settings.getProperty("of"));
+                        builder.append(Node.process(node.getChildren().get(3), settings)); // function
+                    } else {
+                        logger.warn("Bound variable has no limits.");
+                    }
+                } else if (MathMLElement.INTERVAL.equals(secondChild.getType())) {
+                     builder.append(functionName);
+                     builder.append(settings.getProperty("from"));
+                     builder.append(Node.process(secondChild.getChildren().get(0), settings));
+                     builder.append(settings.getProperty("to"));
+                     builder.append(Node.process(secondChild.getChildren().get(1), settings));
+                     builder.append(settings.getProperty("of"));
+                     builder.append(Node.process(node.getChildren().get(2), settings)); // function
+                     
+                } else {
+                    logger.warn("Unknown variable definition [{}] of [{}].", 
+                            secondChild.getType().getElementName(), operation.getKey());
+                }
+                return builder.toString();
+            }    
+            
+            default: {
+                logger.debug("Operation [{}] was not processed.", operation.getKey());
+            }
         }
         
         // try to corresponding element to given function, if none is found

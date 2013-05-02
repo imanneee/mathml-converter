@@ -42,7 +42,7 @@ public enum Operation {
     /**
      * Natural logarithm.
      */
-    NATURAL_LOGARITHM("naturalLogarithm", OperationType.SPECIAL, "ln"),
+    NATURAL_LOGARITHM("natural_logarithm", OperationType.PREFIX, "ln"),
     /**
      * Square. (to the power of 2)
      */
@@ -270,7 +270,7 @@ public enum Operation {
     /**
      * Exponentiation with base <i>e</i>.
      */
-    EXPONENTIAL("exp", OperationType.SPECIAL, "exp"),
+    EXPONENTIAL("exp", OperationType.PREFIX, "exp"),
     /**
      * Set cardinality.
      */
@@ -370,7 +370,7 @@ public enum Operation {
     /**
      * Minus plus
      */
-    MINUS_PLUS("minus_plus", OperationType.INFIX, "$#8723;", "&#x2213;", "∓"),
+    MINUS_PLUS("minus_plus", OperationType.INFIX, "&#8723;", "&#x2213;", "∓"),
     /**
      * Almost equal.
      */
@@ -451,6 +451,18 @@ public enum Operation {
      * Factorial.
      */
     FACTORIAL("factorial", OperationType.PREFIX, "factorial"),
+    /**
+     * Minimum.
+     */
+    MINIMUM("min", OperationType.PREFIX_MULTI, "min"),
+    /**
+     * Maximum.
+     */
+    MAXIMUM("max", OperationType.PREFIX_MULTI, "max"),
+    /**
+     * Direct product.
+     */
+    DIRECT_PRODUCT("direct_product", OperationType.INFIX, "&#8857;", "&#x2299;", "⊙"),
     /**
      * Empty or {@code null} function.
      */

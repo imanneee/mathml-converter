@@ -100,7 +100,7 @@
     <entry key="floor">floor of</entry>
     <entry key="ceiling">ceiling of</entry>
     <entry key="exp">exponential of</entry>
-    <entry key="naturalLogarithm">natural logarithm of</entry>
+    <entry key="natural_logarithm">natural logarithm of</entry>
     <entry key="card">cardinality of</entry>
     <entry key="rem">remainder of</entry>
     <entry key="quotient">quotient of</entry>
@@ -166,5 +166,9 @@
     <entry key="diaeresis">diaeresis</entry>
     <entry key="partialdiff">partial differentiation of function</entry>
     <entry key="factorial">factorial of</entry>
+    <entry key="domain">domain</entry>
+    <entry key="where">where</entry>
+    <entry key="with_parameters">with parameters</entry>
+    <entry key="direct_product">direct product</entry>
     <entry key=""></entry>
 </properties>

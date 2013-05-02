@@ -136,7 +136,7 @@ public enum MathMLElement {
      */
     MAX("max", MathMLType.CONTENT_GROUP),
     /**
-     * Minumum
+     * Minimum
      */
     MIN("min", MathMLType.CONTENT_GROUP),
     /**
@@ -552,6 +552,26 @@ public enum MathMLElement {
      * Vector (a matrix with one column).
      */
     VECTOR("vector", MathMLType.CONTENT),
+    /**
+     * Lower limit of integral, summation, product.
+     */
+    LOWLIMIT("lowlimit", MathMLType.CONTENT),
+    /**
+     * Upper limit of integra, summation, product.
+     */
+    UPLIMIT("uplimit", MathMLType.CONTENT),
+    /**
+     * Condition for summation,...
+     */
+    CONDITION("condition", MathMLType.CONTENT),
+    /**
+     * Domain of summation,...
+     */
+    DOMAIN_OF_APPLICATION("domainofapplication", MathMLType.CONTENT),
+    /**
+     * Bound variable to some context.
+     */
+    BVAR("bvar", MathMLType.CONTENT),
     
     //@todo vectors and statistics
     
