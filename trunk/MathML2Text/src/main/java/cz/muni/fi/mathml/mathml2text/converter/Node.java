@@ -1,9 +1,9 @@
 package cz.muni.fi.mathml.mathml2text.converter;
 
-import cz.muni.fi.mathml.mathml2text.converter.Strings;
 import cz.muni.fi.mathml.mathml2text.converter.content.Apply;
 import cz.muni.fi.mathml.mathml2text.converter.content.Ci;
 import cz.muni.fi.mathml.mathml2text.converter.content.Cn;
+import cz.muni.fi.mathml.mathml2text.converter.presentation.Mfenced;
 import cz.muni.fi.mathml.mathml2text.converter.presentation.Mfrac;
 import cz.muni.fi.mathml.mathml2text.converter.presentation.Mi;
 import cz.muni.fi.mathml.mathml2text.converter.presentation.Mn;
@@ -92,6 +92,10 @@ public final class Node {
             } 
             case MUNDEROVER: case MSUBSUP: {
                 builder.append(Munderover.process(node, settings));
+                break;
+            }
+            case MFENCED: {
+                builder.append(Mfenced.process(node, settings));
                 break;
             }
             case CN: {

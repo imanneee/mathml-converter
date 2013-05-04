@@ -3,11 +3,11 @@ package cz.muni.fi.mathml.mathml2text.converter.presentation;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.LoggerFactory;
 
-import cz.muni.fi.mathml.mathml2text.converter.Strings;
 import cz.muni.fi.mathml.mathml2text.converter.ConverterSettings;
+import cz.muni.fi.mathml.mathml2text.converter.Strings;
 import cz.muni.fi.mathml.mathml2text.converter.operation.Operation;
-import cz.muni.fi.mathml.mathml2text.converter.util.InputValueUtils;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.util.InputValueUtils;
 
 /**
  * Specific implementation of <code>&lt;mo&gt;</code> node.

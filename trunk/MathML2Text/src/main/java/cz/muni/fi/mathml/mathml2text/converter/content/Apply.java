@@ -7,13 +7,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.muni.fi.mathml.mathml2text.converter.Strings;
 import cz.muni.fi.mathml.mathml2text.converter.ConverterSettings;
 import cz.muni.fi.mathml.mathml2text.converter.Node;
+import cz.muni.fi.mathml.mathml2text.converter.Strings;
 import cz.muni.fi.mathml.mathml2text.converter.operation.Operation;
-import cz.muni.fi.mathml.mathml2text.numbers.NumberFormat;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLElement;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.numbers.NumberFormat;
 
 /**
  * Specific implementation of <code>&lt;apply&gt;</code> node.
@@ -267,7 +267,7 @@ public final class Apply {
                 builder.append(settings.getProperty("vector_end"));
                 return builder.toString();
             }
-            case INTEGRAL: case SUMMATION: case PRODUCT: {
+            case INTEGRAL: case SUMMATION: case PRODUCT: case CONTOUR_INTEGRAL: {
                 // if there is only one other child element of apply, there are no limits
                 final MathMLNode secondChild = node.getChildren().get(1);
                 if (node.getChildren().size() == 2) {
@@ -324,6 +324,7 @@ public final class Apply {
             
             default: {
                 logger.debug("Operation [{}] was not processed.", operation.getKey());
+                break;
             }
         }
         
@@ -331,55 +332,6 @@ public final class Apply {
         // try a look up for operation
         // this is done to simplify number of cases needed for processing, 
         // as elements can be sorted into groups
-        MathMLElement functionElement = MathMLElement.forElementName(function);
-        if (MathMLElement.UNKNOWN.equals(functionElement)) {
-            functionElement = MathMLElement.forElementName(operation.getKey());
-        }
-        switch (functionElement.getType()) {
-            case CONTENT_TRIGONOMETRY: {
-                builder.append(functionName);
-                builder.append(settings.getProperty("of"));
-                builder.append(Node.process(node.getChildren().get(1), settings));
-                return builder.toString();
-            }
-            case CONTENT_GROUP: {
-                builder.append(functionName);
-                builder.append(settings.getProperty("of"));
-                builder.append(Node.process(node.getChildren().get(1), settings));
-                int count = node.getChildren().size();
-                for (int index = 2; index < count; ++index) {
-                    if (index == count - 1) {
-                        builder.append(settings.getProperty("and"));
-                    } else {
-                        builder.append(", ");
-                    }
-                    builder.append(Node.process(node.getChildren().get(index), settings));
-                }
-                return builder.toString();
-            }
-            case CONTENT_MIDDLE: {
-                builder.append(Node.process(node.getChildren().get(1), settings));
-                int count = node.getChildren().size();
-                for (int index = 2; index < count; ++index) {
-                    builder.append(functionName);
-                    builder.append(Node.process(node.getChildren().get(index), settings));
-                }
-                return builder.toString();
-            }
-            case CONTENT_BEFORE: {
-                builder.append(functionName);
-                builder.append(Node.process(node.getChildren().get(1), settings));
-                return builder.toString();
-            }
-            case CONTENT_BEFORE_MIDDLE: {
-                builder.append(functionName);
-                builder.append(Node.process(node.getChildren().get(1), settings));
-                builder.append(settings.getProperty(Operation.DIVIDE.getKey()));
-                builder.append(Node.process(node.getChildren().get(2), settings));
-                return builder.toString();
-            }
-            default: // do nothing
-        }
         
         return builder.toString();
     }
