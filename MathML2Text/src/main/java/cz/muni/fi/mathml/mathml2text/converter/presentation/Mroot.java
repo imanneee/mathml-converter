@@ -1,8 +1,8 @@
-package cz.muni.fi.mathml.mathml2text.converter.impl.presentation;
+package cz.muni.fi.mathml.mathml2text.converter.presentation;
 
-import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
-import cz.muni.fi.mathml.mathml2text.converter.impl.Node;
-import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberFormat;
+import cz.muni.fi.mathml.mathml2text.converter.ConverterSettings;
+import cz.muni.fi.mathml.mathml2text.converter.Node;
+import cz.muni.fi.mathml.mathml2text.numbers.NumberFormat;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
 
 /**

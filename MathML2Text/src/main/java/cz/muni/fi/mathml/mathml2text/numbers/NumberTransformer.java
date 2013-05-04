@@ -1,4 +1,4 @@
-package cz.muni.fi.mathml.mathml2text.converter.numbers;
+package cz.muni.fi.mathml.mathml2text.numbers;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

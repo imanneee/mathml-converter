@@ -1,4 +1,4 @@
-package cz.muni.fi.mathml.mathml2text.converter.impl.content;
+package cz.muni.fi.mathml.mathml2text.converter.content;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,10 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.muni.fi.mathml.mathml2text.converter.Strings;
-import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
-import cz.muni.fi.mathml.mathml2text.converter.impl.Node;
-import cz.muni.fi.mathml.mathml2text.converter.impl.operation.Operation;
-import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberFormat;
+import cz.muni.fi.mathml.mathml2text.converter.ConverterSettings;
+import cz.muni.fi.mathml.mathml2text.converter.Node;
+import cz.muni.fi.mathml.mathml2text.converter.operation.Operation;
+import cz.muni.fi.mathml.mathml2text.numbers.NumberFormat;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLElement;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
 

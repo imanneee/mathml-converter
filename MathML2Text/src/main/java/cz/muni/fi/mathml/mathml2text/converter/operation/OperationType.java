@@ -1,4 +1,4 @@
-package cz.muni.fi.mathml.mathml2text.converter.impl.operation;
+package cz.muni.fi.mathml.mathml2text.converter.operation;
 
 /**
  * Type of an operation based on the word order this operation uses.

@@ -1,9 +1,9 @@
-package cz.muni.fi.mathml.mathml2text.converter.impl.content;
+package cz.muni.fi.mathml.mathml2text.converter.content;
 
 import org.slf4j.LoggerFactory;
 
 import cz.muni.fi.mathml.mathml2text.converter.Strings;
-import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
+import cz.muni.fi.mathml.mathml2text.converter.ConverterSettings;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
 import cz.muni.fi.mathml.mathml2text.converter.tree.XmlAttribute;
 
@@ -35,11 +35,13 @@ public final class Cn {
             }
         }
         try {
-        String strippedValue = node.getValue().trim();
-        for (final Character c : Strings.VALUE_EMPTY_CHARS) {
-            strippedValue = strippedValue.replace(c.toString(), Strings.EMPTY);
-        } 
-            final String number = settings.getNumberTransformer().transform(strippedValue);
+            String strippedValue = node.getValue().trim();
+            for (final Character c : Strings.VALUE_EMPTY_CHARS) {
+                strippedValue = strippedValue.replace(c.toString(), Strings.EMPTY);
+            } 
+            final String number = settings.isTransformNumbers() 
+                                  ? settings.getNumberTransformer().transform(strippedValue) 
+                                  : strippedValue;
             return number + Strings.SPACE;
         } catch (final NumberFormatException ex) {
             LoggerFactory.getLogger(Cn.class).warn(String.format("Cannot transform string [%1$s] to number.", node.getValue()), ex);

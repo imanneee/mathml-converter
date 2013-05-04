@@ -1,4 +1,4 @@
-package cz.muni.fi.mathml.mathml2text.converter.impl;
+package cz.muni.fi.mathml.mathml2text.converter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberTransformer;
+import cz.muni.fi.mathml.mathml2text.numbers.NumberTransformer;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLElement;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
 import cz.muni.fi.mathml.mathml2text.converter.tree.XmlAttribute;
