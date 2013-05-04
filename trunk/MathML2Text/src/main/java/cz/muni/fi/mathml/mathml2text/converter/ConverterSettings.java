@@ -1,4 +1,4 @@
-package cz.muni.fi.mathml.mathml2text.converter.impl;
+package cz.muni.fi.mathml.mathml2text.converter;
 
 import java.util.Properties;
 import java.util.Set;
@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.Sets;
 
 import cz.muni.fi.mathml.mathml2text.converter.Strings;
-import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberFormat;
-import cz.muni.fi.mathml.mathml2text.converter.numbers.NumberTransformer;
+import cz.muni.fi.mathml.mathml2text.numbers.NumberFormat;
+import cz.muni.fi.mathml.mathml2text.numbers.NumberTransformer;
 
 /**
  * Settings for {@link MathMLConverter}. 
@@ -56,6 +56,10 @@ public final class ConverterSettings {
      */
     private String outputDirectory;
     /**
+     * Indicates whether numbers should be transformed to strings.
+     */
+    private boolean transformNumbers;
+    /**
      * Singleton instance.
      */
     private static final ConverterSettings INSTANCE = new ConverterSettings();
@@ -66,12 +70,14 @@ public final class ConverterSettings {
      * <ul>
      *  <li>{@link #replaceSpaces} to <code>false</code></li>
      *  <li>{@link #canonicalize} to <code>false</code></li>
+     *  <li>{@link #transformNumbers} to <code>false</code></li>
      *  <li>{@link #threadCount} to <code>1</code></li>
      * </ul>
      */
     private ConverterSettings() {
         this.replaceSpaces = false;
         this.canonicalize = false;
+        this.transformNumbers = false;
         this.threadCount = 1;
     }
     
@@ -222,6 +228,22 @@ public final class ConverterSettings {
      */
     public void setOutputDirectory(String outputDirectory) {
         this.outputDirectory = outputDirectory;
+    }
+
+    /**
+     * Indicates whether numbers should be transformed to strings.
+     * @return {@code true}, if numbers should be transformed, {code false} otherwise.
+     */
+    public boolean isTransformNumbers() {
+        return this.transformNumbers;
+    }
+
+    /**
+     * Sets the value that indicates whether numbers should be transformed to strings.
+     * @param transformNumbers Indicator whether numbers should be transformed to strings.
+     */
+    public void setTransformNumbers(boolean transformNumbers) {
+        this.transformNumbers = transformNumbers;
     }
     
     /**

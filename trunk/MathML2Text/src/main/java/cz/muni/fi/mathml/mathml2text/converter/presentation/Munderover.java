@@ -1,11 +1,11 @@
-package cz.muni.fi.mathml.mathml2text.converter.impl.presentation;
+package cz.muni.fi.mathml.mathml2text.converter.presentation;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.LoggerFactory;
 
-import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
-import cz.muni.fi.mathml.mathml2text.converter.impl.Node;
-import cz.muni.fi.mathml.mathml2text.converter.impl.operation.Operation;
+import cz.muni.fi.mathml.mathml2text.converter.ConverterSettings;
+import cz.muni.fi.mathml.mathml2text.converter.Node;
+import cz.muni.fi.mathml.mathml2text.converter.operation.Operation;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLElement;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
 

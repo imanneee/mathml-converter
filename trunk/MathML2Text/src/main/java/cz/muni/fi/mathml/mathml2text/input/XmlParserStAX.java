@@ -1,4 +1,4 @@
-package cz.muni.fi.mathml.mathml2text.converter.impl;
+package cz.muni.fi.mathml.mathml2text.input;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -43,6 +43,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.muni.fi.mathml.mathml2text.converter.Strings;
+import cz.muni.fi.mathml.mathml2text.converter.ConverterSettings;
+import cz.muni.fi.mathml.mathml2text.converter.MathMLConverter;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLElement;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
 import cz.muni.fi.mathml.mathml2text.converter.tree.XmlAttribute;

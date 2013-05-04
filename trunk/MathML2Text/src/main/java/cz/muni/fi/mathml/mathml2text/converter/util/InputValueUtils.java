@@ -1,4 +1,4 @@
-package cz.muni.fi.mathml.mathml2text.converter.impl.util;
+package cz.muni.fi.mathml.mathml2text.converter.util;
 
 /**
  * Helper methods for processing input values.

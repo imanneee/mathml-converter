@@ -20,8 +20,8 @@ import org.joda.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.muni.fi.mathml.mathml2text.converter.impl.ConverterSettings;
-import cz.muni.fi.mathml.mathml2text.converter.impl.XmlParserStAX;
+import cz.muni.fi.mathml.mathml2text.converter.ConverterSettings;
+import cz.muni.fi.mathml.mathml2text.input.XmlParserStAX;
 
 /**
  * Class containing runnable main method.
@@ -86,6 +86,9 @@ public class App {
                 }
                 ConverterSettings.getInstance().setOutputDirectory(outputDirectoryPath);
             }
+            if (line.hasOption("n")) {
+                ConverterSettings.getInstance().setTransformNumbers(true);
+            }
             String[] fileNames = line.getArgs();
             final List<File> inputFiles = new ArrayList<File>(fileNames.length);
             for (final String fileName : fileNames) {
@@ -134,6 +137,7 @@ public class App {
                 .create("o"));
         options.addOption("c", "canonicalize", false, "canonicalize input");
         options.addOption("r", "replace-spaces", false, "replace spaces with underscores");
+        options.addOption("n", "transform-numbers", false, "transform all numbers to strings");
         return options;
     }
 }
