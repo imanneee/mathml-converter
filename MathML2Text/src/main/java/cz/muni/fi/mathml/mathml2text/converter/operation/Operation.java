@@ -26,7 +26,8 @@ public enum Operation {
     /**
      * Multiplication operator.
      */
-    MULTIPLY("times", OperationType.INFIX, "&times;", "*", "times", "&sdot;", "&#8901;", "&#x22C5;", "⋅", "&#8290;", "&#x2062;", "⁢"),
+    MULTIPLY("times", OperationType.INFIX, "&times;", "*", "times", "&sdot;", "&#8901;", "&#x22C5;", "⋅", 
+            "&#8290;", "&#x2062;", "⁢", "&#8727;", "&#x2217;"),
     /**
      * Division operator.
      */
@@ -60,9 +61,13 @@ public enum Operation {
      */
     INTEGRAL("integral", OperationType.SPECIAL, "int", "&int;"),
     /**
+     * Contour integral.
+     */
+    CONTOUR_INTEGRAL("contour_integral", OperationType.SPECIAL, "&#8750;", "&#x222E;", "∮"),
+    /**
      * Differential of integral.
      */
-    DIFFERENTIAL("differential", OperationType.SPECIAL, "dd", "&dd;"),
+    DIFFERENTIAL("differential", OperationType.SPECIAL, "dd", "&dd;", "&#8518;", "&#x2146;"),
     /**
      * Summation.
      */
@@ -190,7 +195,7 @@ public enum Operation {
     /**
      * Equivalence.
      */
-    EQUIVALENT_TO("equivalent", OperationType.INFIX, "equivalent", "&hArr;", "⇔"),
+    EQUIVALENT_TO("equivalent", OperationType.INFIX, "equivalent", "&hArr;", "⇔", "&#8596;", "&#x2194;", "↔"),
     /**
      * Approximation.
      */
@@ -230,7 +235,7 @@ public enum Operation {
     /**
      * Negated set inclusion.
      */
-    NOTIN("notin", OperationType.INFIX, "notin"),
+    NOTIN("notin", OperationType.INFIX, "notin", "&#8713;", "&#x2209;", "∉"),
     /**
      * Subset.
      */
@@ -362,7 +367,7 @@ public enum Operation {
     /**
      * Direct sum.
      */
-    DIRECT_SUM("direct_sum", OperationType.SPECIAL, "&oplus;", "⊕"),
+    DIRECT_SUM("direct_sum", OperationType.INFIX, "&oplus;", "⊕"),
     /**
      * Plus minus.
      */
@@ -434,11 +439,11 @@ public enum Operation {
     /**
      * An up pointing arrowhead above a letter.
      */
-    UP_ARROWHEAD("up_arrowhead", OperationType.EVERY_ARGUMENT, "&#8963;", "&#x2303;", "⌃"),
+    UP_ARROWHEAD("up_arrowhead", OperationType.EVERY_ARGUMENT, "&#8963;", "&#x2303;", "⌃", "&#94;", "&#x005E;", "^"),
     /**
      * Orthogonal to.
      */
-    PERPENDICULAR("perpendicular", OperationType.INFIX, "&#10178;", "&#x27C2;", "⟂"),
+    PERPENDICULAR("perpendicular", OperationType.INFIX, "&#10178;", "&#x27C2;", "⟂", "&#8869;", "&#x22A5;", "⊥"),
     /**
      * Diaeresis above a letter.
      */
@@ -463,6 +468,38 @@ public enum Operation {
      * Direct product.
      */
     DIRECT_PRODUCT("direct_product", OperationType.INFIX, "&#8857;", "&#x2299;", "⊙"),
+    /**
+     * Backward difference.
+     */
+    BACKWARD_DIFFERENCE("backward_difference", OperationType.PREFIX, "&#8711;", "&#x2207;", "∇"),
+    /**
+     * Asymptotic to.
+     */
+    ASYMPTOTIC_TO("asymptotic_to", OperationType.INFIX, "&#8776;", "&#x2248;", "≈"),
+    /**
+     * For all.
+     */
+    FOR_ALL("for_all", OperationType.SPECIAL, "&#8704;", "&#x2200;", "forall", "∀"),
+    /**
+     * Exists.
+     */
+    EXISTS("exists", OperationType.SPECIAL, "exists"),
+    /**
+     * Divides.
+     */
+    DIVIDES("divides", OperationType.INFIX, "&#8739;", "&#x2223;", "∣"),
+    /**
+     * Tensor product.
+     */
+    TENSOR_PRODUCT("tensor_product", OperationType.INFIX, "&#8855;", "&#x2297;", "⊗"),
+    /**
+     * Maps to.
+     */
+    MAPS_TO("maps_to", OperationType.INFIX, "↦", "&#8614;", "&#x21A6;"),
+    /**
+     * Greater than equal to or less than.
+     */
+    GREATER_THAN_EQUAL_TO_OR_LESS_THAN("greater_equal_less", OperationType.INFIX, "&#8923;", "&#x22DB;", "⋛"),
     /**
      * Empty or {@code null} function.
      */

@@ -27,7 +27,7 @@ public final class NumberTransformer {
     private NumberFormat numberFormat = NumberFormat.CARDINAL;
     
     public NumberTransformer(@Nullable final Locale locale) {
-        this.bundle = ResourceBundle.getBundle("cz.muni.fi.mathml.mathml2text.converter.numbers.numbers", locale != null ? locale : Locale.getDefault());
+        this.bundle = ResourceBundle.getBundle("cz.muni.fi.mathml.mathml2text.numbers.numbers", locale != null ? locale : Locale.getDefault());
     }
 
     /** 

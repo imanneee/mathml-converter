@@ -13,8 +13,20 @@
         <file>${user.dir}/logs/application.log</file>
     </appender>
     
+    <appender name="OPERATIONS"
+              class="ch.qos.logback.core.FileAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36}[%line] - %msg%n</pattern>
+        </encoder>
+        <file>${user.dir}/logs/operations.log</file>
+    </appender>
+    
     <root level="debug">
         <!--<appender-ref ref="STDOUT" />-->
         <appender-ref ref="FILE" />
     </root>
+    
+    <logger name="cz.muni.fi.mathml.mathml2text.converter.content.Apply" level="TRACE">
+        <appender-ref ref="OPERATIONS" />
+    </logger>
 </configuration>
