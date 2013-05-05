@@ -1,5 +1,19 @@
 \begin{thebibliography}{10}
 
+\bibitem{umcl:archambault2004towards}
+Dominique Archambault, Donal Fitzpatrick, Gopal Gupta, Arthur~I Karshmer, Klaus
+  Miesenberger, and Enrico Pontelli.
+\newblock {Towards a universal maths conversion library}.
+\newblock In {\em {Computers Helping People with Special Needs}}, pages
+  664--669. Springer, 2004.
+
+\bibitem{umcl:archambault2006canonical}
+Dominique Archambault and Victor Mo{\c{c}}o.
+\newblock {Canonical MathML to simplify conversion of MathML to Braille
+  mathematical notations}.
+\newblock In {\em {Computers Helping People with Special Needs}}, pages
+  1191--1198. Springer, 2006.
+
 \bibitem{baker2011towards}
 Josef~B Baker, Alan~P Sexton, and Volker Sorge.
 \newblock T{owards reverse engineering of PDF documents}.
@@ -13,6 +27,16 @@ Josef~B Baker, Alan~P Sexton, and Volker Sorge.
   MathML and Text}.
 \newblock In {\em Intelligent Computer Mathematics}, pages 422--426. Springer,
   2012.
+
+\bibitem{canonicalization:formaneketal}
+David Form{\'a}nek, Martin L{\'\i}{\v s}ka, Michal R{\r u}{\v z}i{\v c}ka, and
+  Petr Sojka.
+\newblock {Normalization of Digital Mathematics Library Content}.
+\newblock In James Davenport, Johan Jeuring, Christoph Lange, and Paul
+  Libbrecht, editors, {\em 24\textsuperscript{th} OpenMath Workshop,
+  7\textsuperscript{th} Workshop on Mathematical User Interfaces (MathUI), and
+  Intelligent Computer Mathematics Work in Progress}, number 921 in CEUR
+  Workshop Proceedings, pages 91--103, Aachen, 2012.
 
 \bibitem{tralics:grimm2003}
 Jos{\'e} Grimm.
@@ -31,7 +55,13 @@ Eitan~M Gurari.
 \newblock {TEX4ht: HTML Production}.
 \newblock {\em TUG-boat}, 25(1):39--47, 2004.
 
-\bibitem{mrec2011}
+\bibitem{umcl:jarmar2012conversion}
+Martin Jarmar.
+\newblock {\em {Conversion of Mathematical Documents into Braille}}.
+\newblock PhD thesis, Master’s thesis, Faculty of Informatics (Jan 201 2),
+  \url{https://is.muni.cz/th/172981/fi_m/?lang=en}, 2012.
+
+\bibitem{mrec:mrec2011}
 Martin L{\'\i}{\v{s}}ka, Petr Sojka, Michal R{\r{u}}{\v{z}}i{\v{c}}ka, and Petr
   Mravec.
 \newblock {Web Interface and Collection for Mathematical Retrieval: WebMIaS and
@@ -57,6 +87,19 @@ Waltraud Schweikhardt, Cristian Bernareggi, Nadine Jessel, Benoit Encelle, and
   audio synthesis}.
 \newblock In {\em {Computers Helping People with Special Needs}}, pages
   1223--1230. Springer, 2006.
+
+\bibitem{mias:sojka2011indexing}
+Petr Sojka and Martin L{\'\i}{\v{s}}ka.
+\newblock Indexing and searching mathematics in digital libraries.
+\newblock In {\em Intelligent Computer Mathematics}, pages 228--243. Springer,
+  2011.
+
+\bibitem{mrec:arXMLiv2010}
+Heinrich Stamerjohanns, Michael Kohlhase, Deyan Ginev, Catalin David, and Bruce
+  Miller.
+\newblock {Transforming Large Collections of Scientific Publications to XML}.
+\newblock {\em Mathematics in Computer Science}, 3:299--307, 2010.
+\newblock \url{http://dx.doi.org/10.1007/s11786-010-0024-7}.
 
 \bibitem{mathtalk:stevens1994mathtalk}
 Robert Stevens and Alistair Edwards.
