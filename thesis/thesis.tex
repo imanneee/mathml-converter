@@ -90,8 +90,6 @@ MathML, StAX  @todo more
 \tableofcontents
 
 \chapter{Introduction}
-1 page
-Estimated length is 30-40 pages of text, which will be supplemented with samples (possibly images) and maybe some source code snippets.
 
 \chapter{Motivation}
 
@@ -211,10 +209,11 @@ Creating MathML documents is very simple. All that is needed is a word processor
 
 Multiple software products designated for working with mathematical expressions provide an option to output the results of calculations in MathML format. These include popular web service Wolfram Alpha, Mathematica, Maple or Matlab. MathML can also be used as a data exchange format or input format for aforementioned programs.
 
-Another way of creating MathML documents is a conversion from different formats. Among scientist, mathematicians particularly, \TeX\ is the format of choice. It then comes as no surprise that there are many sources of mathematical texts written in \TeX. However, not every publication comes with the source files. Often only print-ready PDF files are released\cite{baker2011towards}. Also many academic writings, especially older ones, are available only in printed form. These have to be scanned using an Optical Character Recognition (OCR) software. 
+Another way of creating MathML documents is a conversion from different formats. Among scientist, mathematicians particularly, \TeX\ is the format of choice. It then comes as no surprise that there are many sources of mathematical texts written in \TeX. However, not every publication comes with the source files. Often only print-ready PDF files are released \cite{baker2011towards}. Also many academic writings, especially older ones, are available only in printed form. These have to be scanned using an Optical Character Recognition (OCR) software. 
 
 \subsection{\LaTeX ML}
-The lack of a suitable tool for converting \LaTeX\ to XML prompted the participants of the Digital Library of Mathematical Functions project to develop their own solution. Main goals of \LaTeX ML\cite{latexml:miller2013} design contain the aspiration to faithfully emulate \TeX\ behavior, the ease of extensibility and the preservation of both semantic and presentation aspects of original documents. To this end \LaTeX ML provides two main commands, \texttt{latexml} and \texttt{latexmlpost}. \texttt{latexml} converts the initial \TeX\ document to XML based on a set of \LaTeX ML-bindings files, that define the mapping of \TeX\ macros to XML. \texttt{latexmlpost} then processes resulting XML output by converting mathematics
+\label{section:latexml}
+The lack of a suitable tool for converting \LaTeX\ to XML prompted the participants of the Digital Library of Mathematical Functions project to develop their own solution. Main goals of \LaTeX ML \cite{latexml:miller2013} design contain the aspiration to faithfully emulate \TeX\ behavior, the ease of extensibility and the preservation of both semantic and presentation aspects of original documents. To this end \LaTeX ML provides two main commands, \texttt{latexml} and \texttt{latexmlpost}. \texttt{latexml} converts the initial \TeX\ document to XML based on a set of \LaTeX ML-bindings files, that define the mapping of \TeX\ macros to XML. \texttt{latexmlpost} then processes resulting XML output by converting mathematics
 and graphics, cross-referencing and applying an \texttt{XSLT} stylesheet. 
 
 Both commands come with a multitude of parameters that allow users to customize the whole process, such as loading user-defined bindings or choosing the output format. Based on the requested output format, mathematics is converted to graphics (png images for HTML) or Presentation MathML in case of XHTML or HTML5. 
@@ -222,30 +221,36 @@ Both commands come with a multitude of parameters that allow users to customize 
 \LaTeX ML is freely available online as an installation package for Linux systems as well as Windows and MacOS. An extensive and detailed manual is available online or as a PDF document.
 
 \subsection{Tralics}
-Tralics\cite{tralics:grimm2003}\cite{dml:Grimm2010} is a freeware software designed to translate \LaTeX sources into XML documents, that can be further converted into either PDF or HTML. The generated XML is conforming to the local ad-hoc DTD (a simplification of the TEI) with mathematical formulas conforming to the Presentation MathML 2.0 recommendations.
+Tralics \cite{tralics:grimm2003}\cite{dml:Grimm2010} is a freeware software designed to translate \LaTeX sources into XML documents, that can be further converted into either PDF or HTML. The generated XML is conforming to the local ad-hoc DTD (a simplification of the TEI) with mathematical formulas conforming to the Presentation MathML 2.0 recommendations.
 
 Similarly to \LaTeX ML, Tralics provides many ways for customization of resulting documents, among them the possibility to change element and attribute names in the XML file. Besides Presentation MathML, mathematical formulae can be translated to \LaTeX -like   elements as well.
 
 Tralics is readily available online in the form of source files or binaries for Linux, Windows and MacOS operating systems. An extensive documentation regarding customization and usage is also available online. 
 
 \subsection{MaxTract}
-MaxTract\cite{baker2012maxtract} is a tool that through spacial analysis of symbols and fonts in PDF document reverse-engineers its source files in the form of \LaTeX\ or XHTML + MathML documents. The conversion process requires valid PDF files to work correctly as it needs the information about symbols, font encoding and width of objects contained in the PDF file. PDF documents created via \LaTeX\ fulfill these requirements, therefore MaxTract is able to process most of the scientific and mathematical material.
+MaxTract \cite{baker2012maxtract} is a tool that through spacial analysis of symbols and fonts in PDF document reverse-engineers its source files in the form of \LaTeX\ or XHTML + MathML documents. The conversion process requires valid PDF files to work correctly as it needs the information about symbols, font encoding and width of objects contained in the PDF file. PDF documents created via \LaTeX\ fulfill these requirements, therefore MaxTract is able to process most of the scientific and mathematical material.
 
 
 \subsection{INFTY Reader}
-INFTY\cite{suzuki2003infty} is an Optical Character Recognition (OCR) software especially created for mathematical documents. INFTY reads scanned pages (images) and yields their character recognition results in multiple formats, including \LaTeX\ and MathML. It does so in four steps: layout analysis, character recognition, structure analysis of mathematical expressions, and manual error correction (optional). 
+INFTY \cite{suzuki2003infty} is an Optical Character Recognition (OCR) software especially created for mathematical documents. INFTY reads scanned pages (images) and yields their character recognition results in multiple formats, including \LaTeX\ and MathML. It does so in four steps: layout analysis, character recognition, structure analysis of mathematical expressions, and manual error correction (optional). 
 
 The most important phase, character recognition, is responsible for distinguishing mathematical expressions and running a character recognition engine originally developed for mathematical symbols together with non-specialized commercial OCR engine. 
 
 INFTY Reader is available free of charge for limited amount of time, then it is necessary to purchase a license key.
 
 \subsection{\TeX 4ht}
-\TeX 4ht\cite{tex4ht:gurari2004} is a system for producing structured output in a markup language from sources written in the \TeX -based family of languages. It is highly extensible and configurable, most common configurations include the conversion from \LaTeX to HTML with MathML, braille or DocBook targets.
+\TeX 4ht \cite{tex4ht:gurari2004} is a system for producing structured output in a markup language from sources written in the \TeX -based family of languages. It is highly extensible and configurable, most common configurations include the conversion from \LaTeX to HTML with MathML, braille or DocBook targets.
 
 The conversion is invoked by running the \texttt{htlatex} command. To the user the process seems similar to producing standard DVI or PDF outputs. \TeX 4ht uses hooks within the \LaTeX\ constructs and associates configurations to them. By modifying default configuration files, the user can change the resulting HTML document to his liking. \TeX 4ht comes with the support of Cascading style sheets\footnote{\url{http://www.w3schools.com/css/}}, which provides further possibilities of customizing the output files. 
 
-\section{Canonicalization}
+\section{Canonicalization of MathML}
+With a wide variety of options of creating MathML documents it is necessary to modify and unify input documents in such a way that will decrease the number of possible ambiguities (especially in the Presentation MathML), in the best case completely eliminating all ambiguities. 
 
+The team standing behind the Universal Maths Conversion library (UMCL) \cite{umcl:archambault2004towards} proposed a notion of a unified structure - Canonical MathML \cite{umcl:archambault2006canonical}. Canonical MathML is valid Presentation MathML and recommends a set of rules that should be followed to make Presentation MathML documents unambiguous. A correct use of \texttt{msup} (\texttt{msub}) for superscripts (subscripts); parentheses defined in the \texttt{mo} element (\texttt{mfenced} element is not used); or unified way of writing summations, integrals and products to name a few. 
+
+UMCL incorporates this notion and provides a module for converting Presentation MathML markup into Canonical MathML. The canonicalization module employs the use of XSL stylesheets and transformations \ref{section:xsl} to create the desired Canonical MathML. However XSL Transformations tent to be quite slow and the UMCL canonicalization is rather error-prone and sometimes even changes the semantics of mathematical formulae, as was shown in M. Jarmar's thesis \cite[chapter 5]{umcl:jarmar2012conversion}. 
+
+These shortcoming of UMCL prompted a team at Masaryk University to design and implement their own canonicalization solution \cite{canonicalization:formaneketal} for use in the (Web)MIaS project \cite{mias:sojka2011indexing}. Although the implementation of this solution is still under development, the core functionality is already working and provides better results than UMCL (from the point of performance as well as the structure of converted documents). 
 
 \chapter{Status Quo of Current Tools}
 Making mathematical content available to visually impaired users or those with dyslexia has been a focus of many projects and researches over the last two decades. As a result several products (commercial or open source) have been developed that help the users with working with mathematical formulae; by providing text-to-speech solutions, easy to use and comfortable editors, support for browsing and searching documents that contain mathematical equations.
@@ -266,21 +271,23 @@ Besides displaying MathML in the browser MathPlayer comes equipped with a wide r
 MathPlayer is shipped as a free to use software with English localization only, but is still a close source product with a license that limits its use to only computers owned by the user and also prohibits translation and reverse engineering of the application.
 
 \section{AsTeR}
-AsTeR (Audio System for Technical Readings)\cite{aster1994} is an exceptional piece of software developed by T.V. Raman as a part of his dissertation at Cornell University. AsTeR is capable of producing audio renderings of technical documents, even those containing higher mathematical expressions, written in \TeX\ or \LaTeX. However, processing different markup languages does not pose a problem for AsTeR. All that is required is a recognizer for given markup language. 
+AsTeR (Audio System for Technical Readings) \cite{aster1994} is an exceptional piece of software developed by T.V. Raman as a part of his dissertation at Cornell University. AsTeR is capable of producing audio renderings of technical documents, even those containing higher mathematical expressions, written in \TeX\ or \LaTeX. However, processing different markup languages does not pose a problem for AsTeR. All that is required is a recognizer for given markup language. 
 
 The logical structure of the document is transformed to internal representation, which is then rendered in audio using a collection of rendering rules. This enables AsTeR to provide different views of the document; a user can listen to the whole document or select a portion of the document for listening. An important feature of AsTeR makes us of voice intonation to read long and complicated formuale. Such formulae are divided into logical parts (like a single summation or a numerator of a fraction) and read with different intonation than the surrounding part of the expression. 
 
 \section{MathTalk}
-MathTalk\footnote{\url{http://www.mathtalk.com/index.htm}}\cite{mathtalk:stevens1994mathtalk} is a commercial text-to-software that enables visually impaired people to read algebra notation in a quick manner. MathTalk was designed and created as a part of doctoral dissertation of R. D. Stevens\cite{mathtalk:stevens1996principles} and employs the use of prosody in the synthetic voice to decrease the mental workload of the listener. MathTalk enables the users to browse the document and change the speed of reading which gives them comfortable control of the reading process.
+MathTalk\footnote{\url{http://www.mathtalk.com/index.htm}} \cite{mathtalk:stevens1994mathtalk} is a commercial text-to-software that enables visually impaired people to read algebra notation in a quick manner. MathTalk was designed and created as a part of doctoral dissertation of R. D. Stevens \cite{mathtalk:stevens1996principles} and employs the use of prosody in the synthetic voice to decrease the mental workload of the listener. MathTalk enables the users to browse the document and change the speed of reading which gives them comfortable control of the reading process.
 
 \section{Lambda}
-Lambda\cite{lambda:schweikhardt2006lambda} (Linear Access to Mathematic for Braille Device and Audio-synthesis) aims at solving the problem of mathematics text management by blind users. It consists of two sections: the Lambda code and the editor.
+Lambda \cite{lambda:schweikhardt2006lambda} (Linear Access to Mathematic for Braille Device and Audio-synthesis) aims at solving the problem of mathematics text management by blind users. It consists of two sections: the Lambda code and the editor.
 
 The Lambda code directly derives from MathML, it is automatically convertible into equivalent MathML and through it into the most popular mathematical formats. The Lambda code was designed to have explicit meaning with no ambiguities; to provide full Braille output of mathematical equations; to preserve peculiarities of national Braille; to have a compact linear representation (to minimize the movement while reading Braille).
 
 The Lambda editor allows to write and manipulate mathematical expressions. It is essentially a text editor designed to read and write Lambda code. Mathematical elements are grouped into blocks, that can be collapsed or expanded for easier reading. Blocks can also be deleted or copied to a different place in the document. The output of the Lambda editor can be written (displayed) in Braille, spoken by speech synthesis or both at the same time. The speech synthesis exploits the block structure which enables it to change the speech speed and insert brakes to better communicate the meaning of the mathematical formula. 
 
 \section{Web Browser Support}
+Strictly speaking web browsers by themselves are not considered an accessibility software, but they play a key role in sharing information and making mathematical content available to many people across the globe.
+
 MathML was designed as a standard for including mathematical formulae in web pages. It stands to reason that at the most well-known and wide-spread web browsers should have good support of MathML, at least the Presentation MathML. Unfortunately the situation is not that good, developers of these browsers are mainly focused on different areas and MathML stand very low on the ladder of priorities.
 
 \paragraph*{Mozilla Firefox} 
@@ -322,6 +329,7 @@ Each node, except the top one called root, has a parent. Nodes can have arbitrar
 A major drawback of using DOM lies in creating the node tree for the whole document. The input document may be very extensive, but contains only a few MathML expressions (pieces of MathML markup). We are only interested in these pieces and therefore a lot of information provided by DOM is redundant and will be discarded. Also the memory and time requirements needed for creating DOM in computing memory increase with the size of input documents.
 
 \subsection{XSL}
+\label{section:xsl}
 Extensible Stylesheet Language (XSL) is a family of languages used to transform and render XML documents. It was created by the W3C consortium and consists of three languages:
 \begin{itemize}
 \item XSL Transformation,
@@ -524,7 +532,14 @@ This chapter describes various implementation aspects that occurred during the c
 
 The application uses Apache Maven for build automation, distribution management and dependency management.
 
-The structure of the application can be seen on \textit{UML component diagram}.
+The structure of the application can be seen on the component diagram \ref{fig:componentdiagram} below.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\textwidth]{component_diagram}
+\caption{Component diagram of the application}
+\label{fig:componentdiagram}
+\end{figure}
 
 \section{DOM-like Representation of MathML}
 For this application a fully-fledged DOM representation of MathML markup is not required. The information this model provides wastes resources (time and memory) and most of it would be discarded. However we need a structure that will be provide a comfortable traversal; moving from parent to children and vice versa.
@@ -705,19 +720,23 @@ The conversion of Presentation MathML elements is very simple and derives from t
 
 On the other hand the conversion of Content MathML elements is more complicated. Everything important is happening inside the class \texttt{Apply}. The first child of the \texttt{apply} element denotes the operation. The operation can be defined by the appropriate Content MathML element, in which case we use the element name to retrieve the operation from the enumeration; by the \texttt{csymbol} element, then the value of the element is used; or by another \texttt{apply} element, for which we invoke the \texttt{Node.process()} method. 
 
-When we have determined the exact operation, we proceed by processing it based on its type, i.e. based on its word order when spoken. Operations that have a type \texttt{OperationType.SPECIAL} have to be processed individually.
+When we have determined the exact operation, we proceed by processing it based on its type, i.e. based on its word order when spoken. Operations with a type \texttt{OperationType.SPECIAL} have to be processed individually since they require a distinctive approach (e.g. logarithm) or there are multiple ways of expressing them (e.g. summation, integral).
+
+Lastly the conversion of numbers to strings ($11 \rightarrow$ eleven) is optionally executed and contents of identifiers (elements \texttt{mi} and \texttt{ci}) are verbatim copied to the output. 
 
 \chapter{Results}
-\section{MREC Corpus}
-\url{https://mir.fi.muni.cz/MREC/index.html}\\
-\\ \cite{mrec2011}
-\\
+\section{Mathematical Retrieval Collection MREC}
+MREC \cite{mrec:mrec2011} is a large corpus of mathematical texts (numbering close to 500 thousand documents). MREC\footnote{\url{https://mir.fi.muni.cz/MREC/index.html}} is based on documents downloaded from arXMLiv\footnote{\url{http://kwarc.info/projects/arXMLiv/}} \cite{mrec:arXMLiv2010}, which in turn is created by transforming \TeX~ documents from arXiv\footnote{\url{http://arxiv.org/}} - a huge library of freely available texts from multiple scientific fields, including Physics, Mathematics and Computer science. Using \LaTeX ML \ref{section:latexml} these texts are converted into XML format with mathematics being represented in MathML. Not all documents from the arXiv are part of MREC - only documents for which the conversion yielded results in categories successful and complete with errors are included.
+
+
 \section{Changing StAX Implementation}
 
 
 \chapter{Conclusion}
 1 page
 
+\clearpage
+\markboth{Bibliography}{Bibliography}
 \bibliographystyle{own}
 \bibliography{thesis}
 

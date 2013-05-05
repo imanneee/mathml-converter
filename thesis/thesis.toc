@@ -11,7 +11,7 @@
 \contentsline {subsection}{\numberline {3.2.3}\rmfamily MaxTract}{11}{subsection.3.2.3}
 \contentsline {subsection}{\numberline {3.2.4}\rmfamily INFTY Reader}{11}{subsection.3.2.4}
 \contentsline {subsection}{\numberline {3.2.5}\rmfamily \textlatin {T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\spacefactor \@m }4ht}{11}{subsection.3.2.5}
-\contentsline {section}{\numberline {3.3}\slshape Canonicalization}{12}{section.3.3}
+\contentsline {section}{\numberline {3.3}\slshape Canonicalization of MathML}{12}{section.3.3}
 \contentsline {chapter}{\numberline {4}\bfseries Status Quo of Current Tools}{13}{chapter.4}
 \contentsline {section}{\numberline {4.1}\slshape DAISY}{13}{section.4.1}
 \contentsline {section}{\numberline {4.2}\slshape MathPlayer}{14}{section.4.2}
@@ -32,11 +32,11 @@
 \contentsline {subsection}{\numberline {5.2.2}\rmfamily Content MathML}{25}{subsection.5.2.2}
 \contentsline {subsection}{\numberline {5.2.3}\rmfamily Operators and Symbols}{26}{subsection.5.2.3}
 \contentsline {chapter}{\numberline {6}\bfseries Implementation}{27}{chapter.6}
-\contentsline {section}{\numberline {6.1}\slshape DOM-like Representation of MathML}{27}{section.6.1}
-\contentsline {section}{\numberline {6.2}\slshape Input Processing}{29}{section.6.2}
+\contentsline {section}{\numberline {6.1}\slshape DOM-like Representation of MathML}{28}{section.6.1}
+\contentsline {section}{\numberline {6.2}\slshape Input Processing}{28}{section.6.2}
 \contentsline {subsection}{\numberline {6.2.1}\rmfamily XML Parser}{31}{subsection.6.2.1}
 \contentsline {section}{\numberline {6.3}\slshape Conversion}{32}{section.6.3}
-\contentsline {chapter}{\numberline {7}\bfseries Results}{34}{chapter.7}
-\contentsline {section}{\numberline {7.1}\slshape MREC Corpus}{34}{section.7.1}
-\contentsline {section}{\numberline {7.2}\slshape Changing StAX Implementation}{34}{section.7.2}
-\contentsline {chapter}{\numberline {8}\bfseries Conclusion}{35}{chapter.8}
+\contentsline {chapter}{\numberline {7}\bfseries Results}{35}{chapter.7}
+\contentsline {section}{\numberline {7.1}\slshape Mathematical Retrieval Collection MREC}{35}{section.7.1}
+\contentsline {section}{\numberline {7.2}\slshape Changing StAX Implementation}{35}{section.7.2}
+\contentsline {chapter}{\numberline {8}\bfseries Conclusion}{36}{chapter.8}
