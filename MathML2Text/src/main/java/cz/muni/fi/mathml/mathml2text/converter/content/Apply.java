@@ -267,7 +267,8 @@ public final class Apply {
                 builder.append(settings.getProperty("vector_end"));
                 return builder.toString();
             }
-            case INTEGRAL: case SUMMATION: case PRODUCT: case CONTOUR_INTEGRAL: {
+            case INTEGRAL: case SUMMATION: case PRODUCT: case CONTOUR_INTEGRAL: case DOUBLE_INTEGRAL: 
+            case COPRODUCT: {
                 // if there is only one other child element of apply, there are no limits
                 final MathMLNode secondChild = node.getChildren().get(1);
                 if (node.getChildren().size() == 2) {
@@ -321,7 +322,20 @@ public final class Apply {
                 }
                 return builder.toString();
             }    
-            
+            case UPWARDS_ARROW: case DOWNWARDS_ARROW: {
+                for (int index = 1; index < node.getChildren().size(); ++index) {
+                    builder.append(Node.process(node.getChildren().get(index), settings));
+                    builder.append(functionName);
+                }
+                break;
+            }
+            case FUNCTION_APPLICATION: {
+                // I don't know what function application means in Content MathML
+                for (int index = 1; index < node.getChildren().size(); ++index) {
+                    builder.append(Node.process(node.getChildren().get(index), settings));
+                }
+                break;
+            }
             default: {
                 logger.debug("Operation [{}] was not processed.", operation.getKey());
                 break;
