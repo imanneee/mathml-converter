@@ -27,7 +27,7 @@ public enum Operation {
      * Multiplication operator.
      */
     MULTIPLY("times", OperationType.INFIX, "&times;", "*", "times", "&sdot;", "&#8901;", "&#x22C5;", "⋅", 
-            "&#8290;", "&#x2062;", "⁢", "&#8727;", "&#x2217;"),
+            "&#8290;", "&#x2062;", "⁢", "&#8727;", "&#x2217;", "∗", "∙", "&#8729;", "&#x2219;"),
     /**
      * Division operator.
      */
@@ -51,7 +51,7 @@ public enum Operation {
     /**
      * Limit.
      */
-    LIMIT("limit", OperationType.SPECIAL, "lim"),
+    LIMIT("limit", OperationType.SPECIAL, "lim", "limit"),
     /**
      * A variable approaches a value.
      */
@@ -67,7 +67,7 @@ public enum Operation {
     /**
      * Differential of integral.
      */
-    DIFFERENTIAL("differential", OperationType.SPECIAL, "dd", "&dd;", "&#8518;", "&#x2146;"),
+    DIFFERENTIAL("differential", OperationType.SPECIAL, "dd", "&dd;", "&#8518;", "&#x2146;", "ⅆ"),
     /**
      * Summation.
      */
@@ -99,7 +99,7 @@ public enum Operation {
     /**
      * Cotangent.
      */
-    COT("cot", OperationType.PREFIX, "cot"),
+    COT("cot", OperationType.PREFIX, "cot", "cotg"),
     /**
      * Hyperbolic sine.
      */
@@ -215,7 +215,7 @@ public enum Operation {
     /**
      * Logical implication.
      */
-    IMPLIES("implies", OperationType.INFIX, "implies"),
+    IMPLIES("implies", OperationType.INFIX, "implies", "&#8658;", "&#x21D2;", "⇒"),
     /**
      * Factor of.
      */
@@ -231,7 +231,7 @@ public enum Operation {
     /**
      * Set inclusion.
      */
-    IN("in", OperationType.INFIX, "in", "∈", "&isin;"),
+    IN("in", OperationType.INFIX, "in", "∈", "&isin;", "&#8714;", "&#x220A;", "&#8712;", "&#x2208;", "∊"),
     /**
      * Negated set inclusion.
      */
@@ -331,11 +331,11 @@ public enum Operation {
     /**
      * Superscript.
      */
-    SUPERSCRIPT("superscript", OperationType.SPECIAL, "superscript"),
+    SUPERSCRIPT("superscript", OperationType.SPECIAL, "superscript", "sup"),
     /**
      * Subscript.
      */
-    SUBSCRIPT("subscript", OperationType.SPECIAL, "subscript"),
+    SUBSCRIPT("subscript", OperationType.SPECIAL, "subscript", "sub"),
     /**
      * Some files use ci instead of csymbol to express function.
      */
@@ -479,11 +479,11 @@ public enum Operation {
     /**
      * For all.
      */
-    FOR_ALL("for_all", OperationType.SPECIAL, "&#8704;", "&#x2200;", "forall", "∀"),
+    FOR_ALL("for_all", OperationType.PREFIX_MULTI, "&#8704;", "&#x2200;", "forall", "∀"),
     /**
      * Exists.
      */
-    EXISTS("exists", OperationType.SPECIAL, "exists"),
+    EXISTS("exists", OperationType.PREFIX_MULTI, "exists"),
     /**
      * Divides.
      */
@@ -500,6 +500,162 @@ public enum Operation {
      * Greater than equal to or less than.
      */
     GREATER_THAN_EQUAL_TO_OR_LESS_THAN("greater_equal_less", OperationType.INFIX, "&#8923;", "&#x22DB;", "⋛"),
+    /**
+     * Set minus.
+     */
+    SET_MINUS("set_minus", OperationType.INFIX, "&#8726;", "&#x2216;", "∖", "\\"),
+    /**
+     * Subset or equal to.
+     */
+    SUBSET_EQUAL("subset_equal", OperationType.INFIX, "&#8838;", "&#x2286;", "⊆"),
+    /**
+     * Transpose.
+     */
+    TRANSPOSE("transpose", OperationType.EVERY_ARGUMENT, "†", "&#8224;", "&#x2020;"),
+    /**
+     * Upwards arrow.
+     */
+    UPWARDS_ARROW("upwards_arrow", OperationType.SPECIAL, "↑", "&#8593;", "&#x2191;"),
+    /**
+     * Downwards arrow.
+     */
+    DOWNWARDS_ARROW("downwards_arrow", OperationType.SPECIAL, "↓", "&#8595;", "&#x2193;"),
+    /**
+     * Less than or approximate.
+     */
+    LESS_THAN_OR_APPROXIMATE("less_than_or_approximate", OperationType.INFIX, "&#10885;", "&#x2A85;", "⪅"),
+    /**
+     * Greater than or approximate.
+     */
+    GREATER_THAN_OR_APPROXIMATE("greater_than_or_approximate", OperationType.INFIX, "&#10886;", "&#x2A86;", "⪆"),
+    /**
+     * Function application.
+     */
+    FUNCTION_APPLICATION("function_application", OperationType.SPECIAL, "&#8289;", "&#x2061;", "⁡"),
+    /**
+     * Approaches the limit.
+     */
+    APPROACHES_THE_LIMIT("approaches_the_limit", OperationType.INFIX, "&#8784;", "&#x2250;", "≐"),
+    /**
+     * Ring above a letter.
+     */
+    RING_ABOVE("ring_above", OperationType.EVERY_ARGUMENT, "̊", "&#778;", "&#x030A;"),
+    /**
+     * Double integral.
+     */
+    DOUBLE_INTEGRAL("double_integral", OperationType.SPECIAL, "&#8748;", "&#x222C;", "∬"),
+    /**
+     * Entails.
+     */
+    ENTAILS("entails", OperationType.INFIX, "⊧", "&#8871;", "&#x22A7;"),
+    /**
+     * Inference.
+     */
+    INFERS("infers", OperationType.INFIX, "⊢", "&#8866;", "&#x22A2;"),
+    /**
+     * Superset or equal.
+     */
+    SUPERSET_EQUAL("superset_equal", OperationType.INFIX, "&#8839;", "&#x2287;", "⊇"),
+    /**
+     * Superset.
+     */
+    SUPERSET("superset", OperationType.INFIX, "&#8835;", "&#x2283;", "⊃"),
+    /**
+     * Not identical.
+     */
+    NOT_IDENTICAL("not_identical", OperationType.INFIX, "&#8802;", "&#x2262;", "≢"),
+    /**
+     * Precedes or equal.
+     */
+    PRECEDES_OR_EQUAL("precedes_or_equal", OperationType.INFIX, "&#10927;", "&#x2AAF;", "⪯", "&#8828;", "&#x227C;", "≼"),
+    /**
+     * Succeeds or equal.
+     */
+    SUCCEEDS_OR_EQUAL("succeeds_or_equal", OperationType.INFIX, "&#10928;", "&#x2AB0;", "⪰", "&#8829;", "&#x227D;", "≽"),
+    /**
+     * Delta.
+     */
+    DELTA("delta", OperationType.INFIX, "Δ", "&#916;", "&#x0394;"),
+    /**
+     * Contains as member.
+     */
+    CONTAINS_AS_MEMBER("contains_as_member", OperationType.INFIX, "&#8715;", "&#x220B;", "∋", "∍", "&#8717;", "&#x220D;"),
+    /**
+     * Wreath product.
+     */
+    WREATH_PRODUCT("wreath_product", OperationType.INFIX, "&#8768;", "&#x2240;", "≀"),
+    /**
+     * Breve.
+     */
+    BREVE("breve", OperationType.EVERY_ARGUMENT, "&#728;", "&#x02D8;", "˘"),
+    /**
+     * Not superset.
+     */
+    NOT_SUPERSET("not_superset", OperationType.INFIX, "&#8837;", "&#x2285;", "⊅"),
+    /**
+     * Succeeds or not equal to.
+     */
+    SUCCEEDS_OR_NOT_EQUAL("succeeds_or_not_equal", OperationType.INFIX, "&#10934;", "&#x2AB6;", "⪶"),
+    /**
+     * Not subset.
+     */
+    NOT_SUBSET("not_subset", OperationType.INFIX, "&#8836;", "&#x2284;", "⊄"),
+    /**
+     * Precedes.
+     */
+    PRECEDES("precedes", OperationType.INFIX, "&#8826;", "&#x227A;", "≺"),
+    /**
+     * Succeeds.
+     */
+    SUCCEEDS("succeeds", OperationType.INFIX, "&#8827;", "&#x227B;", "≻"),
+    /**
+     * Subset not equal.
+     */
+    SUBSET_NOT_EQUAL("subset_not_equal", OperationType.INFIX, "&#8842;", "&#x228A;", "⊊"),
+    /**
+     * Normal subgroup.
+     */
+    NORMAL_SUBGROUP("normal_subgroup", OperationType.INFIX, "&#8882;", "&#x22B2;", "⊲"),
+    /**
+     * Neither less nor equal to.
+     */
+    NOT_LESS_NOT_EQUAL("not_less_not_equal", OperationType.INFIX, "&#8816;", "&#x2270;", "≰"),
+    /**
+     * Coproduct.
+     */
+    COPRODUCT("coproduct", OperationType.SPECIAL, "&#8720;", "&#x2210;", "∐"),
+    /**
+     * Normal subgroup or equal to.
+     */
+    NORMAL_SUBGROUP_OR_EQUAL("normal_subgroup_or_equal", OperationType.INFIX, "&#8884;", "&#x22B4;", "⊴"),
+    /**
+     * Not precede or equal.
+     */
+    NOT_PRECEDE_OR_EQUAL("not_precede_or_equal", OperationType.INFIX, "&#8928;", "&#x22E0;", "⋠"),
+    /**
+     * Netheir subset or equal to.
+     */
+    NOT_SUBSET_NOT_EQUAL("not_subset_not_equal", OperationType.INFIX, "&#8840;", "&#x2288;", "⊈"),
+    /**
+     * Symmetric diffrence.
+     */
+    SYMMETRIC_DIFFERENCE("symmetric_diffrence", OperationType.INFIX, "&#8854;", "&#x2296;", "⊖"),
+    /**
+     * Not less than.
+     */
+    NOT_LESS("not_less", OperationType.INFIX, "&#8814;", "&#x226E;", "≮"),
+    /**
+     * Does not exist.
+     */
+    NOT_EXISTS("not_exists", OperationType.PREFIX_MULTI, "&#8708;", "&#x2204;", "∄"),
+    /**
+     * Lowest common multiple.
+     */
+    LCM("lcm", OperationType.PREFIX_MULTI, "lcm"),
+    /**
+     * Greatest common divisor.
+     */
+    GCD("gcd", OperationType.PREFIX_MULTI, "gcd"),
     /**
      * Empty or {@code null} function.
      */
