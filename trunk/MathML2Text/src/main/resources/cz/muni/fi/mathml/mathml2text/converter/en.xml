@@ -76,9 +76,9 @@
     <entry key="factorial">factorial</entry>
     <entry key="neq">is not equal to</entry>
     <entry key="gt">is greater than</entry>
-    <entry key="lt">is lower than</entry>
+    <entry key="lt">is less than</entry>
     <entry key="geq">is greater than or equal to</entry>
-    <entry key="leq">is lower than or equal to</entry>
+    <entry key="leq">is less than or equal to</entry>
     <entry key="equivalent">is equivalent to</entry>
     <entry key="approx">is approximately</entry>
     <entry key="and">and</entry>
@@ -111,7 +111,7 @@
     <entry key="assign">assign to</entry>
     <entry key="value">value</entry>
     <entry key="sim">is roughly similar</entry>
-    <entry key="dashed">dash</entry>
+    <entry key="dashed">overline</entry>
     <entry key="tilde">tilde</entry>
     <entry key="interval">interval</entry>
     <entry key="compose">the composition of</entry>
@@ -214,5 +214,16 @@
     <entry key="symmetric_diffrence">symmetric difference</entry>
     <entry key="not_less">is not less than</entry>
     <entry key="not_exists">does not exist</entry>
+    <entry key="congruent">is congruent to</entry>
+    <entry key="end_of_proof">end of proof</entry>
+    <entry key="union_nary">n-ary union</entry>
+    <entry key="and_nary">n-ary locigal and</entry>
+    <entry key="or_nary">n-ary logical or</entry>
+    <entry key="intersect_nary">n-ary intersect</entry>
+    <entry key="not_almost_equal">is not almost equal to</entry>
+    <entry key="top_element">top element of</entry>
+    <entry key="contains_as_normal_subgroup">contains as normal subgroup</entry>
+    <entry key="function_composition">composed with</entry>
+    <entry key="above">above</entry>
     <entry key=""></entry>
 </properties>

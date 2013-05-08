@@ -29,4 +29,7 @@
     <logger name="cz.muni.fi.mathml.mathml2text.converter.content.Apply" level="TRACE">
         <appender-ref ref="OPERATIONS" />
     </logger>
+    <logger name="cz.muni.fi.mathml.mathml2text.converter.presentation.Mo" level="TRACE">
+        <appender-ref ref="OPERATIONS" />
+    </logger>
 </configuration>

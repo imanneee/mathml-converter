@@ -171,6 +171,59 @@ public final class Apply {
                     return builder.toString();
                 }
             }
+            case WITH_INTERVAL: {
+                final MathMLNode secondChild = node.getChildren().get(1);
+                if (node.getChildren().size() == 2) {
+                    builder.append(functionName);
+                    builder.append(settings.getProperty("of"));
+                    builder.append(Node.process(secondChild, settings));
+                    return builder.toString();
+                }
+                
+                if (MathMLElement.DOMAIN_OF_APPLICATION.equals(secondChild.getType())) {
+                    builder.append(functionName);
+                    builder.append(settings.getProperty("over"));
+                    builder.append(settings.getProperty("domain"));
+                    builder.append(Node.process(secondChild, settings)); // domain
+                    builder.append(settings.getProperty("of"));
+                    builder.append(Node.process(node.getChildren().get(2), settings)); // function
+                } else if (MathMLElement.BVAR.equals(secondChild.getType())) {
+                    if (MathMLElement.LOWLIMIT.equals(node.getChildren().get(2).getType())) {
+                        builder.append(functionName);
+                        builder.append(settings.getProperty("over"));
+                        builder.append(Node.process(secondChild, settings));
+                        builder.append(settings.getProperty("from"));
+                        builder.append(Node.process(node.getChildren().get(2), settings)); // lowlimit
+                        builder.append(settings.getProperty("to"));
+                        builder.append(Node.process(node.getChildren().get(3), settings)); // uplimit
+                        builder.append(settings.getProperty("of"));
+                        builder.append(Node.process(node.getChildren().get(4), settings)); // function
+                    } else if (MathMLElement.CONDITION.equals(node.getChildren().get(2).getType())) {
+                        builder.append(functionName);
+                        builder.append(settings.getProperty("over"));
+                        builder.append(Node.process(secondChild, settings));
+                        builder.append(settings.getProperty("where"));
+                        builder.append(Node.process(node.getChildren().get(2), settings)); // condition
+                        builder.append(settings.getProperty("of"));
+                        builder.append(Node.process(node.getChildren().get(3), settings)); // function
+                    } else {
+                        logger.warn("Bound variable has no limits.");
+                    }
+                } else if (MathMLElement.INTERVAL.equals(secondChild.getType())) {
+                     builder.append(functionName);
+                     builder.append(settings.getProperty("from"));
+                     builder.append(Node.process(secondChild.getChildren().get(0), settings));
+                     builder.append(settings.getProperty("to"));
+                     builder.append(Node.process(secondChild.getChildren().get(1), settings));
+                     builder.append(settings.getProperty("of"));
+                     builder.append(Node.process(node.getChildren().get(2), settings)); // function
+                     
+                } else {
+                    logger.warn("Unknown variable definition [{}] of [{}].", 
+                            secondChild.getType().getElementName(), operation.getKey());
+                }
+                return builder.toString();
+            }
             default: break;
         }
         
@@ -267,61 +320,6 @@ public final class Apply {
                 builder.append(settings.getProperty("vector_end"));
                 return builder.toString();
             }
-            case INTEGRAL: case SUMMATION: case PRODUCT: case CONTOUR_INTEGRAL: case DOUBLE_INTEGRAL: 
-            case COPRODUCT: {
-                // if there is only one other child element of apply, there are no limits
-                final MathMLNode secondChild = node.getChildren().get(1);
-                if (node.getChildren().size() == 2) {
-                    builder.append(functionName);
-                    builder.append(settings.getProperty("of"));
-                    builder.append(Node.process(secondChild, settings));
-                    return builder.toString();
-                }
-                
-                if (MathMLElement.DOMAIN_OF_APPLICATION.equals(secondChild.getType())) {
-                    builder.append(functionName);
-                    builder.append(settings.getProperty("over"));
-                    builder.append(settings.getProperty("domain"));
-                    builder.append(Node.process(secondChild, settings)); // domain
-                    builder.append(settings.getProperty("of"));
-                    builder.append(Node.process(node.getChildren().get(2), settings)); // function
-                } else if (MathMLElement.BVAR.equals(secondChild.getType())) {
-                    if (MathMLElement.LOWLIMIT.equals(node.getChildren().get(2).getType())) {
-                        builder.append(functionName);
-                        builder.append(settings.getProperty("over"));
-                        builder.append(Node.process(secondChild, settings));
-                        builder.append(settings.getProperty("from"));
-                        builder.append(Node.process(node.getChildren().get(2), settings)); // lowlimit
-                        builder.append(settings.getProperty("to"));
-                        builder.append(Node.process(node.getChildren().get(3), settings)); // uplimit
-                        builder.append(settings.getProperty("of"));
-                        builder.append(Node.process(node.getChildren().get(4), settings)); // function
-                    } else if (MathMLElement.CONDITION.equals(node.getChildren().get(2).getType())) {
-                        builder.append(functionName);
-                        builder.append(settings.getProperty("over"));
-                        builder.append(Node.process(secondChild, settings));
-                        builder.append(settings.getProperty("where"));
-                        builder.append(Node.process(node.getChildren().get(2), settings)); // condition
-                        builder.append(settings.getProperty("of"));
-                        builder.append(Node.process(node.getChildren().get(3), settings)); // function
-                    } else {
-                        logger.warn("Bound variable has no limits.");
-                    }
-                } else if (MathMLElement.INTERVAL.equals(secondChild.getType())) {
-                     builder.append(functionName);
-                     builder.append(settings.getProperty("from"));
-                     builder.append(Node.process(secondChild.getChildren().get(0), settings));
-                     builder.append(settings.getProperty("to"));
-                     builder.append(Node.process(secondChild.getChildren().get(1), settings));
-                     builder.append(settings.getProperty("of"));
-                     builder.append(Node.process(node.getChildren().get(2), settings)); // function
-                     
-                } else {
-                    logger.warn("Unknown variable definition [{}] of [{}].", 
-                            secondChild.getType().getElementName(), operation.getKey());
-                }
-                return builder.toString();
-            }    
             case UPWARDS_ARROW: case DOWNWARDS_ARROW: {
                 for (int index = 1; index < node.getChildren().size(); ++index) {
                     builder.append(Node.process(node.getChildren().get(index), settings));
