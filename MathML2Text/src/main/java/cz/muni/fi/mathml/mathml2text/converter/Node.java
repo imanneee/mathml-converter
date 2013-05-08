@@ -8,6 +8,7 @@ import cz.muni.fi.mathml.mathml2text.converter.presentation.Mfrac;
 import cz.muni.fi.mathml.mathml2text.converter.presentation.Mi;
 import cz.muni.fi.mathml.mathml2text.converter.presentation.Mn;
 import cz.muni.fi.mathml.mathml2text.converter.presentation.Mo;
+import cz.muni.fi.mathml.mathml2text.converter.presentation.Mover;
 import cz.muni.fi.mathml.mathml2text.converter.presentation.Mroot;
 import cz.muni.fi.mathml.mathml2text.converter.presentation.Msqrt;
 import cz.muni.fi.mathml.mathml2text.converter.presentation.Msub;
@@ -44,6 +45,11 @@ public final class Node {
                 for (final MathMLNode child : node.getChildren()) {
                     builder.append(Node.process(child, settings));
                 }
+                break;
+            }
+            case ANNOTATION_XML: {
+                // if we encounter annotation-xml element, then we are processing
+                // Presentation MathML and it is time to stop
                 break;
             }
             case MROW: {
@@ -90,6 +96,10 @@ public final class Node {
                 builder.append(Munder.process(node, settings));
                 break;
             } 
+            case MOVER: {
+                builder.append(Mover.process(node, settings));
+                break;
+            }
             case MUNDEROVER: case MSUBSUP: {
                 builder.append(Munderover.process(node, settings));
                 break;

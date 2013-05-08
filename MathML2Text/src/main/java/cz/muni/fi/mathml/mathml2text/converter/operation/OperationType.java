@@ -28,6 +28,10 @@ public enum OperationType {
      */
     EVERY_ARGUMENT,
     /**
+     * Operation is defined on an interval (sum, integral, ...).
+     */
+    WITH_INTERVAL,
+    /**
      * Operation can not be assigned to any of above defined groups.
      */
     SPECIAL;

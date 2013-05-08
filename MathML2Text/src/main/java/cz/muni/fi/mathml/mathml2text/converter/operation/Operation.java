@@ -27,7 +27,7 @@ public enum Operation {
      * Multiplication operator.
      */
     MULTIPLY("times", OperationType.INFIX, "&times;", "*", "times", "&sdot;", "&#8901;", "&#x22C5;", "⋅", 
-            "&#8290;", "&#x2062;", "⁢", "&#8727;", "&#x2217;", "∗", "∙", "&#8729;", "&#x2219;"),
+            "&#8290;", "&#x2062;", "⁢", "&#8727;", "&#x2217;", "∗", "∙", "&#8729;", "&#x2219;", "&lowast;"),
     /**
      * Division operator.
      */
@@ -59,11 +59,11 @@ public enum Operation {
     /**
      * Integral.
      */
-    INTEGRAL("integral", OperationType.SPECIAL, "int", "&int;"),
+    INTEGRAL("integral", OperationType.WITH_INTERVAL, "int", "&int;"),
     /**
      * Contour integral.
      */
-    CONTOUR_INTEGRAL("contour_integral", OperationType.SPECIAL, "&#8750;", "&#x222E;", "∮"),
+    CONTOUR_INTEGRAL("contour_integral", OperationType.WITH_INTERVAL, "&#8750;", "&#x222E;", "∮"),
     /**
      * Differential of integral.
      */
@@ -71,11 +71,11 @@ public enum Operation {
     /**
      * Summation.
      */
-    SUMMATION("summation", OperationType.SPECIAL, "sum", "&sum;"),
+    SUMMATION("summation", OperationType.WITH_INTERVAL, "sum", "&sum;"),
     /**
      * Product.
      */
-    PRODUCT("product", OperationType.SPECIAL, "prod", "&prod;", "∏", "&amp;prod;"),
+    PRODUCT("product", OperationType.WITH_INTERVAL, "prod", "&prod;", "∏", "&amp;prod;"),
     /**
      * Sine.
      */
@@ -175,27 +175,27 @@ public enum Operation {
     /**
      * Not equal.
      */
-    NOT_EQUAL_TO("neq", OperationType.INFIX, "neq", "&neq;"),
+    NOT_EQUAL_TO("neq", OperationType.INFIX, "neq", "&neq;", "&ne;", "&#8800;", "&#x2260;"),
     /**
      * Greater than.
      */
     GREATER_THAN("gt", OperationType.INFIX, "gt", "&gt;"),
     /**
-     * Lower than.
+     * Less than.
      */
-    LOWER_THAN("lt", OperationType.INFIX, "lt", "&lt;"),
+    LESS_THAN("lt", OperationType.INFIX, "lt", "&lt;"),
     /**
      * Greater than or equal to.
      */
-    GREATER_THAN_OR_EQUAL_TO("geq", OperationType.INFIX, "geq", "&geq;"),
+    GREATER_THAN_OR_EQUAL_TO("geq", OperationType.INFIX, "geq", "&geq;", "&ge;", "&#10878;", "&#x2A7E;", "⩾", "&#8807;", "&#x2267;", "≧"),
     /**
-     * Lower than or equal to.
+     * Less than or equal to.
      */
-    LOWER_THAN_OR_EQUAL_TO("leq", OperationType.INFIX, "leq", "&leq;"),
+    LESS_THAN_OR_EQUAL_TO("leq", OperationType.INFIX, "leq", "&leq;", "&le;", "&#10877;", "&#x2A7D;", "⩽", "&#8806;", "&#x2266;", "≦"),
     /**
      * Equivalence.
      */
-    EQUIVALENT_TO("equivalent", OperationType.INFIX, "equivalent", "&hArr;", "⇔", "&#8596;", "&#x2194;", "↔"),
+    EQUIVALENT_TO("equivalent", OperationType.INFIX, "equivalent", "&hArr;", "⇔", "&#8596;", "&#x2194;", "↔", "&harr;", "&hArr;"),
     /**
      * Approximation.
      */
@@ -203,11 +203,11 @@ public enum Operation {
     /**
      * Logical and.
      */
-    AND("and", OperationType.INFIX, "and"),
+    AND("and", OperationType.INFIX, "and", "&and;"),
     /**
      * Logical or.
      */
-    OR("or", OperationType.INFIX, "or"),
+    OR("or", OperationType.INFIX, "or", "&or;"),
     /**
      * Logical xor.
      */
@@ -215,7 +215,7 @@ public enum Operation {
     /**
      * Logical implication.
      */
-    IMPLIES("implies", OperationType.INFIX, "implies", "&#8658;", "&#x21D2;", "⇒"),
+    IMPLIES("implies", OperationType.INFIX, "implies", "&#8658;", "&#x21D2;", "⇒", "&rArr;"),
     /**
      * Factor of.
      */
@@ -223,11 +223,11 @@ public enum Operation {
     /**
      * Union of sets.
      */
-    UNION("union", OperationType.INFIX, "union"),
+    UNION("union", OperationType.INFIX, "union", "&#8746;", "&#x222A;", "∪", "&cup;"),
     /**
      * Intersection of sets.
      */
-    INTERSECT("intersect", OperationType.INFIX, "intersect"),
+    INTERSECT("intersect", OperationType.INFIX, "intersect", "&#8745;", "&#x2229;", "∩", "&cap;"),
     /**
      * Set inclusion.
      */
@@ -235,7 +235,7 @@ public enum Operation {
     /**
      * Negated set inclusion.
      */
-    NOTIN("notin", OperationType.INFIX, "notin", "&#8713;", "&#x2209;", "∉"),
+    NOTIN("notin", OperationType.INFIX, "notin", "&#8713;", "&#x2209;", "∉", "&notin;"),
     /**
      * Subset.
      */
@@ -295,7 +295,7 @@ public enum Operation {
     /**
      * Root extraction.
      */
-    ROOT("root", OperationType.SPECIAL, "root"),
+    ROOT("root", OperationType.SPECIAL, "root", "&radic;", "&#8730;", "&#x221A;", "√"),
     /**
      * Open parentheses.
      */
@@ -351,7 +351,7 @@ public enum Operation {
     /**
      * Dash above a letter.
      */
-    DASHED("dashed", OperationType.EVERY_ARGUMENT, "¯"),
+    DASHED("dashed", OperationType.EVERY_ARGUMENT, "¯", "&#175;", "&#x00AF;", "&macr;"),
     /**
      * Interval.
      */
@@ -395,7 +395,7 @@ public enum Operation {
     /**
      * Comma.
      */
-    COMMA("comma", OperationType.INFIX, ",", "&#44;"),
+    COMMA("comma", OperationType.INFIX, ",", "&#44;", "&#8291;", "&#x2063;", "⁣"),
     /**
      * Dot.
      */
@@ -415,7 +415,7 @@ public enum Operation {
     /**
      * Identical to.
      */
-    IDENTICAL("identical_to", OperationType.INFIX, "≡", "&#8801;", "&#x2261;"),
+    IDENTICAL("identical_to", OperationType.INFIX, "≡", "&#8801;", "&#x2261;", "&equiv;"),
     /**
      * Set.
      */
@@ -443,15 +443,15 @@ public enum Operation {
     /**
      * Orthogonal to.
      */
-    PERPENDICULAR("perpendicular", OperationType.INFIX, "&#10178;", "&#x27C2;", "⟂", "&#8869;", "&#x22A5;", "⊥"),
+    PERPENDICULAR("perpendicular", OperationType.INFIX, "&#10178;", "&#x27C2;", "⟂", "&#8869;", "&#x22A5;", "⊥", "&perp;"),
     /**
      * Diaeresis above a letter.
      */
-    DIAERESIS("diaeresis", OperationType.EVERY_ARGUMENT, "¨", "&#168;", "&#x00A8;"),
+    DIAERESIS("diaeresis", OperationType.EVERY_ARGUMENT, "¨", "&#168;", "&#x00A8;", "&uml;"),
     /**
      * Partial differentiation.
      */
-    PARTIALDIFF("partialdiff", OperationType.PREFIX, "partialdiff"),
+    PARTIALDIFF("partialdiff", OperationType.PREFIX, "partialdiff", "&#8706;", "&#x2202;", "&part;"),
     /**
      * Factorial.
      */
@@ -471,11 +471,11 @@ public enum Operation {
     /**
      * Backward difference.
      */
-    BACKWARD_DIFFERENCE("backward_difference", OperationType.PREFIX, "&#8711;", "&#x2207;", "∇"),
+    BACKWARD_DIFFERENCE("backward_difference", OperationType.PREFIX, "&#8711;", "&#x2207;", "∇", "&nabla;"),
     /**
      * Asymptotic to.
      */
-    ASYMPTOTIC_TO("asymptotic_to", OperationType.INFIX, "&#8776;", "&#x2248;", "≈"),
+    ASYMPTOTIC_TO("asymptotic_to", OperationType.INFIX, "&#8776;", "&#x2248;", "≈", "&asymp;"),
     /**
      * For all.
      */
@@ -491,7 +491,7 @@ public enum Operation {
     /**
      * Tensor product.
      */
-    TENSOR_PRODUCT("tensor_product", OperationType.INFIX, "&#8855;", "&#x2297;", "⊗"),
+    TENSOR_PRODUCT("tensor_product", OperationType.INFIX, "&#8855;", "&#x2297;", "⊗", "&otimes;"),
     /**
      * Maps to.
      */
@@ -507,15 +507,15 @@ public enum Operation {
     /**
      * Subset or equal to.
      */
-    SUBSET_EQUAL("subset_equal", OperationType.INFIX, "&#8838;", "&#x2286;", "⊆"),
+    SUBSET_EQUAL("subset_equal", OperationType.INFIX, "&#8838;", "&#x2286;", "⊆", "&sube;"),
     /**
      * Transpose.
      */
-    TRANSPOSE("transpose", OperationType.EVERY_ARGUMENT, "†", "&#8224;", "&#x2020;"),
+    TRANSPOSE("transpose", OperationType.EVERY_ARGUMENT, "†", "&#8224;", "&#x2020;", "&dagger;"),
     /**
      * Upwards arrow.
      */
-    UPWARDS_ARROW("upwards_arrow", OperationType.SPECIAL, "↑", "&#8593;", "&#x2191;"),
+    UPWARDS_ARROW("upwards_arrow", OperationType.SPECIAL, "↑", "&#8593;", "&#x2191;", "&uarr;"),
     /**
      * Downwards arrow.
      */
@@ -543,7 +543,7 @@ public enum Operation {
     /**
      * Double integral.
      */
-    DOUBLE_INTEGRAL("double_integral", OperationType.SPECIAL, "&#8748;", "&#x222C;", "∬"),
+    DOUBLE_INTEGRAL("double_integral", OperationType.WITH_INTERVAL, "&#8748;", "&#x222C;", "∬"),
     /**
      * Entails.
      */
@@ -555,11 +555,11 @@ public enum Operation {
     /**
      * Superset or equal.
      */
-    SUPERSET_EQUAL("superset_equal", OperationType.INFIX, "&#8839;", "&#x2287;", "⊇"),
+    SUPERSET_EQUAL("superset_equal", OperationType.INFIX, "&#8839;", "&#x2287;", "⊇", "&supe;"),
     /**
      * Superset.
      */
-    SUPERSET("superset", OperationType.INFIX, "&#8835;", "&#x2283;", "⊃"),
+    SUPERSET("superset", OperationType.INFIX, "&#8835;", "&#x2283;", "⊃", "&sup;"),
     /**
      * Not identical.
      */
@@ -579,7 +579,7 @@ public enum Operation {
     /**
      * Contains as member.
      */
-    CONTAINS_AS_MEMBER("contains_as_member", OperationType.INFIX, "&#8715;", "&#x220B;", "∋", "∍", "&#8717;", "&#x220D;"),
+    CONTAINS_AS_MEMBER("contains_as_member", OperationType.INFIX, "&#8715;", "&#x220B;", "∋", "∍", "&#8717;", "&#x220D;", "&ni;"),
     /**
      * Wreath product.
      */
@@ -623,7 +623,7 @@ public enum Operation {
     /**
      * Coproduct.
      */
-    COPRODUCT("coproduct", OperationType.SPECIAL, "&#8720;", "&#x2210;", "∐"),
+    COPRODUCT("coproduct", OperationType.WITH_INTERVAL, "&#8720;", "&#x2210;", "∐"),
     /**
      * Normal subgroup or equal to.
      */
@@ -656,6 +656,46 @@ public enum Operation {
      * Greatest common divisor.
      */
     GCD("gcd", OperationType.PREFIX_MULTI, "gcd"),
+    /**
+     * Congruent to.
+     */
+    CONGRUENT("congruent", OperationType.INFIX, "&#8773;", "&#x2245;", "&cong;", "≅"),
+    /**
+     * End of proof.
+     */
+    END_OF_PROOF("end_of_proof", OperationType.SPECIAL, "&#8718;", "&#x220E;", "∎"),
+    /**
+     * N-ary union.
+     */
+    UNION_NARY("union_nary", OperationType.WITH_INTERVAL, "&#8899;", "&#x22C3;", "⋃"),
+    /**
+     * N-ary logical and.
+     */
+    AND_NARY("and_nary", OperationType.WITH_INTERVAL, "&#8896;", "&#x22C0;", "⋀"),
+    /**
+     * N-ary logical or.
+     */
+    OR_NARY("or_nary", OperationType.WITH_INTERVAL, "&#8897;", "&#x22C1;", "⋁"),
+    /**
+     * N-ary intersection.
+     */
+    INTERSECT_NARY("intersect_nary", OperationType.WITH_INTERVAL, "&#8898;", "&#x22C2;", "⋂"),
+    /**
+     * Not almost equal to.
+     */
+    NOT_ALMOST_EQUAL("not_almost_equal", OperationType.INFIX, "&#8777;", "&#x2249;", "≉"),
+    /**
+     * Top element.
+     */
+    TOP_ELEMENT("top_element", OperationType.SPECIAL, "&#8868;", "&#x22A4;", "⊤"),
+    /**
+     * Contains as normal subgroup.
+     */
+    CONTAINS_AS_NORMAL_SUBGROUP("contains_as_normal_subgroup", OperationType.INFIX, "&#8883;", "&#x22B3;", "⊳"),
+    /**
+     * Function composition.
+     */
+    FUNCTION_COMPOSITION("function_composition", OperationType.INFIX, "&#8728;", "&#x2218;", "∘"),
     /**
      * Empty or {@code null} function.
      */

@@ -98,8 +98,14 @@ public class MathMLConverter {
      */
     private MathMLNode getNodeForProcessing(final MathMLNode node) {
         for (final MathMLNode child : node.getChildren()) {
+            if (child.getType().getElementName().startsWith("m")) {
+                return node;
+            }
             if (MathMLElement.SEMANTICS.equals(child.getType())) {
                 for (final MathMLNode semanticsChild : child.getChildren()) {
+                    if (semanticsChild.getType().getElementName().startsWith("m")) {
+                        return child;
+                    }
                     if (MathMLElement.ANNOTATION_XML.equals(semanticsChild.getType())) {
                         for (final XmlAttribute attr : semanticsChild.getAttributes()) {
                             if ("encoding".equals(attr.getKey()) && "MathML-Content".equals(attr.getValue())) {

@@ -214,5 +214,16 @@
     <entry key="symmetric_diffrence">symetrický rozdíl</entry>
     <entry key="not_less">není méně než</entry>
     <entry key="not_exists">neexistuje</entry>
+    <entry key="congruent">je kongruentní s</entry>
+    <entry key="end_of_proof">konec důkazu</entry>
+    <entry key="union_nary">n-ární sjednocení</entry>
+    <entry key="and_nary">n-ární logické a</entry>
+    <entry key="or_nary">n-ární logické nebo</entry>
+    <entry key="intersect_nary">n-ární průnik</entry>
+    <entry key="not_almost_equal">není téměř stejný jako</entry>
+    <entry key="top_element">vrchní element ze</entry>
+    <entry key="contains_as_normal_subgroup">obsahuje jako normální podgrupu</entry>
+    <entry key="function_composition">složená s</entry>
+    <entry key="above">nad</entry>
     <entry key=""></entry>
 </properties>
