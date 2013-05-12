@@ -54,6 +54,7 @@
 \thesisadvisor{doc. RNDr. Petr Sojka, Ph.D.}
 
 \begin{document}
+\sloppy
 
 \hyphenation{Math-ML}
 \hyphenation{spe-cial-ized}
@@ -91,7 +92,6 @@ MathML, StAX  @todo more
 
 \chapter{Introduction}
 
-\chapter{Motivation}
 
 \chapter{Mathematical Markup Language - MathML}
 World Wide Web pages and their main publishing language, HTML\footnote{HyperText Markup Language}, provide many ways to present desired information to the user. However, presenting mathematics is not so easy and straightforward. There aren't any special tags in the HTML specification for including mathematics. In most cases mathematical equations are presented in the form of an image. On one hand this approach renders the equation the same way in every web browser, on the other hand there is no way to copy the equation for further use, not to mention editing the equation. 
@@ -244,6 +244,7 @@ INFTY Reader is available free of charge for limited amount of time, then it is 
 The conversion is invoked by running the \texttt{htlatex} command. To the user the process seems similar to producing standard DVI or PDF outputs. \TeX 4ht uses hooks within the \LaTeX\ constructs and associates configurations to them. By modifying default configuration files, the user can change the resulting HTML document to his liking. \TeX 4ht comes with the support of Cascading style sheets\footnote{\url{http://www.w3schools.com/css/}}, which provides further possibilities of customizing the output files. 
 
 \section{Canonicalization of MathML}
+\label{section:canonicalization}
 With a wide variety of options of creating MathML documents it is necessary to modify and unify input documents in such a way that will decrease the number of possible ambiguities (especially in the Presentation MathML), in the best case completely eliminating all ambiguities. 
 
 The team standing behind the Universal Maths Conversion library (UMCL) \cite{umcl:archambault2004towards} proposed a notion of a unified structure - Canonical MathML \cite{umcl:archambault2006canonical}. Canonical MathML is valid Presentation MathML and recommends a set of rules that should be followed to make Presentation MathML documents unambiguous. A correct use of \texttt{msup} (\texttt{msub}) for superscripts (subscripts); parentheses defined in the \texttt{mo} element (\texttt{mfenced} element is not used); or unified way of writing summations, integrals and products to name a few. 
@@ -305,24 +306,73 @@ Opera was one of the first browsers to include native support for MathML. The re
 \paragraph*{Browser for Hand-held Devices}
 At the time of writing this thesis none of the browsers for hand-held devices has a satisfactory native support for MathML. However they are capable of rendering expressions using CSS.
 
+
 \chapter{Analysis and Solution Proposal}
-The goal of this thesis is the development of a conversion tool, that will be able to process XML document or documents and transform each occurrence of MathML markup into the appropriate textual representation. For example $5 \times \alpha = x + 3$ should be transformed into "five times alpha equals x plus three". In case of a visual (not semantic) change of the operator the tool should produce the same result. In our example $5 \times \alpha = x + 3$, $5 \cdot \alpha = x + 3$ and $5\alpha = x + 3$ all have the same meaning, so all should be transformed into identical strings.
+The goal of this thesis is the development of a conversion tool, that will be able to process XML document or documents and transform each occurrence of MathML markup into the appropriate textual representation. For example $5 \times \alpha = x + 3$ should be transformed into "five times alpha equals x plus three". In case of a visual (not semantic) change of the operator the tool should produce the same result. In our example $5 \times \alpha = x + 3$, $5 \cdot \alpha = x + 3$ and $5\alpha = x + 3$ have the same meaning, so both of them should be transformed into identical strings. For better results the input can be first canonicalized (as described in section~\vref{section:canonicalization}). From these requirements we can devise a basic top-level workflow diagram~\vref{fig:basicworkflow} of the application.
 
-Since the tool will be used on a corpus composed of thousands of mathematical documents, the computation speed and spacial requirements must be within reasonable limits. 
+\begin{figure}[!ht]
+\centering
+\includegraphics{basic_diagram}
+\caption{Basic diagram of application workflow}
+\label{fig:basicworkflow}
+\end{figure}
 
+Before the input documents are loaded into in-memory structure for representing XML documents, a preprocessing phase will take place. This includes determining the file structure on the hard-drive and retrieving all files from the input document and all its descendants. This structure will be preserved and output documents will have the same structure, just in the user-specified directory. Also the input files can be packed using the .zip archive file format (as is the case with documents in the MREC~\ref{section:mrec}) and such files have to be unpacked before further processing. Then, if requested, we will canonicalize input files. Since the canonicalization comes from external module (library), we have to be careful of possible errors or the time efficiency of this process. 
 
-\section{Input Processing}
-The batch processing of a substantial amount of documents in a reasonably low time is one of the most important requirements of our conversion tool. Therefore the tool must be able to utilize the ability of modern processors to run applications in multiple threads at the same time. 
+One important factor about the input documents, that was not taken into account, is their quantity. The application must be able to process large corpora of mathematical documents in reasonable time and with efficient memory usage. Fortunately modern computation systems provide a way of running the application in multiple threads. The application just has to ensure that all threads work with the same settings. This can be accomplished by providing a single point of entry to the settings instance. A globally visible class (object) that implements the Singleton design pattern is the best solution for accessing settings across the whole application. Also retrieving external resources for each single thread is very time consuming, therefore an in-memory cache of resources common for all threads will be implemented.
 
-\subsection{Multithreading}
-Performing conversion one document at a time, especially on a batch of a substantial amount of files, is utterly impractical. The application would run for hours or even days or weeks. Therefore it is necessary to run the conversions in parallel, in multiple threads. The number of disposable threads depends on the hardware equipment of the user's computer. It would be desirable to allow the user to set the number of threads available in the thread pool of the application.
+We can now create a more complex and detailed diagram of internal workings and dataflows inside the application. See diagram~\vref{fig:activitydiagramall}. 
 
-Another important factor of speeding up the conversion process represents the sharing of settings and resources among the threads. It lowers the time that each thread spends waiting for external resources, especially those residing on the hard-drive. This can be achieved by using an in memory cache.
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\textwidth]{activity_diagram_all}
+\caption{Activity diagram of the application}
+\label{fig:activitydiagramall}
+\end{figure}
 
-It is also essential to ensure that all threads work with the same settings. This can be accomplished by providing a single point of entry to the settings instance. A globally visible class (object) that implements the Singleton design pattern is the best solution for accessing conversion settings across the whole application.
+Three activities (processes) still remain to be defined:
+\begin{enumerate}
+\item Load Document
+\item Create Tree
+\item Convert Tree
+\end{enumerate}
 
+\section{Load Document}
+\label{section:loaddocument}
+When it comes to processing XML documents, there are four common approaches:
+
+\begin{enumerate}
+\item Document Object Model\footnote{\url{http://www.w3.org/DOM/DOMTR}} (DOM) retains the tree structure of the XML document and is composed of nodes. Node represent elements in the XML structure and form a hierarchical structure.
+
+\item Extensible Stylesheet Language\footnote{\url{http://www.w3.org/Style/XSL/}} (XSL) refers to a family of languages used to transform and render XML documents. 
+
+\item Streaming XML is an event-based, sequential and unidirectional approach of processing XML documents.
+
+\item XML data binding is a process of mapping XML documents to objects in computer memory (deserialization).
+\end{enumerate}
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+& Processing speed & Memory requirements \\ \hline
+\hline
+DOM & slow & high  \\ \hline
+XSL & slow & high  \\ \hline
+Streaming XML & fast & low  \\ \hline
+Data binding & average & high  \\ \hline
+\end{tabular}
+\caption{XML processing options comparison}
+\label{table:xmlprocessing}
+\end{table}
+
+The memory requirements shown in table~\vref{table:xmlprocessing} stem from the maximum amount of data that each method uses to process documents. For Streaming XML method, that reads only one event at a time and retains only minimal processing information, these requirements are low. The rest of compared methods need to load the whole document into computer memory and therefore their memory requirements are high. The processing speeds comparison comes from experience of the author with working with these methods.
+
+Based on the comparison in table~\vref{table:xmlprocessing} we choose the fastest and most memory-efficient method for processing our input documents - the Streaming XML method. Algorithm~\vref{alg-processinput} shows a way to process input documents, using an in-memory tree structure defined in section~\vref{section:createtree}.
+
+\iffalse
 \subsection{Document Object Model}
-Document Object Model is one of the most wide-spread methods of representing and working with XML and (X)HTML documents. It retains the tree structure of the XML document and is composed of nodes. Node represent elements in the XML structure and form a hierarchical structure. 
+Document Object Model\footnote{Document Object Model \url{http://www.w3.org/DOM/DOMTR}} (DOM) is one of the most wide-spread methods of representing and working with XML and (X)HTML documents. It retains the tree structure of the XML document and is composed of nodes. Node represent elements in the XML structure and form a hierarchical structure. 
 
 Each node, except the top one called root, has a parent. Nodes can have arbitrary amount of children or siblings (nodes with the same parent). This makes traversing the document structure very easy and logical. 
 
@@ -409,6 +459,7 @@ The next best approach is using the DOM with its easy to traverse structure. But
 The optimal solution would be to pass through the document using the streaming method. But streaming method does not provide any means to look ahead or behind on elements that might be needed to process the current element. On the other hand the DOM method is well suited for accessing arbitrary elements in the document tree. So combining these two methods should lead to a satisfactory solution. 
 
 \paragraph*{Solution}\label{inputprocessing:solution} The streaming processor traverses the document and every read event that is not a part of the MathML markup automatically writes to the output. As we can see, also the output document is being created dynamically. When the processor encounters a \texttt{math} node it creates a in-memory DOM-like representation of MathML tree. We use a customized DOM-like model, because we do not actually need all the information that full DOM implementations tend to provide (such as namespaces), a simpler implementation suffices. After the MathML model is created (\texttt{math} end element event gets registered) the conversion needs to take place immediately, so that the conversion result can be written to the output in the right place. This way all non-MathML related information is retained and written to the output and for every occurrence of MathML markup in the document a separate DOM-like representation is created and directly converted. See algorithm \ref{alg-processinput} for illustration. 
+\fi
 
 \begin{algorithm}[!ht]
 \caption{Process input algorithm}
@@ -434,10 +485,29 @@ The optimal solution would be to pass through the document using the streaming m
 \end{algorithmic}
 \end{algorithm}
 
-\section{Conversion}
-We are starting the conversion process with our customized DOM representation of the MathML markup. At the beginning of the conversion we need to determine whether the tree consist of only the Presentation markup, Content markup or both, since each requires a slightly different approach to the conversion. In most cases the Presentation MathML resides directly in the \texttt{math} tree (is a direct descendant of \texttt{math} element) or in the element \texttt{semantics}, while the Content MathML is often found enclosed in the \texttt{annotation-xml} element with an attribute \texttt{encoding} set to the value \texttt{MathML-Content}. Or we can simply traverse the tree till we find an element from either the Presentation of Content MathML markup and continue based on our finding.
+\section{Create Tree}
+\label{section:createtree}
+The tree in this case means an in-memory representation of MathML with tree structure. DOM seems like a good option for this application, however a fully-fledged DOM representation of MathML markup is not required. The information this model provides takes up resources (time and memory) and a big part of it would be discarded. However we need a structure that will provide a comfortable traversal; moving from parent to children and vice versa.
+
+We have therefore designed a simplified DOM tree, with just the information we actually need. Since we only use it to build a tree representation of MathML markup, every node in this tree has a special property, that denotes its type - name of the element and part of MathML it belongs to (Presentation or Content). 
+
+Besides the type property our simplified model contains a list of children, pointer to the parent, a text value, a list of XML attributes (key-value pairs) and a attribute that signifies whether this node has already been processed (we want to process each node only once).
+
+Our very simple tree has one more advantage, besides simplicity - it allows the application to provide an option to change the method of loading XML documents.
+
+\section{Convert Tree}
+We are starting the conversion process with our tree representation of the MathML markup. At the beginning of the conversion we need to determine whether the tree consist of only the Presentation markup, Content markup or both, since each requires a slightly different approach to the conversion. In most cases the Presentation MathML resides directly in the \texttt{math} tree (is a direct descendant of \texttt{math} element) or in the element \texttt{semantics}, while the Content MathML is often found enclosed in the \texttt{annotation-xml} element with an attribute \texttt{encoding} set to the value \texttt{MathML-Content}. Or we can simply traverse the tree till we find an element from either the Presentation of Content MathML markup and continue based on our finding.
 
 The conversion process starts at the top level element, \texttt{math}, and then recursively continues to traverse the tree, converting the Presentation and Content elements based on their own specifics. Each converted node is marked as processed to prevent it to be processed twice, since in some cases the conversion requires to look ahead and jump out of the recursion pattern to process a sibling node (or any other node).
+
+The basic outline of the conversion process can be seen in figure~\vref{fig:converttree} and will be described in detail in the next sections.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics{activity_diagram_tree}
+\caption{Tree conversion process}
+\label{fig:converttree}
+\end{figure}
 
 \subsection{Presentation MathML}
 Every element of the Presentation MathML requires individual approach to processing. But there are still groups of elements with similar characteristics. 
@@ -527,8 +597,9 @@ As we mentioned before many mathematical operations can be expressed using more 
 
 This way all operators that denote the same operation are grouped together and we can easily unify the way each operation is converted.
 
+
 \chapter{Implementation}
-This chapter describes various implementation aspects that occurred during the creation of the conversion application. The application is written in Java programming language, mainly because of personal preference of the author. Also the existence and availability of many frameworks and tools for Java language (for working with XML documents among others) are are a big advantage of using this language. 
+This chapter describes various implementation aspects that occurred during the creation of the conversion application. The application is written in Java programming language, mainly because of personal preference of the author. Also the existence and availability of many frameworks and tools for Java language (for working with XML documents among others) are a big advantage of using this language. 
 
 The application uses Apache Maven for build automation, distribution management and dependency management.
 
@@ -542,11 +613,7 @@ The structure of the application can be seen on the component diagram \ref{fig:c
 \end{figure}
 
 \section{DOM-like Representation of MathML}
-For this application a fully-fledged DOM representation of MathML markup is not required. The information this model provides wastes resources (time and memory) and most of it would be discarded. However we need a structure that will be provide a comfortable traversal; moving from parent to children and vice versa.
-
-We have therefore implemented a simplified DOM tree, with just the information we actually need. Since we only use it to build a DOM representation of MathML markup, every node in this tree has a special property, that denotes its type - name of the element and part of MathML it belongs to (Presentation or Content). It is implemented as an enumeration, which makes it easier to process elements in the \texttt{switch} statement.
-
-Besides the type property our simplified DOM model contains a list of children, pointer to the parent, a text value, a list of XML attributes (key-value pairs) and a attribute that signifies whether this node has already been processed (we want to process each node only once). The whole structure can be seen in figure~\vref{fig:customdom}.
+The implementation of the tree designed in section~\vref{section:createtree} can be seen in figure~\vref{fig:customdom}.
 
 \begin{figure}[!ht]
 \lstset{language=Java,frame=single,backgroundcolor=\color{lightgray}}
@@ -590,19 +657,17 @@ public final class MathMLNode {
 \end{figure}
 
 \section{Input Processing}
-As we outlined in section \ref{inputprocessing:solution}, the streaming approach with custom DOM-like internal representation of MathML tree is used. 
+As we outlined in section~\vref{section:loaddocument}, the streaming approach with custom DOM-like internal representation of MathML tree is used. 
 
 In Java two major APIs\footnote{Application programming interface} for streaming processing of XML documents are popular among developers:
 \begin{itemize}
-\item SAX (Simple API for XML) - SAX implements the push principle, reporting events as it encounters them. From the point of view of this application a better approach would be
+\item SAX (Simple API for XML) implements the push principle, reporting events as it encounters them. From the point of view of this application a better approach would be
 \item StAX (Streaming API for XML) - pull principle; the application requests events from the StAX processor. (StAX is a specification defined by the JSR 173\footnote{\url{http://www.jcp.org/en/jsr/detail?id=173}}.)
 \end{itemize}
 
-This application uses default StAX implementation that is shipped with Java Standard Edition 6 runtime. There are also other implementations available, such as Woodstox\footnote{\url{http://woodstox.codehaus.org}} or Aalto\footnote{\url{http://wiki.fasterxml.com/AaltoHome}}, and they might provide better performance. These alternative implementations have a possibility to set up the processor for specific use (i.e., for fast processing, low memory usage). 
+This application uses default StAX implementation that is shipped with Java Standard Edition 6 runtime, but there are also other implementations available, such as Woodstox\footnote{\url{http://woodstox.codehaus.org}} or Aalto\footnote{\url{http://wiki.fasterxml.com/AaltoHome}}, and there is a possibility to request one of these two implementations to use instead of the default implementation.
 
-StAX offers two ways of traversing documents: Cursor API and Iterator API. 
-
-\paragraph*{Cursor API} As the name suggests, the Cursor API provides a cursor with which we can run through the document one event (a more appropriate name might be an infoset element) at a time. The cursor always moves forwards, never backwards. Two main interfaces are available: \texttt{XMLStremReader} for accessing all possible information retrievable from XML documents and \texttt{XMLStreamWriter} which in turn provides methods for outputting this information. 
+StAX offers two ways of traversing documents: Cursor API and Iterator API. We will use the first, Cursor API, because it should be faster and more memory-efficient\footnote{\url{http://docs.oracle.com/cd/E17802_01/webservices/webservices/docs/1.6/tutorial/doc/SJSXP3.html}}. Two main interfaces are available in the Cursor API: \texttt{XMLStremReader} for accessing all possible information retrievable from XML documents and \texttt{XMLStreamWriter} which in turn provides methods for outputting this information. 
 
 \begin{figure}[!ht]
 \lstset{language=Java,frame=single,backgroundcolor=\color{lightgray}}
@@ -627,38 +692,12 @@ public interface XMLStreamWriter {
 \label{fig:staxcursorapi}
 \end{figure}
 
-\paragraph*{Iterator API} The Iterator API represents XML stream as a set of discrete event objects. Much like the Cursor API, the Iterator API provides two interfaces for reading and writing these event objects: \texttt{XMLEventReader} and \texttt{XMLEventWriter}. The \texttt{XMLEventReader} extends \texttt{java.util.Iterator} interface, which means, that values returned by \texttt{XMLEventReader} can be cached and work with standard Java Iterator.
-
-\begin{figure}[!ht]
-\lstset{language=Java,frame=single,backgroundcolor=\color{lightgray}}
-\begin{lstlisting}
-public interface XMLEventReader extends Iterator {
-  	public XMLEvent nextEvent();
-  	public boolean hasNext();
-  	public XMLEvent peek();
-  	...
-} 
-
-public interface XMLEventWriter {
-  	public void flush();
-  	public void close();
-  	public void add(XMLEvent e);
-  	public void add(Attribute attribute);
-  	...
-} 
-\end{lstlisting}
-\caption{Example of methods in \texttt{XMLEventReader} and \texttt{XMLEventWriter} interfaces of the Iterator API}
-\label{fig:staxinterfaceapi}
-\end{figure}
-
-\paragraph*{Comparison} The Cursor API is generally faster and more memory efficient than the Iterator API. On the other hand subclasses of the \texttt{XMLEvent} of the Iterator API can be passed into collections or otherwise used even after the parser has moved on to subsequent events. Our application has very little use of this functionality and does not need to modify the input stream (which the Iterator API enables). However, it benefits from the Cursor API's memory and time efficiency.
-
 \subsection{XML Parser}
-The class \texttt{XmlParserStAX} is responsible for processing input XML documents using the StAX Cursor API and at the same time creating output documents in the same run through the file. The internal processing follows steps outlined in algorithm~\vref{alg-processinput}. The parser also provides a method for processing string input and producing string output. In this case the parser processes the document defined by this string the same way as any other input document, however the output contains only converted strings, without any of original documents elements outside the MathML markup.
+The implementation of the \texttt{XmlParser} interface, \texttt{XmlParserStAX}, is responsible for processing input XML documents using the StAX Cursor API and at the same time creating output documents in the same run through the file. The internal processing follows steps outlined in algorithm~\vref{alg-processinput}. The parser also provides a method for processing string input and producing string output. In this case the parser processes the document defined by this string the same way as any other input document, however the output contains only converted strings, without any of original documents elements outside the MathML markup.
 \begin{figure}[!ht]
 \lstset{language=Java,frame=single,backgroundcolor=\color{lightgray}}
 \begin{lstlisting}
-public class XmlParserStAX {
+public class XmlParserStAX implements XmlParser {
 	public String parse(final String inputString, final Locale language);
 	public File parse(final File file, final Locale language);
 	public List<File> parse(final List<File> files, final Locale language);
@@ -670,10 +709,14 @@ public class XmlParserStAX {
 
 The parser is capable of accepting a folder as an input (instead of a document) and processing all files in this folder, preserving the file structure on the path entered by the user. 
 
-A thread pool of a user-specified size is initialized at the beginning and for every file from the input a \texttt{java.util.concurrent.Callable} instance is created. Using the \texttt{java.util.concurrent.ExecutorService} with our thread pool these callables are concurrently invoked (whenever there is an free thread in the thread pool next callable is invoked).  
+A thread pool of a user-specified size is initialized at the beginning and for every file from the input a \texttt{java.util.concurrent.Callable} instance is created. Using the \texttt{java.util.concurrent.ExecutorService} with our thread pool these callables are concurrently invoked (whenever there is an free thread in the thread pool next callable is invoked). 
+
+A JDOM\footnote{\url{http://www.jdom.org}} implementation of the \texttt{XmlParser} is also provided and will be used to compare the performance of StAX implementation in section~\vref{section:compareparsers}.
 
 \section{Conversion}
-When the parser creates a complete DOM-like tree, it immediately initializes the conversion of that tree by calling the \texttt{convert(tree, language)} method of the \texttt{MathMLConverter} class. The converter then decides which element of the input tree will be used as the root element of the conversion. In case that the tree contains Content MathML markup, this markup has precedence over the Presentation markup. 
+When the parser creates a complete tree, it immediately initializes the conversion of that tree by calling the \texttt{convert(tree, language)} method of the \texttt{MathMLConverter} class. The converter then decides which element of the input tree will be used as the root element of the conversion. 
+
+In case that the tree contains Content MathML markup, this markup has precedence over the Presentation markup. 
 
 The converter consists of several classes that represent elements of MathML markup; a separate class for each element of the Presentation MathML markup and three classes (\texttt{Apply}, \texttt{Cn}, \texttt{Ci}) for the Content MathML markup. Every class has only one static method, \texttt{process(node, settings)}, that is called whenever the traversal of the input tree encounters corresponding element. The run through the tree is done via the class \texttt{Node} and its static method \texttt{process(node, settings)}. This method works as a switch for every type of node and delegates the processing to a specific class. It also marks each encountered node as processed (see figure \ref{fig:converter-node} for illustration). The resulting string is gradually built from partial results of individual nodes.
 
@@ -726,11 +769,12 @@ Lastly the conversion of numbers to strings ($11 \rightarrow$ eleven) is optiona
 
 \chapter{Results}
 \section{Mathematical Retrieval Collection MREC}
+\label{section:mrec}
 MREC \cite{mrec:mrec2011} is a large corpus of mathematical texts (numbering close to 500 thousand documents). MREC\footnote{\url{https://mir.fi.muni.cz/MREC/index.html}} is based on documents downloaded from arXMLiv\footnote{\url{http://kwarc.info/projects/arXMLiv/}} \cite{mrec:arXMLiv2010}, which in turn is created by transforming \TeX~ documents from arXiv\footnote{\url{http://arxiv.org/}} - a huge library of freely available texts from multiple scientific fields, including Physics, Mathematics and Computer science. Using \LaTeX ML \ref{section:latexml} these texts are converted into XML format with mathematics being represented in MathML. Not all documents from the arXiv are part of MREC - only documents for which the conversion yielded results in categories successful and complete with errors are included.
 
 
-\section{Changing StAX Implementation}
-
+\section{Comparing \texttt{XmlParser} Implementations}
+\label{section:compareparsers}
 
 \chapter{Conclusion}
 1 page
