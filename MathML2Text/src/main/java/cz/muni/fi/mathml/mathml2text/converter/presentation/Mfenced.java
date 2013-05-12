@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import cz.muni.fi.mathml.mathml2text.converter.ConverterSettings;
 import cz.muni.fi.mathml.mathml2text.converter.Node;
-import cz.muni.fi.mathml.mathml2text.converter.operation.Operation;
+import cz.muni.fi.mathml.mathml2text.converter.operation.Symbol;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
 import cz.muni.fi.mathml.mathml2text.converter.tree.XmlAttribute;
 
@@ -30,19 +30,21 @@ public final class Mfenced {
         String closeBraces = settings.getProperty("close_braces");
         for (final XmlAttribute attr : node.getAttributes()) {
             if ("open".equals(attr.getKey())) {
-                final Operation op = Operation.forSymbol(attr.getValue());
-                if (op == null) {
+                final Symbol symbol = Symbol.forValue(attr.getValue());
+                if (symbol == null) {
                     logger.warn("Uknown braces [{}].", attr.getValue());
                 } else {
-                    openBraces = settings.getProperty(op.getKey());
+                    openBraces = settings.getProperty(symbol.getKey());
                 }
             }
             if ("close".equals(attr.getKey())) {
-                final Operation op = Operation.forSymbol(attr.getValue());
-                if (op == null) {
+                final Symbol symbol = Symbol.forValue(attr.getValue());
+                if (symbol == null) {
                     logger.warn("Uknown braces [{}].", attr.getValue());
+                } else if (Symbol.ABS.equals(symbol)) { 
+                    closeBraces = settings.getProperty("abs_close");
                 } else {
-                    closeBraces = settings.getProperty(op.getKey());
+                    closeBraces = settings.getProperty(symbol.getKey());
                 }
             }
         }

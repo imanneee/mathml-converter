@@ -16,6 +16,7 @@ import cz.muni.fi.mathml.mathml2text.converter.presentation.Msup;
 import cz.muni.fi.mathml.mathml2text.converter.presentation.Munder;
 import cz.muni.fi.mathml.mathml2text.converter.presentation.Munderover;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLType;
 
 /**
  * General MathML node.
@@ -55,8 +56,17 @@ public final class Node {
             case MROW: {
                 // mrow acts as a grouping element
                 //@todo Make some kind of mark to divide long formulae.
+                final boolean enclose = node.getChildren().size() > 1 
+                        && node.getParent() != null 
+                        && MathMLType.PRESENTATION.equals(node.getParent().getType().getType());
+                if (enclose) {
+                    builder.append(settings.getProperty("open_braces"));
+                }
                 for (final MathMLNode child : node.getChildren()) {
                     builder.append(Node.process(child, settings));
+                }
+                if (enclose) {
+                    builder.append(settings.getProperty("close_braces"));
                 }
                 break;
             }

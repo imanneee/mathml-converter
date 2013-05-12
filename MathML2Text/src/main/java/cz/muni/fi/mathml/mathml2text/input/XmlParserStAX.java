@@ -1,6 +1,5 @@
 package cz.muni.fi.mathml.mathml2text.input;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -12,7 +11,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -24,9 +22,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
 
 import javax.annotation.Nonnull;
 import javax.xml.stream.XMLInputFactory;
@@ -80,7 +75,7 @@ import cz.muni.fi.mir.mathmlcanonicalization.modules.OperatorNormalizer;
  * 
  * @author Maros Kucbel Oct 31, 2012, 19:07:12 PM
  */
-public final class XmlParserStAX {
+public final class XmlParserStAX implements XmlParser {
 
     /**
      * Logger.
@@ -113,6 +108,14 @@ public final class XmlParserStAX {
     
     /**
      * Constructor.
+     * Delegates to {@link #XmlParserStAX(boolean) } with parameter value <code>true</false>.
+     */
+    public XmlParserStAX() {
+        this(true);
+    }
+    
+    /**
+     * Constructor.
      * {@link XMLInputFactory} is configured with values:
      * <ul>
      *  <li>{@link XMLInputFactory#IS_REPLACING_ENTITY_REFERENCES} &rarr <code>true</code></li>
@@ -121,20 +124,22 @@ public final class XmlParserStAX {
      *  <li>{@link XMLInputFactory#IS_VALIDATING} &rarr <code>false</code></li>
      *  <li>{@link XMLInputFactory#SUPPORT_DTD} &rarr <code>true</code></li>
      * </ul>
+     * 
+     * @param supportDTD Enable DTD processing.
      */
-    public XmlParserStAX() {
+    public XmlParserStAX(final boolean supportDTD) {
         this.converter = new MathMLConverter();
         this.xmlInputFactory = XMLInputFactory.newInstance();
         this.xmlInputFactory.setProperty(XMLInputFactory.IS_REPLACING_ENTITY_REFERENCES, true);
         this.xmlInputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, true);
         this.xmlInputFactory.setProperty(XMLInputFactory.IS_COALESCING, Boolean.TRUE);
         this.xmlInputFactory.setProperty(XMLInputFactory.IS_VALIDATING, Boolean.FALSE);
-        this.xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, true);
+        this.xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, supportDTD);
         this.xmlInputFactory.setProperty(XMLInputFactory.RESOLVER, new XMLResolver() {
             @Override
             public Object resolveEntity(String publicID, String systemID, String baseURI, String namespace) throws XMLStreamException {
-                if (systemID.endsWith("dtd")) {
-                        return XmlParserStAX.class.getResourceAsStream("xhtml-math11-f.dtd");
+                if (systemID.endsWith("dtd")) { 
+                    return XmlParserStAX.class.getResourceAsStream("xhtml-math11-f.dtd");
                 }
                 return null;
             }
@@ -163,6 +168,7 @@ public final class XmlParserStAX {
      * @return Input converted to plain text.
      * @throws UnsupportedLanguageException
      */
+    @Override
     public String parse(@Nonnull final String inputString, final Locale language)
             throws UnsupportedLanguageException {
         Validate.isTrue(StringUtils.isNotBlank(inputString));
@@ -289,16 +295,7 @@ public final class XmlParserStAX {
         return Strings.EMPTY;
     }
     
-    /**
-     * Concurrently converts all input files.
-     * For every file delegates to method {@link #parse(java.io.File, java.util.Locale) }.
-     * The number of possible concurrent conversion is determined with parameter
-     * {@link ConverterSettings#getThreadCount()}. 
-     * @param files List of input files.
-     * @param language Language of conversion.
-     * @return List of converted files.
-     * @throws UnsupportedLanguageException
-     */
+    @Override
     public List<File> parse(@Nonnull final List<File> files, final Locale language) throws UnsupportedLanguageException {
         final List<File> inputFiles = new ArrayList<File>();
         for (final File file : files) {
@@ -345,17 +342,7 @@ public final class XmlParserStAX {
         return null;
     }
     
-    /**
-     * Parses single file. For every occurrence of math element inside input 
-     * XML file new {@link MathMLNode} tree is builded and subsequently converted
-     * to string.
-     * 
-     * @param file Input XML file.
-     * @param language Language of conversion.
-     * @return A file with every occurence of <code>&lt;math&gt;</code> tag replaced
-     *  with converted string inside <code>&lt;mathconv&gt;</code> tag.
-     * @throws UnsupportedLanguageException
-     */
+    @Override
     public File parse(@Nonnull final File file, final Locale language) throws UnsupportedLanguageException {
         Validate.isTrue(file != null, "File for transformation should not be null.");
         this.checkSupportedLanguages(language);
@@ -409,7 +396,7 @@ public final class XmlParserStAX {
         try {
             InputStream inputStream;
             if (file.getName().endsWith("zip")) {
-                inputStream = this.unzip(file);
+                inputStream = Unzipper.unzip(file);
             } else {
                 inputStream = new FileInputStream(file);
             }
@@ -633,49 +620,6 @@ public final class XmlParserStAX {
             }
         }
         return files;
-    }
-    
-    /**
-     * Unzips a single file.
-     * 
-     * @param zipFile Input zipped file.
-     * @return {@link InputStream} containing unzipped file or {@code null} if there
-     * was an error during unzipping.
-     */
-    private InputStream unzip(final File zipFile) {
-        Validate.isTrue(zipFile.getName().endsWith("zip"), "Input file is not zipped.");
-        int bufferSize = 2048;
-
-        try {
-            ZipFile zip = new ZipFile(zipFile);
-            Enumeration zipFileEntries = zip.entries();
-            // Process each entry
-            while (zipFileEntries.hasMoreElements()) {
-                // grab a zip file entry
-                ZipEntry entry = (ZipEntry) zipFileEntries.nextElement();
-                if (!entry.isDirectory()) {
-                    final BufferedInputStream is = new BufferedInputStream(zip.getInputStream(entry));
-                    int currentByte;
-                    // establish buffer for writing file
-                    byte data[] = new byte[bufferSize];
-
-                    // write the current file to disk
-                    ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-                    // read and write until last byte is encountered
-                    while ((currentByte = is.read(data, 0, bufferSize)) != -1) {
-                        out.write(data, 0, currentByte);
-                    }
-                    is.close();
-                    return new ByteArrayInputStream(out.toByteArray());
-                }
-            }
-        } catch (final ZipException ex) {
-            logger.warn("Error while unzipping file.", ex);
-        } catch (final IOException ex) {
-            logger.warn("Error while unzipping file.", ex);
-        }
-        return null;
     }
     
 }

@@ -24,17 +24,7 @@ public final class Msqrt {
         }
         final StringBuilder builder = new StringBuilder();
         builder.append(settings.getProperty("square_root"));
-        boolean braces = false;
-        if (node.getChildren().get(0).getChildren().size() > 1) {
-            braces = true;
-        }
-        if (braces) {
-            builder.append(settings.getProperty("open_braces"));
-        }
         builder.append(Node.process(node.getChildren().get(0), settings));
-        if (braces) {
-            builder.append(settings.getProperty("close_braces"));
-        }
         return builder.toString();
     }
 }

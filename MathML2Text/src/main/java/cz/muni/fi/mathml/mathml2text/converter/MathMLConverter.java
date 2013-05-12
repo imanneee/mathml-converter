@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLElement;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLType;
 import cz.muni.fi.mathml.mathml2text.converter.tree.XmlAttribute;
 import cz.muni.fi.mathml.mathml2text.numbers.NumberTransformer;
 
@@ -88,6 +89,9 @@ public class MathMLConverter {
         } catch (Throwable ex) {
             logger.error("Error while processing input tree.", ex);
         }
+        if (result == null) {
+            result = Strings.EMPTY;
+        }
         return result;
     }
     
@@ -97,13 +101,14 @@ public class MathMLConverter {
      * @return 
      */
     private MathMLNode getNodeForProcessing(final MathMLNode node) {
+        final boolean useContentMarkup = ConverterSettings.getInstance().isUseContentMarkup();
         for (final MathMLNode child : node.getChildren()) {
-            if (child.getType().getElementName().startsWith("m")) {
+            if (!useContentMarkup && MathMLType.PRESENTATION.equals(child.getType().getType())) {
                 return node;
             }
             if (MathMLElement.SEMANTICS.equals(child.getType())) {
                 for (final MathMLNode semanticsChild : child.getChildren()) {
-                    if (semanticsChild.getType().getElementName().startsWith("m")) {
+                    if (!useContentMarkup && MathMLType.PRESENTATION.equals(semanticsChild.getType().getType())) {
                         return child;
                     }
                     if (MathMLElement.ANNOTATION_XML.equals(semanticsChild.getType())) {

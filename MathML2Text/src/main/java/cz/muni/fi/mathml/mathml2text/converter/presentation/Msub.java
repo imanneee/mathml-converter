@@ -31,6 +31,7 @@ public final class Msub {
             builder.append(settings.getProperty("logarithm_from"));
         } else {
             builder.append(Node.process(node.getChildren().get(0), settings));
+            builder.append(settings.getProperty("subscript"));
             builder.append(Node.process(node.getChildren().get(1), settings));
         }
         return builder.toString();

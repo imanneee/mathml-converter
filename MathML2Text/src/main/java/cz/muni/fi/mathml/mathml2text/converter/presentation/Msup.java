@@ -30,7 +30,7 @@ public final class Msup {
         } else {
             builder.append(settings.getProperty("superscript"));
             builder.append(Node.process(node.getChildren().get(1), settings));
-        }
+            }
         return builder.toString();
     }
 }

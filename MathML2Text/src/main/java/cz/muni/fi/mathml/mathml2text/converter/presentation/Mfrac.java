@@ -33,25 +33,9 @@ public final class Mfrac {
         }
         if (isFraction) {
             builder.append(settings.getProperty("fraction"));
-            boolean braces = false;
-            if (node.getChildren().get(0).getChildren().size() > 1) {
-                builder.append(settings.getProperty("open_braces"));
-                braces = true;
-            }
             builder.append(Node.process(node.getChildren().get(0), settings));
-            if (braces) {
-                builder.append(settings.getProperty("close_braces"));
-            }
             builder.append(settings.getProperty("divided_by"));
-            braces = false;
-            if (node.getChildren().get(0).getChildren().size() > 1) {
-                builder.append(settings.getProperty("open_braces"));
-                braces = true;
-            }
             builder.append(Node.process(node.getChildren().get(1), settings));
-            if (braces) {
-                builder.append(settings.getProperty("close_braces"));
-            }
             builder.append(settings.getProperty("end_fraction"));
         } else {
             builder.append(settings.getProperty("binomial_coefficient"));

@@ -35,7 +35,7 @@ public final class Mn {
             final String number = settings.isTransformNumbers() 
                                   ? settings.getNumberTransformer().transform(strippedValue) 
                                   : strippedValue;
-            return number + Strings.SPACE;
+            return number.trim() + Strings.SPACE;
         } catch (final NumberFormatException ex) {
             LoggerFactory.getLogger(Mn.class).warn(String.format("Cannot transform string [%1$s] to number.", node.getValue()), ex);
         } catch (final NullPointerException ex) {
