@@ -397,6 +397,10 @@ public enum Operation {
      */
     COMMA("comma", OperationType.INFIX, ",", "&#44;", "&#8291;", "&#x2063;", "⁣"),
     /**
+     * Semicolon.
+     */
+    SEMICOLON("semicolon", OperationType.INFIX, ";"),
+    /**
      * Dot.
      */
     DOT("dot", OperationType.INFIX, ".", "&#46;"),
@@ -487,7 +491,7 @@ public enum Operation {
     /**
      * Divides.
      */
-    DIVIDES("divides", OperationType.INFIX, "&#8739;", "&#x2223;", "∣"),
+    DIVIDES("divides", OperationType.INFIX, "&#8739;", "&#x2223;", "∣", "|"),
     /**
      * Tensor product.
      */
@@ -696,6 +700,10 @@ public enum Operation {
      * Function composition.
      */
     FUNCTION_COMPOSITION("function_composition", OperationType.INFIX, "&#8728;", "&#x2218;", "∘"),
+    /**
+     * Parallel to.
+     */
+    PARALLEL_TO("parallel_to", OperationType.INFIX, "&#8741;", "&#x2225;", "∥"),
     /**
      * Empty or {@code null} function.
      */

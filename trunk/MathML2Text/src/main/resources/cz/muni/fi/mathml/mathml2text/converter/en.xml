@@ -97,6 +97,7 @@
     <entry key="setdiff">except</entry>
     <entry key="not">not</entry>
     <entry key="abs">absolute value of</entry>
+    <entry key="abs_close">end absolute value</entry>
     <entry key="floor">floor of</entry>
     <entry key="ceiling">ceiling of</entry>
     <entry key="exp">exponential of</entry>
@@ -225,5 +226,7 @@
     <entry key="contains_as_normal_subgroup">contains as normal subgroup</entry>
     <entry key="function_composition">composed with</entry>
     <entry key="above">above</entry>
+    <entry key="semicolon">semicolon</entry>
+    <entry key="parallel_to">is parallel to</entry>
     <entry key=""></entry>
 </properties>

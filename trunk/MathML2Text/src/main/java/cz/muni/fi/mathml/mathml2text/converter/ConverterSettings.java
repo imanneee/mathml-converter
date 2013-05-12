@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Sets;
 
-import cz.muni.fi.mathml.mathml2text.converter.Strings;
 import cz.muni.fi.mathml.mathml2text.numbers.NumberFormat;
 import cz.muni.fi.mathml.mathml2text.numbers.NumberTransformer;
 
@@ -60,6 +59,10 @@ public final class ConverterSettings {
      */
     private boolean transformNumbers;
     /**
+     * Indicates wheter the Content MathML markup should be used for conversion (if present).
+     */
+    private boolean useContentMarkup;
+    /**
      * Singleton instance.
      */
     private static final ConverterSettings INSTANCE = new ConverterSettings();
@@ -68,16 +71,10 @@ public final class ConverterSettings {
      * Constructor.
      * Inicializes this values:
      * <ul>
-     *  <li>{@link #replaceSpaces} to <code>false</code></li>
-     *  <li>{@link #canonicalize} to <code>false</code></li>
-     *  <li>{@link #transformNumbers} to <code>false</code></li>
      *  <li>{@link #threadCount} to <code>1</code></li>
      * </ul>
      */
     private ConverterSettings() {
-        this.replaceSpaces = false;
-        this.canonicalize = false;
-        this.transformNumbers = false;
         this.threadCount = 1;
     }
     
@@ -244,6 +241,24 @@ public final class ConverterSettings {
      */
     public void setTransformNumbers(boolean transformNumbers) {
         this.transformNumbers = transformNumbers;
+    }
+    /**
+     * Indicates wheter the Content MathML markup should be used for conversion (if present).
+     * @return {@code true}, if the Content MathML markup should be used for 
+     *  conversion (if present), {@code false} otherwise.
+     */
+    public boolean isUseContentMarkup() {
+        return this.useContentMarkup;
+    }
+
+    /**
+     * Sets the value that indicates whether the Content MathML markup should 
+     *  be used for conversion (if present).
+     * @param useContentMarkup Indicator whether the Content MathML markup should 
+     *  be used for conversion (if present).
+     */
+    public void setUseContentMarkup(boolean useContentMarkup) {
+        this.useContentMarkup = useContentMarkup;
     }
     
     /**

@@ -97,6 +97,7 @@
     <entry key="setdiff">kromě</entry>
     <entry key="not">ne</entry>
     <entry key="abs">absolútní hodnota ze</entry>
+    <entry key="abs_close">konec absolutní hodnoty</entry>
     <entry key="floor">dolní celá část</entry>
     <entry key="ceiling">horní celá část</entry>
     <entry key="exp">exponenciál ze</entry>
@@ -225,5 +226,7 @@
     <entry key="contains_as_normal_subgroup">obsahuje jako normální podgrupu</entry>
     <entry key="function_composition">složená s</entry>
     <entry key="above">nad</entry>
+    <entry key="semicolon">středník</entry>
+    <entry key="parallel_to">je paralelní s</entry>
     <entry key=""></entry>
 </properties>

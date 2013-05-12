@@ -21,6 +21,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.muni.fi.mathml.mathml2text.converter.ConverterSettings;
+import cz.muni.fi.mathml.mathml2text.input.XmlParser;
+import cz.muni.fi.mathml.mathml2text.input.XmlParserDOM;
 import cz.muni.fi.mathml.mathml2text.input.XmlParserStAX;
 
 /**
@@ -53,7 +55,8 @@ public class App {
             helpFormatter.printHelp("converter [options] <file...>", createOptions());
             System.exit(0);
         }
-        
+        // default parser implementation
+        String parserImplementation = "dom";
         final CommandLineParser commandLineParser = new BasicParser();
         try {
             CommandLine line = commandLineParser.parse(createOptions(), args);
@@ -64,10 +67,10 @@ public class App {
                     System.exit(1);
                 }
             }
-            if (line.hasOption("c")) {
+            if (line.hasOption("canonicalize")) {
                 ConverterSettings.getInstance().setCanonicalize(true);
             }
-            if (line.hasOption("r")) {
+            if (line.hasOption("replace-spaces")) {
                 ConverterSettings.getInstance().setReplaceSpaces(true);
             }
             if (line.hasOption("threads")) {
@@ -86,8 +89,14 @@ public class App {
                 }
                 ConverterSettings.getInstance().setOutputDirectory(outputDirectoryPath);
             }
-            if (line.hasOption("n")) {
+            if (line.hasOption("transform-numbers")) {
                 ConverterSettings.getInstance().setTransformNumbers(true);
+            }
+            if (line.hasOption("parser")) {
+                parserImplementation = line.getOptionValue("parser");
+            }
+            if (line.hasOption("content-markup")) {
+                ConverterSettings.getInstance().setUseContentMarkup(true);
             }
             String[] fileNames = line.getArgs();
             final List<File> inputFiles = new ArrayList<File>(fileNames.length);
@@ -96,7 +105,24 @@ public class App {
             }
             final Instant start = Instant.now();
 
-            final XmlParserStAX parser = new XmlParserStAX();
+            final XmlParser parser;
+            if ("stax".equals(parserImplementation)) {
+                setUpForStAX();
+                parser = new XmlParserStAX(); 
+            } else if ("dom".equals(parserImplementation)) {
+                setUpForDOM();
+                parser = new XmlParserDOM();
+            } else if ("aalto".equals(parserImplementation)) {
+                setUpForAalto();
+                parser = new XmlParserStAX();
+            } else if ("woodstox".equals(parserImplementation)) {
+                setUpForWoodstox();
+                parser = new XmlParserStAX(false);
+            } else {
+                System.err.println("Unknown parser implementation");
+                parser = null;
+                System.exit(1);
+            }
 
             List<File> parse = parser.parse(inputFiles, new Locale(language));
             
@@ -135,9 +161,43 @@ public class App {
                 .hasArg()//
                 .withArgName("PATH")//
                 .create("o"));
+        options.addOption(OptionBuilder.withLongOpt("parser")//
+                .withDescription("choose parser implementation [dom|stax|aalto|woodstox], defaults to dom")//
+                .hasArg()//
+                .withArgName("PARSER")//
+                .create("p"));
         options.addOption("c", "canonicalize", false, "canonicalize input");
         options.addOption("r", "replace-spaces", false, "replace spaces with underscores");
         options.addOption("n", "transform-numbers", false, "transform all numbers to strings");
+        options.addOption("cm", "content-markup", false, "use content markup for conversion");
         return options;
+    }
+    
+    private static void setUpForDOM() {
+        System.setProperty("javax.xml.stream.XMLInputFactory", "com.sun.xml.internal.stream.XMLInputFactoryImpl");
+        System.setProperty("javax.xml.stream.XMLOutputFactory", "com.sun.xml.internal.stream.XMLOutputFactoryImpl");
+        System.setProperty("javax.xml.stream.XMLEventFactory", "com.sun.xml.internal.stream.events.XMLEventFactoryImpl");
+        System.setProperty("javax.xml.parsers.SAXParserFactory", "com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl");
+    }
+    
+    private static void setUpForStAX() {
+        System.setProperty("javax.xml.stream.XMLInputFactory", "com.sun.xml.internal.stream.XMLInputFactoryImpl");
+        System.setProperty("javax.xml.stream.XMLOutputFactory", "com.sun.xml.internal.stream.XMLOutputFactoryImpl");
+        System.setProperty("javax.xml.stream.XMLEventFactory", "com.sun.xml.internal.stream.events.XMLEventFactoryImpl");
+        System.setProperty("javax.xml.parsers.SAXParserFactory", "com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl");
+    }
+    
+    private static void setUpForAalto() {
+        System.setProperty("javax.xml.stream.XMLInputFactory", "com.fasterxml.aalto.stax.InputFactoryImpl");
+        System.setProperty("javax.xml.stream.XMLOutputFactory", "com.fasterxml.aalto.stax.OutputFactoryImpl");
+        System.setProperty("javax.xml.stream.XMLEventFactory", "com.fasterxml.aalto.stax.EventFactoryImpl");
+        System.setProperty("javax.xml.parsers.SAXParserFactory", "com.fasterxml.aalto.sax.SAXParserFactoryImpl");
+    }
+    
+    private static void setUpForWoodstox() {
+        System.setProperty("javax.xml.stream.XMLInputFactory", "com.ctc.wstx.stax.WstxInputFactory");
+        System.setProperty("javax.xml.stream.XMLOutputFactory", "com.ctc.wstx.stax.WstxOutputFactory");
+        System.setProperty("javax.xml.stream.XMLEventFactory", "com.ctc.wstx.stax.WstxEventFactory");
+        System.setProperty("javax.xml.parsers.SAXParserFactory", "com.ctc.wstx.sax.WstxSAXParserFactory");
     }
 }

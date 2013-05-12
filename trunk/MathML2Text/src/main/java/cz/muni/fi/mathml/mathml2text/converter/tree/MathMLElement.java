@@ -122,31 +122,31 @@ public enum MathMLElement {
     /**
      * Integer division operator.
      */
-    QUOTIENT("quotient", MathMLType.CONTENT_BEFORE_MIDDLE),
+    QUOTIENT("quotient", MathMLType.CONTENT),
     /**
      * Factorial.
      */
-    FACTORIAL("factorial", MathMLType.CONTENT_GROUP),
+    FACTORIAL("factorial", MathMLType.CONTENT),
     /**
      * Division
      */
-    DIVIDE("divide", MathMLType.CONTENT_MIDDLE),
+    DIVIDE("divide", MathMLType.CONTENT),
     /**
      * Maximum.
      */
-    MAX("max", MathMLType.CONTENT_GROUP),
+    MAX("max", MathMLType.CONTENT),
     /**
      * Minimum
      */
-    MIN("min", MathMLType.CONTENT_GROUP),
+    MIN("min", MathMLType.CONTENT),
     /**
      * With one argument it's unary operator (-x), with two it's subtraction.
      */
-    MINUS("minus", MathMLType.CONTENT_MIDDLE),
+    MINUS("minus", MathMLType.CONTENT),
     /**
      * Addition.
      */
-    PLUS("plus", MathMLType.CONTENT_MIDDLE),
+    PLUS("plus", MathMLType.CONTENT),
     /**
      * Exponentiation.
      */
@@ -154,11 +154,11 @@ public enum MathMLElement {
     /**
      * Remainder.
      */
-    REM("rem", MathMLType.CONTENT_BEFORE_MIDDLE),
+    REM("rem", MathMLType.CONTENT),
     /**
      * Multiplication.
      */
-    TIMES("times", MathMLType.CONTENT_MIDDLE),
+    TIMES("times", MathMLType.CONTENT),
     /**
      * Root.
      */
@@ -170,27 +170,27 @@ public enum MathMLElement {
     /**
      * Greatest common divisor.
      */
-    GCD("gcd", MathMLType.CONTENT_GROUP),
+    GCD("gcd", MathMLType.CONTENT),
     /**
      * Logical and.
      */
-    AND("and", MathMLType.CONTENT_MIDDLE),
+    AND("and", MathMLType.CONTENT),
     /**
      * Logical or.
      */
-    OR("or", MathMLType.CONTENT_MIDDLE),
+    OR("or", MathMLType.CONTENT),
     /**
      * Logical xor.
      */
-    XOR("xor", MathMLType.CONTENT_MIDDLE),
+    XOR("xor", MathMLType.CONTENT),
     /**
      * Logical not.
      */
-    NOT("not", MathMLType.CONTENT_BEFORE),
+    NOT("not", MathMLType.CONTENT),
     /**
      * Logical implication.
      */
-    IMPLIES("implies", MathMLType.CONTENT_MIDDLE),
+    IMPLIES("implies", MathMLType.CONTENT),
     /**
      * For all quantifier.
      */
@@ -202,7 +202,7 @@ public enum MathMLElement {
     /**
      * Absolute value.
      */
-    ABS("abs", MathMLType.CONTENT_BEFORE),
+    ABS("abs", MathMLType.CONTENT),
     /**
      * Function defined over the complex numbers with returns 
      * the complex conjugate of its argument.
@@ -227,51 +227,51 @@ public enum MathMLElement {
     /**
      * Lowest common multiple.
      */
-    LCM("lcm", MathMLType.CONTENT_GROUP),
+    LCM("lcm", MathMLType.CONTENT),
     /**
      * Rounds down to the nearest integer.
      */
-    FLOOR("floor", MathMLType.CONTENT_BEFORE),
+    FLOOR("floor", MathMLType.CONTENT),
     /**
      * Rounds up to the nearest integer.
      */
-    CEILING("ceiling", MathMLType.CONTENT_BEFORE),
+    CEILING("ceiling", MathMLType.CONTENT),
     /**
      * Equal to.
      */
-    EQ("eq", MathMLType.CONTENT_MIDDLE),
+    EQ("eq", MathMLType.CONTENT),
     /**
      * Not equal to.
      */
-    NEQ("neq", MathMLType.CONTENT_MIDDLE),
+    NEQ("neq", MathMLType.CONTENT),
     /**
      * Greater than.
      */
-    GT("gt", MathMLType.CONTENT_MIDDLE),
+    GT("gt", MathMLType.CONTENT),
     /**
      * Lower than.
      */
-    LT("lt", MathMLType.CONTENT_MIDDLE),
+    LT("lt", MathMLType.CONTENT),
     /**
      * Greater than or equal to.
      */
-    GEQ("geq", MathMLType.CONTENT_MIDDLE),
+    GEQ("geq", MathMLType.CONTENT),
     /**
      * Lower than or equal to.
      */
-    LEQ("leq", MathMLType.CONTENT_MIDDLE),
+    LEQ("leq", MathMLType.CONTENT),
     /**
      * Equivalence.
      */
-    EQUIVALENT("equivalent", MathMLType.CONTENT_MIDDLE),
+    EQUIVALENT("equivalent", MathMLType.CONTENT),
     /**
      * Approximation.
      */
-    APPROX("approx", MathMLType.CONTENT_MIDDLE),
+    APPROX("approx", MathMLType.CONTENT),
     /**
      * Factor of.
      */
-    FACTOROF("factorof", MathMLType.CONTENT_MIDDLE),
+    FACTOROF("factorof", MathMLType.CONTENT),
     /**
      * Integral.
      */
@@ -303,51 +303,51 @@ public enum MathMLElement {
     /**
      * Set.
      */
-    SET("set", MathMLType.CONTENT_GROUP),
+    SET("set", MathMLType.CONTENT),
     /**
      * List.
      */
-    LIST("list", MathMLType.CONTENT_GROUP),
+    LIST("list", MathMLType.CONTENT),
     /**
      * Union of sets.
      */
-    UNION("union", MathMLType.CONTENT_MIDDLE),
+    UNION("union", MathMLType.CONTENT),
     /**
      * Intersection of sets.
      */
-    INTERSECT("intersect", MathMLType.CONTENT_MIDDLE),
+    INTERSECT("intersect", MathMLType.CONTENT),
     /**
      * Set inclusion.
      */
-    IN("in", MathMLType.CONTENT_MIDDLE),
+    IN("in", MathMLType.CONTENT),
     /**
      * Negated set inclusion.
      */
-    NOTIN("notin", MathMLType.CONTENT_MIDDLE),
+    NOTIN("notin", MathMLType.CONTENT),
     /**
      * Subset.
      */
-    SUBSET("subset", MathMLType.CONTENT_MIDDLE),
+    SUBSET("subset", MathMLType.CONTENT),
     /**
      * Proper subset.
      */
-    PRSUBSET("prsubset", MathMLType.CONTENT_MIDDLE),
+    PRSUBSET("prsubset", MathMLType.CONTENT),
     /**
      * Negated subset.
      */
-    NOTSUBSET("notsubset", MathMLType.CONTENT_MIDDLE),
+    NOTSUBSET("notsubset", MathMLType.CONTENT),
     /**
      * Negated proper subset.
      */
-    NOTPRSUBSET("notprsubset", MathMLType.CONTENT_MIDDLE),
+    NOTPRSUBSET("notprsubset", MathMLType.CONTENT),
     /**
      * Set difference.
      */
-    SETDIFF("setdiff", MathMLType.CONTENT_MIDDLE),
+    SETDIFF("setdiff", MathMLType.CONTENT),
     /**
      * Set cardinality.
      */
-    CARD("card", MathMLType.CONTENT_BEFORE),
+    CARD("card", MathMLType.CONTENT),
     /**
      * Cartesian product.
      */
@@ -371,107 +371,107 @@ public enum MathMLElement {
     /**
      * Sine.
      */
-    SIN("sin", MathMLType.CONTENT_TRIGONOMETRY),
+    SIN("sin", MathMLType.CONTENT),
     /**
      * Cosine.
      */
-    COS("cos", MathMLType.CONTENT_TRIGONOMETRY),
+    COS("cos", MathMLType.CONTENT),
     /**
      * Tangent
      */
-    TAN("tan", MathMLType.CONTENT_TRIGONOMETRY),
+    TAN("tan", MathMLType.CONTENT),
     /**
      * Secant.
      */
-    SEC("sec", MathMLType.CONTENT_TRIGONOMETRY),
+    SEC("sec", MathMLType.CONTENT),
     /**
      * Cosecant.
      */
-    CSC("csc", MathMLType.CONTENT_TRIGONOMETRY),
+    CSC("csc", MathMLType.CONTENT),
     /**
      * Cotangent.
      */
-    COT("cot", MathMLType.CONTENT_TRIGONOMETRY),
+    COT("cot", MathMLType.CONTENT),
     /**
      * Hyperbolic sine.
      */
-    SINH("sinh", MathMLType.CONTENT_TRIGONOMETRY),
+    SINH("sinh", MathMLType.CONTENT),
     /**
      * Hyperbolic cosine.
      */
-    COSH("cosh", MathMLType.CONTENT_TRIGONOMETRY),
+    COSH("cosh", MathMLType.CONTENT),
     /**
      * Hyperbolic tangent.
      */
-    TANH("tanh", MathMLType.CONTENT_TRIGONOMETRY),
+    TANH("tanh", MathMLType.CONTENT),
     /**
      * Hyperbolic secant.
      */
-    SECH("sech", MathMLType.CONTENT_TRIGONOMETRY),
+    SECH("sech", MathMLType.CONTENT),
     /**
      * Hyperbolic cosecant.
      */
-    CSCH("csch", MathMLType.CONTENT_TRIGONOMETRY),
+    CSCH("csch", MathMLType.CONTENT),
     /**
      * Hyperbolic cotangent.
      */
-    COTH("coth", MathMLType.CONTENT_TRIGONOMETRY),
+    COTH("coth", MathMLType.CONTENT),
     /**
      * Arcsine.
      */
-    ARCSIN("arcsin", MathMLType.CONTENT_TRIGONOMETRY),
+    ARCSIN("arcsin", MathMLType.CONTENT),
     /**
      * Arccosine.
      */
-    ARCCOS("arccos", MathMLType.CONTENT_TRIGONOMETRY),
+    ARCCOS("arccos", MathMLType.CONTENT),
     /**
      * Arctangent.
      */
-    ARCTAN("arctan", MathMLType.CONTENT_TRIGONOMETRY),
+    ARCTAN("arctan", MathMLType.CONTENT),
     /**
      * Inverse hyperbolic cosine.
      */
-    ARCCOSH("arccosh", MathMLType.CONTENT_TRIGONOMETRY),
+    ARCCOSH("arccosh", MathMLType.CONTENT),
     /**
      * Arccotangent.
      */
-    ARCCOT("arccot", MathMLType.CONTENT_TRIGONOMETRY),
+    ARCCOT("arccot", MathMLType.CONTENT),
     /**
      * Inverse hyperbolic tangent.
      */
-    ARCCOTH("arccoth", MathMLType.CONTENT_TRIGONOMETRY),
+    ARCCOTH("arccoth", MathMLType.CONTENT),
     /**
      * Inverse cosecant.
      */
-    ARCCSC("arccsc", MathMLType.CONTENT_TRIGONOMETRY),
+    ARCCSC("arccsc", MathMLType.CONTENT),
     /**
      * Inverse hyperbolic cosecant.
      */
-    ARCCSCH("arccsch", MathMLType.CONTENT_TRIGONOMETRY),
+    ARCCSCH("arccsch", MathMLType.CONTENT),
     /**
      * Inverse secant.
      */
-    ARCSEC("arcsec", MathMLType.CONTENT_TRIGONOMETRY),
+    ARCSEC("arcsec", MathMLType.CONTENT),
     /**
      * Inverse hyperbolic secant.
      */
-    ARCSECH("arcsech", MathMLType.CONTENT_TRIGONOMETRY),
+    ARCSECH("arcsech", MathMLType.CONTENT),
     /**
      * Inverse hyperbolic sine.
      */
-    ARCSINH("arcsinh", MathMLType.CONTENT_TRIGONOMETRY),
+    ARCSINH("arcsinh", MathMLType.CONTENT),
     /**
      * Inverse hyperbolic tangent.
      */
-    ARCTANH("arctanh", MathMLType.CONTENT_TRIGONOMETRY),
+    ARCTANH("arctanh", MathMLType.CONTENT),
     /**
      * Exponentiation.
      */
-    EXP("exp", MathMLType.CONTENT_BEFORE),
+    EXP("exp", MathMLType.CONTENT),
     /**
      * Natural logarithm.
      */
-    LN("ln", MathMLType.CONTENT_BEFORE),
+    LN("ln", MathMLType.CONTENT),
     /**
      * Logarithm.
      */

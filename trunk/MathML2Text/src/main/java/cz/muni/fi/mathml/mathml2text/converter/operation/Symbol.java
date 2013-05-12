@@ -37,7 +37,17 @@ public enum Symbol {
     PHI("phi", "phi", "&phi;", "Phi", "&Phi;", "&#x3A6;", "&#x3C6;", "&#934;", "&#966;"),
     CHI("chi", "chi", "&chi;", "Chi", "&Chi;", "&#x3A7;", "&#x3C7;", "&#935;", "&#967;"),
     PSI("psi", "psi", "&psi;", "Psi", "&Psi;", "&#x3A8;", "&#x3C8;", "&#936;", "&#968;"),
-    OMEGA("omega", "omega", "&omega;", "Omega", "&Omega;", "&#x3A9;", "&#x3C9;", "&#937;", "&#969;");
+    OMEGA("omega", "omega", "&omega;", "Omega", "&Omega;", "&#x3A9;", "&#x3C9;", "&#937;", "&#969;"),
+    /** Parentheses */
+    ROUND_OPEN("open_braces", "("),
+    ROUND_CLOSE("close_braces", ")"),
+    ANGLE_OPEN("left_angle_bracket", "⟨", "&#10216;", "&#x27E8;", "<", "&lt;"),
+    ANGLE_CLOSE("right_angle_bracket", "⟩", "&#10217;", "&#x27E9;", ">", "&gt;"),
+    SQUARE_OPEN("left_square_bracket", "[", "&#91;", "&#x005B;"),
+    SQUARE_CLOSE("right_square_bracket", "]", "&#93;", "&#x005D;"),
+    CURLY_OPEN("left_curly_bracket", "{", "&#125;", "&#x007D;"),
+    CURLY_CLOSE("right_curly_bracket", "}", "&#102177;", "&#x27E9;"),
+    ABS("abs", "|", "&#125;", "&#x007D;");
     
     /** Localization key for this symbol. */
     private final String key;
