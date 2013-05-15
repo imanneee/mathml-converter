@@ -25,12 +25,13 @@
 \contentsline {subsection}{\numberline {4.3.1}\rmfamily Presentation MathML}{21}{subsection.4.3.1}
 \contentsline {subsection}{\numberline {4.3.2}\rmfamily Content MathML}{23}{subsection.4.3.2}
 \contentsline {subsection}{\numberline {4.3.3}\rmfamily Operators and Symbols}{25}{subsection.4.3.3}
-\contentsline {chapter}{\numberline {5}\bfseries Implementation}{26}{chapter.5}
-\contentsline {section}{\numberline {5.1}\slshape DOM-like Representation of MathML}{27}{section.5.1}
-\contentsline {section}{\numberline {5.2}\slshape Input Processing}{27}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}\rmfamily XML Parser}{27}{subsection.5.2.1}
-\contentsline {section}{\numberline {5.3}\slshape Conversion}{30}{section.5.3}
-\contentsline {chapter}{\numberline {6}\bfseries Results}{33}{chapter.6}
-\contentsline {section}{\numberline {6.1}\slshape Mathematical Retrieval Collection MREC}{33}{section.6.1}
-\contentsline {section}{\numberline {6.2}\slshape Changing StAX Implementation}{33}{section.6.2}
-\contentsline {chapter}{\numberline {7}\bfseries Conclusion}{34}{chapter.7}
+\contentsline {subsection}{\numberline {4.3.4}\rmfamily Adding Parentheses}{25}{subsection.4.3.4}
+\contentsline {chapter}{\numberline {5}\bfseries Implementation}{27}{chapter.5}
+\contentsline {section}{\numberline {5.1}\slshape DOM-like Representation of MathML}{28}{section.5.1}
+\contentsline {section}{\numberline {5.2}\slshape Input Processing}{28}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}\rmfamily XML Parser}{28}{subsection.5.2.1}
+\contentsline {section}{\numberline {5.3}\slshape Conversion}{31}{section.5.3}
+\contentsline {chapter}{\numberline {6}\bfseries Results}{34}{chapter.6}
+\contentsline {section}{\numberline {6.1}\slshape Mathematical Retrieval Collection MREC}{34}{section.6.1}
+\contentsline {section}{\numberline {6.2}\slshape Comparing \texttt {XmlParser} Implementations}{34}{section.6.2}
+\contentsline {chapter}{\numberline {7}\bfseries Conclusion}{35}{chapter.7}

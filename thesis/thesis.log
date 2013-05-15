@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/W32TeX) (format=pdflatex 2012.10.7)  12 MAY 2013 22:28
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/W32TeX) (format=pdflatex 2012.10.7)  15 MAY 2013 22:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -658,7 +658,12 @@ LaTeX Font Info:    External font `cmex10' loaded for size
  [1
 
 
-])
+]
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 36.
+
+(c:/texlive/2012/texmf-dist/tex/latex/psnfss/t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+))
 \tf@toc=\write4
 \openout4 = `thesis.toc'.
 
@@ -670,21 +675,16 @@ LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <12> not available
 
 ]
 Chapter 2.
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 99.
-(c:/texlive/2012/texmf-dist/tex/latex/psnfss/t1pcr.fd
-File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
-)
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <9> on input line 99.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 99.
- [4
+[4
 
 ]
 LaTeX Font Info:    Try loading font information for OMS+ppl on input line 109.
 
-
-(c:/texlive/2012/texmf-dist/tex/latex/psnfss/omsppl.fd
+ (c:/texlive/2012/texmf-dist/tex/latex/psnfss/omsppl.fd
 File: omsppl.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ppl/m/n' in size <10.95> not available
@@ -720,7 +720,7 @@ Overfull \vbox (3.06392pt too high) has occurred while \output is active []
 
 [14] [15]
 Chapter 4.
-<basic_diagram.png, id=383, 276.28218pt x 342.5297pt>
+<basic_diagram.png, id=389, 276.28218pt x 342.5297pt>
 File: basic_diagram.png Graphic file (type png)
  <use basic_diagram.png>
 Package pdftex.def Info: basic_diagram.png used on input line 315.
@@ -728,7 +728,7 @@ Package pdftex.def Info: basic_diagram.png used on input line 315.
 
 [16
 
-] <activity_diagram_all.png, id=393, 365.11406pt x 435.87843pt>
+] <activity_diagram_all.png, id=398, 365.11406pt x 435.87843pt>
 File: activity_diagram_all.png Graphic file (type png)
 
 <use activity_diagram_all.png>
@@ -744,7 +744,7 @@ put line 465.
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [20]
-<activity_diagram_tree.png, id=435, 365.86688pt x 456.20438pt>
+<activity_diagram_tree.png, id=439, 365.86688pt x 456.20438pt>
 File: activity_diagram_tree.png Graphic file (type png)
 
 <use activity_diagram_tree.png>
@@ -755,13 +755,13 @@ Overfull \hbox (4.51599pt too wide) in paragraph at lines 507--508
  [][] 
  []
 
-[21] [22 <./activity_diagram_tree.png>] [23] [24] [25]
+[21] [22 <./activity_diagram_tree.png>] [23] [24] [25] [26]
 Chapter 5.
-<component_diagram.png, id=491, 403.5075pt x 252.945pt>
+<component_diagram.png, id=530, 403.5075pt x 252.945pt>
 File: component_diagram.png Graphic file (type png)
 
 <use component_diagram.png>
-Package pdftex.def Info: component_diagram.png used on input line 610.
+Package pdftex.def Info: component_diagram.png used on input line 651.
 (pdftex.def)             Requested size: 361.34999pt x 226.52138pt.
 
 (c:/texlive/2012/texmf-dist/tex/latex/listings/lstlang1.sty
@@ -771,88 +771,94 @@ File: lstlang1.sty 2004/09/05 1.3 listings language file
 File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
 )
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 621.
- [26
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 662.
+ [27
 
  <./component_diagram.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 670--670
+Underfull \hbox (badness 10000) in paragraph at lines 711--711
 [][][][][]$\T1/pcr/m/n/9 http : / / docs . oracle . com / cd / E17802 _ 01 / we
 bservices / webservices /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 691--691
+Underfull \hbox (badness 10000) in paragraph at lines 732--732
 []\T1/ppl/m/n/10.95 Figure 5.3: []Example of meth-ods in \T1/pcr/m/n/10.95 XMLS
 treamReader \T1/ppl/m/n/10.95 and
  []
 
-[27]
-
-LaTeX Warning: Text page 28 contains only floats.
-
 [28]
+
+LaTeX Warning: Text page 29 contains only floats.
+
+[29]
 Underfull \vbox (badness 4266) has occurred while \output is active []
 
- [29]
-Underfull \hbox (badness 10000) in paragraph at lines 712--713
+ [30]
+Underfull \hbox (badness 10000) in paragraph at lines 753--754
 []\T1/ppl/m/n/10.95 A thread pool of a user-specified size is ini-tial-ized
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 712--713
+Underfull \hbox (badness 10000) in paragraph at lines 753--754
 \T1/ppl/m/n/10.95 at the be-gin-ning and for ev-ery file from the in-put a
  []
 
 
-Underfull \hbox (badness 3803) in paragraph at lines 712--713
+Underfull \hbox (badness 3803) in paragraph at lines 753--754
 \T1/pcr/m/n/10.95 java.util.concurrent.Callable \T1/ppl/m/n/10.95 in-stance is 
 cre-ated. Us-ing the
  []
 
 
-Underfull \hbox (badness 3503) in paragraph at lines 712--713
+Underfull \hbox (badness 3503) in paragraph at lines 753--754
 \T1/pcr/m/n/10.95 java.util.concurrent.ExecutorService \T1/ppl/m/n/10.95 with o
 ur thread pool
  []
 
 
-Underfull \hbox (badness 1107) in paragraph at lines 719--720
+Underfull \hbox (badness 1107) in paragraph at lines 762--763
 \T1/ppl/m/n/10.95 MathML markup; a sep-a-rate class for each el-e-ment of the P
 re-sen-ta-
  []
 
-[30] [31] [32]
+
+Overfull \vbox (1.54646pt too high) has occurred while \output is active []
+
+
+[31] [32] [33]
 Chapter 6.
-[33
+LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <12> not available
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 819.
+[34
 
 ]
 Chapter 7.
-[34
+[35
 
-] (./thesis.bbl [35
+] (./thesis.bbl [36
 
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 785.
- [36]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 785.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 839.
+ [37]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 839.
  (./thesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 785.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 785.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 839.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 839.
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 017987B899B27221431B1D20548C4922;5032.
+(rerunfilecheck)             Checksum: EE3A3D8135B252CE73C6B4FD88467EE8;5230.
 
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 785.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 839.
  ) 
 Here is how much of TeX's memory you used:
- 12567 strings out of 493488
- 173235 string characters out of 3144748
- 399920 words of memory out of 3000000
- 15417 multiletter control sequences out of 15000+200000
- 31278 words of font info for 60 fonts, out of 3000000 for 9000
+ 12586 strings out of 493488
+ 173687 string characters out of 3144748
+ 398453 words of memory out of 3000000
+ 15403 multiletter control sequences out of 15000+200000
+ 34189 words of font info for 66 fonts, out of 3000000 for 9000
  963 hyphenation exceptions out of 8191
  29i,8n,49p,1062b,1301s stack positions out of 5000i,500n,10000p,200000b,50000s
 {c:/texlive/2012/texmf-dist/fonts/enc/dvips/base/8r.enc} <./fi-logo.514pk><c:
@@ -864,13 +870,14 @@ ublic/amsfonts/cm/cmr8.pfb><c:/texlive/2012/texmf-dist/fonts/type1/public/amsfo
 nts/cm/cmsy10.pfb><c:/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 sy8.pfb><c:/texlive/2012/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb><c:/texl
 ive/2012/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><c:/texlive/2012/texmf-d
-ist/fonts/type1/urw/palatino/uplb8a.pfb><c:/texlive/2012/texmf-dist/fonts/type1
-/urw/palatino/uplr8a.pfb><c:/texlive/2012/texmf-dist/fonts/type1/urw/palatino/u
-plr8a.pfb>
-Output written on thesis.pdf (41 pages, 345878 bytes).
+ist/fonts/type1/urw/courier/ucrro8a.pfb><c:/texlive/2012/texmf-dist/fonts/type1
+/urw/palatino/uplb8a.pfb><c:/texlive/2012/texmf-dist/fonts/type1/urw/palatino/u
+plr8a.pfb><c:/texlive/2012/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb><c:/t
+exlive/2012/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on thesis.pdf (42 pages, 365239 bytes).
 PDF statistics:
- 833 PDF objects out of 1000 (max. 8388607)
- 712 compressed objects within 8 object streams
- 294 named destinations out of 1000 (max. 500000)
- 301 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 884 PDF objects out of 1000 (max. 8388607)
+ 760 compressed objects within 8 object streams
+ 322 named destinations out of 1000 (max. 500000)
+ 309 words of extra memory for PDF output out of 10000 (max. 10000000)
 
