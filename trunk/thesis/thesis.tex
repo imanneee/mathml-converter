@@ -308,7 +308,7 @@ At the time of writing this thesis none of the browsers for hand-held devices ha
 
 
 \chapter{Analysis and Solution Proposal}
-The goal of this thesis is the development of a conversion tool, that will be able to process XML document or documents and transform each occurrence of MathML markup into the appropriate textual representation. For example $5 \times \alpha = x + 3$ should be transformed into "five times alpha equals x plus three". In case of a visual (not semantic) change of the operator the tool should produce the same result. In our example $5 \times \alpha = x + 3$, $5 \cdot \alpha = x + 3$ and $5\alpha = x + 3$ have the same meaning, so both of them should be transformed into identical strings. For better results the input can be first canonicalized (as described in section~\vref{section:canonicalization}). From these requirements we can devise a basic top-level workflow diagram~\vref{fig:basicworkflow} of the application.
+The goal of this thesis is the development of a conversion tool, that will be able to process XML document or documents and transform each occurrence of MathML markup into the appropriate textual representation. For example $5 \times \alpha = x + 3$ should be transformed into "five times alpha equals x plus three". In case of a visual (not semantic) change of the operator the tool should produce the same result. In our example $5 \times \alpha = x + 3$, $5 \cdot \alpha = x + 3$ and $5\alpha = x + 3$ have the same meaning, so both of them should be transformed into identical strings. For better results the input can be first canonicalized (as described in section~\ref{section:canonicalization}). From these requirements we can devise a basic top-level workflow diagram~\ref{fig:basicworkflow} of the application. All other data outside \texttt{math} elements contained in input document has to be preserved and copied verbatim to the output.
 
 \begin{figure}[!ht]
 \centering
@@ -321,7 +321,7 @@ Before the input documents are loaded into in-memory structure for representing 
 
 One important factor about the input documents, that was not taken into account, is their quantity. The application must be able to process large corpora of mathematical documents in reasonable time and with efficient memory usage. Fortunately modern computation systems provide a way of running the application in multiple threads. The application just has to ensure that all threads work with the same settings. This can be accomplished by providing a single point of entry to the settings instance. A globally visible class (object) that implements the Singleton design pattern is the best solution for accessing settings across the whole application. Also retrieving external resources for each single thread is very time consuming, therefore an in-memory cache of resources common for all threads will be implemented.
 
-We can now create a more complex and detailed diagram of internal workings and dataflows inside the application. See diagram~\vref{fig:activitydiagramall}. 
+We can now create a more complex and detailed diagram of internal workings and dataflows inside the application. See diagram~\ref{fig:activitydiagramall}. 
 
 \begin{figure}[!ht]
 \centering
@@ -366,9 +366,9 @@ Data binding & average & high  \\ \hline
 \label{table:xmlprocessing}
 \end{table}
 
-The memory requirements shown in table~\vref{table:xmlprocessing} stem from the maximum amount of data that each method uses to process documents. For Streaming XML method, that reads only one event at a time and retains only minimal processing information, these requirements are low. The rest of compared methods need to load the whole document into computer memory and therefore their memory requirements are high. The processing speeds comparison comes from experience of the author with working with these methods.
+The memory requirements shown in table~\ref{table:xmlprocessing} stem from the maximum amount of data that each method uses to process documents. For Streaming XML method, that reads only one event at a time and retains only minimal processing information, these requirements are low. The rest of compared methods need to load the whole document into computer memory and therefore their memory requirements are high. The processing speeds comparison comes from experience of the author with working with these methods.
 
-Based on the comparison in table~\vref{table:xmlprocessing} we choose the fastest and most memory-efficient method for processing our input documents - the Streaming XML method. Algorithm~\vref{alg-processinput} shows a way to process input documents, using an in-memory tree structure defined in section~\vref{section:createtree}.
+Based on the comparison in table~\ref{table:xmlprocessing} we choose the fastest and most memory-efficient method for processing our input documents - the Streaming XML method. Algorithm~\ref{alg-processinput} shows a way to process input documents, using an in-memory tree structure defined in section~\ref{section:createtree}.
 
 \iffalse
 \subsection{Document Object Model}
@@ -500,7 +500,7 @@ We are starting the conversion process with our tree representation of the MathM
 
 The conversion process starts at the top level element, \texttt{math}, and then recursively continues to traverse the tree, converting the Presentation and Content elements based on their own specifics. Each converted node is marked as processed to prevent it to be processed twice, since in some cases the conversion requires to look ahead and jump out of the recursion pattern to process a sibling node (or any other node).
 
-The basic outline of the conversion process can be seen in figure~\vref{fig:converttree} and will be described in detail in the next sections.
+The basic outline of the conversion process can be seen in figure~\ref{fig:converttree} and will be described in detail in the next sections.
 
 \begin{figure}[!ht]
 \centering
@@ -557,7 +557,7 @@ The last group is formed by elements that have purely presentation function: spa
 
 
 \subsection{Content MathML}
-\label{analysis-content}
+\label{section:analysis-content}
 The cornerstone of the Content MathML is without a doubt the element \texttt{apply}, function application. It describes the application of its first child element on the rest of child elements, all of which can be \texttt{apply} elements themselves. The \texttt{apply} element will therefore serve as a hub, assigning the processing of expression or subexpression based on the operator (the first child element).
 
 To be able to convert the expression correctly we need a different approach than for the Presentation MathML, where the elements are ordered for display purposes and can be converted basically from top to bottom (with a few exceptions). In the Content MathML a function can be applied to multiple elements, but it will be declared only once as seen in figure \ref{fig:mathplus} (in the Presentation MathML the plus symbol would be declared twice, between $x$ and $y$, $y$ and $z$).
@@ -597,6 +597,47 @@ As we mentioned before many mathematical operations can be expressed using more 
 
 This way all operators that denote the same operation are grouped together and we can easily unify the way each operation is converted.
 
+\subsection{Adding Parentheses}
+Imagine someone read you the following sentence: "x to the power of three plus y". What equation would you imagine? Is it $x^{3} + y$ or $x^{3+y}$? Lets assume the original equation was the latter, $x^{3+y}$. In MathML markup this ambiguity does not exist as can be seen in figure~\ref{fig:addingbraces}. However the Presentation MathML relies on the rendering of the equation and the ability of the user to visually distinguish between the two possibilities (standard font vs superscript) and so does not need to explicitly include parentheses. The Content MathML is not predominantly intended to read by human users and therefore it also does not provide explicit parentheses.
+
+\begin{figure}[!ht]
+\lstset{language=XML,frame=lines}
+\begin{lstlisting}
+<math>
+	<mrow>
+		<msup>
+			<mi>x</mi>
+			<mrow>
+				<mn>3</mn>
+				<mo>+</mo>
+				<mi>y</mi>
+			</mrow>
+		</msup>
+	</mrow>
+	<annotation-xml encoding="MathML-Content">
+		<apply>
+			<power/>
+			<ci>x</ci>
+			<apply>
+				<plus/>
+				<cn>3</cn>
+				<ci>y</ci>
+			</apply>
+		</apply>
+	</annotation-xml>
+</math>
+\end{lstlisting}
+\caption{Expression $x^{3+y}$ in Presentation and Content MathML}
+\label{fig:addingbraces}
+\end{figure}
+
+Since the conversion results in just a plain string with no visual aid to determine what the original equation was expressing, we have to enclose parts of equations that logically belong together and can be ambiguous with parentheses ourselves. 
+
+In the Presentation MathML logical parts of equations reside inside a single \texttt{mrow} element. So the straightforward solution is to prepend and append parentheses to the \texttt{mrow} element content. However we do not always need (or want) parentheses in this place, like in the case of the \texttt{msup} element in figure~\ref{fig:addingbraces}. The easiest and in most cases sufficient fix is to add parentheses only if the \texttt{mrow} element has at least two child elements.
+
+In the Content MathML the element \texttt{apply} acts as a grouping element. Similarly to the \texttt{mrow} element, we do not need to add parentheses every time. In figure~\ref{fig:addingbraces} the first \texttt{apply} element does not need to use parentheses, only the second one does. For deciding whether to add parentheses or not we will use the division of operations introduced in section~\ref{section:analysis-content}. Only operators belonging to the \textit{infix} form group will add parentheses.
+
+The resulting string procured from the conversion of equation $x^{3+y}$ should therefore be: "x to the power of open braces three plus y close braces".
 
 \chapter{Implementation}
 This chapter describes various implementation aspects that occurred during the creation of the conversion application. The application is written in Java programming language, mainly because of personal preference of the author. Also the existence and availability of many frameworks and tools for Java language (for working with XML documents among others) are a big advantage of using this language. 
@@ -613,7 +654,7 @@ The structure of the application can be seen on the component diagram \ref{fig:c
 \end{figure}
 
 \section{DOM-like Representation of MathML}
-The implementation of the tree designed in section~\vref{section:createtree} can be seen in figure~\vref{fig:customdom}.
+The implementation of the tree designed in section~\ref{section:createtree} can be seen in figure~\ref{fig:customdom}.
 
 \begin{figure}[!ht]
 \lstset{language=Java,frame=single,backgroundcolor=\color{lightgray}}
@@ -657,7 +698,7 @@ public final class MathMLNode {
 \end{figure}
 
 \section{Input Processing}
-As we outlined in section~\vref{section:loaddocument}, the streaming approach with custom DOM-like internal representation of MathML tree is used. 
+As we outlined in section~\ref{section:loaddocument}, the streaming approach with custom DOM-like internal representation of MathML tree is used. 
 
 In Java two major APIs\footnote{Application programming interface} for streaming processing of XML documents are popular among developers:
 \begin{itemize}
@@ -667,7 +708,7 @@ In Java two major APIs\footnote{Application programming interface} for streaming
 
 This application uses default StAX implementation that is shipped with Java Standard Edition 6 runtime, but there are also other implementations available, such as Woodstox\footnote{\url{http://woodstox.codehaus.org}} or Aalto\footnote{\url{http://wiki.fasterxml.com/AaltoHome}}, and there is a possibility to request one of these two implementations to use instead of the default implementation.
 
-StAX offers two ways of traversing documents: Cursor API and Iterator API. We will use the first, Cursor API, because it should be faster and more memory-efficient\footnote{\url{http://docs.oracle.com/cd/E17802_01/webservices/webservices/docs/1.6/tutorial/doc/SJSXP3.html}}. Two main interfaces are available in the Cursor API: \texttt{XMLStremReader} for accessing all possible information retrievable from XML documents and \texttt{XMLStreamWriter} which in turn provides methods for outputting this information. 
+StAX offers two ways of traversing documents: Cursor API and Iterator API. We use the first, Cursor API, because it should be faster and more memory-efficient\footnote{\url{http://docs.oracle.com/cd/E17802_01/webservices/webservices/docs/1.6/tutorial/doc/SJSXP3.html}}. Two main interfaces are available in the Cursor API: \texttt{XMLStremReader} for accessing all possible information retrievable from XML documents and \texttt{XMLStreamWriter} which in turn provides methods for outputting this information. 
 
 \begin{figure}[!ht]
 \lstset{language=Java,frame=single,backgroundcolor=\color{lightgray}}
@@ -693,7 +734,7 @@ public interface XMLStreamWriter {
 \end{figure}
 
 \subsection{XML Parser}
-The implementation of the \texttt{XmlParser} interface, \texttt{XmlParserStAX}, is responsible for processing input XML documents using the StAX Cursor API and at the same time creating output documents in the same run through the file. The internal processing follows steps outlined in algorithm~\vref{alg-processinput}. The parser also provides a method for processing string input and producing string output. In this case the parser processes the document defined by this string the same way as any other input document, however the output contains only converted strings, without any of original documents elements outside the MathML markup.
+The implementation of the \texttt{XmlParser} interface, \texttt{XmlParserStAX}, is responsible for processing input XML documents using the StAX Cursor API and at the same time creating output documents in the same run through the file. The internal processing follows steps outlined in algorithm~\ref{alg-processinput}. The parser also provides a method for processing string input and producing string output. In this case the parser processes the document defined by this string the same way as any other input document, however the output contains only converted strings, without any of original documents elements outside the MathML markup.
 \begin{figure}[!ht]
 \lstset{language=Java,frame=single,backgroundcolor=\color{lightgray}}
 \begin{lstlisting}
@@ -711,7 +752,7 @@ The parser is capable of accepting a folder as an input (instead of a document) 
 
 A thread pool of a user-specified size is initialized at the beginning and for every file from the input a \texttt{java.util.concurrent.Callable} instance is created. Using the \texttt{java.util.concurrent.ExecutorService} with our thread pool these callables are concurrently invoked (whenever there is an free thread in the thread pool next callable is invoked). 
 
-A JDOM\footnote{\url{http://www.jdom.org}} implementation of the \texttt{XmlParser} is also provided and will be used to compare the performance of StAX implementation in section~\vref{section:compareparsers}.
+A JDOM\footnote{\url{http://www.jdom.org}} implementation of the \texttt{XmlParser} is also provided and will be used to compare the performance of StAX implementation in section~\ref{section:compareparsers}.
 
 \section{Conversion}
 When the parser creates a complete tree, it immediately initializes the conversion of that tree by calling the \texttt{convert(tree, language)} method of the \texttt{MathMLConverter} class. The converter then decides which element of the input tree will be used as the root element of the conversion. 
@@ -746,7 +787,7 @@ public class Node {
 \label{fig:converter-node}
 \end{figure}
 
-Before we get to the explanation of the conversion inside these classes, we have to define how mathematical operators and operations are defined in the application. The \texttt{Operation} class is an enumeration of all operations known to this application. Each operation is assigned a unique key, that is also used to retrieve appropriate textual representation of this operation from the localization files. Next there is a type of the operation as defined in section \ref{analysis-content}. The last property is an array of possible operators or symbols that might be used to represent this operation in documents. These can be standard HTML character entities entered by their name (\texttt{\&minus;}) or unicode code point (decimal or hexadecimal) or a name of the corresponding element in the Content MathML markup as seen in figure \ref{fig:converter-operation}.
+Before we get to the explanation of the conversion inside these classes, we have to define how mathematical operators and operations are defined in the application. The \texttt{Operation} class is an enumeration of all operations known to this application. Each operation is assigned a unique key, that is also used to retrieve appropriate textual representation of this operation from the localization files. Next there is a type of the operation as defined in section \ref{section:analysis-content}. The last property is an array of possible operators or symbols that might be used to represent this operation in documents. These can be standard HTML character entities entered by their name (\texttt{\&minus;}) or unicode code point (decimal or hexadecimal) or a name of the corresponding element in the Content MathML markup as seen in figure \ref{fig:converter-operation}.
 
 \begin{figure}[!ht]
 \lstset{language=Java,frame=single,backgroundcolor=\color{lightgray}}
@@ -767,6 +808,8 @@ When we have determined the exact operation, we proceed by processing it based o
 
 Lastly the conversion of numbers to strings ($11 \rightarrow$ eleven) is optionally executed and contents of identifiers (elements \texttt{mi} and \texttt{ci}) are verbatim copied to the output. 
 
+
+
 \chapter{Results}
 \section{Mathematical Retrieval Collection MREC}
 \label{section:mrec}
@@ -775,6 +818,15 @@ MREC \cite{mrec:mrec2011} is a large corpus of mathematical texts (numbering clo
 
 \section{Comparing \texttt{XmlParser} Implementations}
 \label{section:compareparsers}
+The application comes with two implementations of \texttt{XmlParser} interface: one uses DOM, the other StAX. Since the StAX implementation uses only general API, we have an option to use and compare different StAX API implementations. Together we have four implementations to test:
+\begin{itemize}
+\item JDOM - a DOM implementation,
+\item Woodstox - a StAX implementation,
+\item Aalto - another StAX implementation,
+\item StAX - a StAX implementation included in Java 6.
+\end{itemize} 
+
+
 
 \chapter{Conclusion}
 1 page
