@@ -18,6 +18,9 @@
 \definecolor{darkblue}{rgb}{0.0,0.0,0.6}
 \definecolor{cyan}{rgb}{0.0,0.6,0.6}
 \definecolor{lightgray}{rgb}{0.9,0.9,0.9}
+\definecolor{black}{rgb}{0,0,0}
+\definecolor{darkgray}{rgb}{0.2,0.2,0.2}
+\definecolor{almostblack}{rgb}{0.1,0.1,0.1}
 
 \lstset{
   basicstyle=\ttfamily,
@@ -38,10 +41,10 @@
   morestring=[b]",
   morestring=[s]{>}{<},
   morecomment=[s]{<?}{?>},
-  stringstyle=\color{black},
-  identifierstyle=\color{darkblue},
-  keywordstyle=\color{cyan},
-  morekeywords={xmlns,version,type,cd}% list your attributes here
+  stringstyle=\color{almostblack},
+  identifierstyle=\color{black},
+  keywordstyle=\color{darkgray},
+  morekeywords={xmlns,version,type,cd}
 }
 
 \thesistitle{Normative Textual Representation of Mathematical Formulae}
@@ -303,7 +306,7 @@ Internet Explorer does not have any native support for MathML, but MathML render
 \paragraph*{Opera}
 Opera was one of the first browsers to include native support for MathML. The rendering of MathML is not as good as in Firefox, Opera has issues with positioning of elements in more complicated constructs. 
 
-\paragraph*{Browser for Hand-held Devices}
+\paragraph*{Browsers for Hand-held Devices}
 At the time of writing this thesis none of the browsers for hand-held devices has a satisfactory native support for MathML. However they are capable of rendering expressions using CSS.
 
 
@@ -316,6 +319,8 @@ The goal of this thesis is the development of a conversion tool, that will be ab
 \caption{Basic diagram of application workflow}
 \label{fig:basicworkflow}
 \end{figure}
+
+This thesis is a continuation of my bachelor thesis~\cite{Kucbel2011thesis} called \textit{Generování textu z MathML}. The bachelor thesis introduces a program for generating plain text from MathML as described in the paragraph above, however it has serious limitations when it comes to scalability, supports only a subset of the Presentation MathML elements and a limited amount of mathematical operations. The program uses XSL Transformations\footnote{Extensible Stylesheet Language Transformations \url{http://www.w3.org/TR/xslt}} to convert MathML markup into plain text. In this thesis we will try to improve the computation speed, provide better scalability, support a greater amount of mathematical operations and encompass most of the Presentation MathML as well as the Content MathML elements.
 
 Before the input documents are loaded into in-memory structure for representing XML documents, a preprocessing phase will take place. This includes determining the file structure on the hard-drive and retrieving all files from the input document and all its descendants. This structure will be preserved and output documents will have the same structure, just in the user-specified directory. Also the input files can be packed using the .zip archive file format (as is the case with documents in the MREC~\ref{section:mrec}) and such files have to be unpacked before further processing. Then, if requested, we will canonicalize input files. Since the canonicalization comes from external module (library), we have to be careful of possible errors or the time efficiency of this process. 
 
@@ -808,7 +813,7 @@ When we have determined the exact operation, we proceed by processing it based o
 
 Lastly the conversion of numbers to strings ($11 \rightarrow$ eleven) is optionally executed and contents of identifiers (elements \texttt{mi} and \texttt{ci}) are verbatim copied to the output. 
 
-
+Example of conversion result can be found in Appendix~\ref{appendix:conversionexamples}.
 
 \chapter{Results}
 \section{Mathematical Retrieval Collection MREC}
@@ -826,6 +831,7 @@ The application comes with two implementations of \texttt{XmlParser} interface: 
 \item StAX - a StAX implementation included in Java 6.
 \end{itemize} 
 
+We will compare these implementations by their performance 
 
 
 \chapter{Conclusion}
@@ -835,5 +841,118 @@ The application comes with two implementations of \texttt{XmlParser} interface: 
 \markboth{Bibliography}{Bibliography}
 \bibliographystyle{own}
 \bibliography{thesis}
+
+\appendix
+\chapter{Conversion Examples}
+\label{appendix:conversionexamples}
+
+\begin{figure}[!ht]
+\lstset{language=XML,frame=lines}
+\begin{lstlisting}
+<?xml version="1.0" encoding="UTF-8"?><document xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:conv="http://code.google.com/p/mathml-converter/">
+	<child id="42">
+		<content>content</content>		
+		<conv:math>logarithm to the base two of open braces x plus five point two close braces</conv:math>
+		<content></content>
+	</child>
+	<conv:math>logarithm to the base two of open braces x plus five point two close braces</conv:math>
+</document>
+\end{lstlisting}
+\caption{Figure~\ref{appendix:xml:example1} converted using StAX}
+\end{figure}
+
+\begin{figure}[!ht]
+\lstset{language=XML,frame=lines}
+\begin{lstlisting}
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns:m="http://www.w3.org/1998/Math/MathML">
+	<child id="42">
+		<content>content</content>		
+		<m:math>
+			<m:mrow>
+				<m:msub>
+					<m:mo>log</m:mo>
+					<m:mn>2</m:mn>
+				</m:msub>
+				<m:mrow>
+					<m:mi>x</m:mi>
+					<m:mo>+</m:mo>
+					<m:mn>5.2</m:mn>
+				</m:mrow>
+			</m:mrow>			
+		</m:math>
+		<content/>
+	</child>
+	<m:math>
+		<m:semantics>
+			<m:annotation-xml encoding="MathML-Content">
+				<m:apply>
+					<m:csymbol>log</m:csymbol>
+					<m:logbase><m:cn>2</m:cn></m:logbase>
+					<m:apply>
+						<m:plus/>
+						<m:ci>x</m:ci>
+						<m:cn>5.2</m:cn>
+					</m:apply>
+				</m:apply>
+			</m:annotation-xml>
+		</m:semantics>
+	</m:math>
+</document>
+\end{lstlisting}
+\caption{Expression $log_2 (x+5.2)$ in MathML}
+\label{appendix:xml:example1}
+\end{figure}
+
+\begin{figure}[!ht]
+\lstset{language=XML,frame=lines}
+\begin{lstlisting}
+<?xml version="1.0" encoding="UTF-8"?><math xmlns="http://code.google.com/p/mathml-converter/">open braces sum from open braces i equals zero close braces to ten of open braces absolute value of i factorial minus x with lower index i end absolute value close braces close braces times definite integral from 0 to 1 of x with respect to x</math>
+\end{lstlisting}
+\caption{Figure~\ref{appendix:xml:example2} converted using StAX}
+\end{figure}
+
+\begin{figure}[!ht]
+\lstset{language=XML,frame=lines}
+\begin{lstlisting}
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+	<mrow>
+		<mrow>
+			<munderover>
+				<mo>&#x2211;</mo>
+				<mrow>
+					<mi>i</mi>
+					<mo>=</mo>
+					<mn>0</mn>
+				</mrow>
+				<mn>10</mn>
+			</munderover>
+			<mrow>
+				<mo>|</mo>
+				<mi>i</mi>
+				<mo>!</mo>
+				<mo>-</mo>
+				<msub>
+					<mi>x</mi>
+					<mi>i</mi>
+				</msub>
+				<mo>|</mo>
+			</mrow>
+		</mrow>
+		<mo>*</mo>
+		<msubsup>
+			<mi>&#x222b;</mi>
+			<mi>0</mi>
+			<mi>1</mi>
+		</msubsup>
+		<mi>x</mi>
+		<mo>&#x2146;</mo>
+		<mi>x</mi>
+	</mrow>
+</math>
+\end{lstlisting}
+\caption{Expression $\Sigma_{i=10}^{10}|i!-x_i|*\int_0^1 x \mathrm{d} x$ in MathML}
+\label{appendix:xml:example2}
+\end{figure}
 
 \end{document}
