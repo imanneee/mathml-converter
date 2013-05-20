@@ -1,6 +1,6 @@
 \select@language {english}
 \contentsline {chapter}{\numberline {1}\bfseries Introduction}{3}{chapter.1}
-\contentsline {chapter}{\numberline {2}\bfseries Mathematical Markup Language - MathML}{4}{chapter.2}
+\contentsline {chapter}{\numberline {2}\bfseries Mathematical Markup Language~- MathML}{4}{chapter.2}
 \contentsline {section}{\numberline {2.1}\slshape Structure of MathML}{4}{section.2.1}
 \contentsline {subsection}{\numberline {2.1.1}\rmfamily Presentation MathML}{5}{subsection.2.1.1}
 \contentsline {subsection}{\numberline {2.1.2}\rmfamily Content MathML}{6}{subsection.2.1.2}
@@ -17,23 +17,24 @@
 \contentsline {section}{\numberline {3.3}\slshape AsTeR}{13}{section.3.3}
 \contentsline {section}{\numberline {3.4}\slshape MathTalk}{14}{section.3.4}
 \contentsline {section}{\numberline {3.5}\slshape Lambda}{14}{section.3.5}
-\contentsline {section}{\numberline {3.6}\slshape Web Browser Support}{14}{section.3.6}
-\contentsline {chapter}{\numberline {4}\bfseries Analysis and Solution Proposal}{16}{chapter.4}
-\contentsline {section}{\numberline {4.1}\slshape Load Document}{19}{section.4.1}
-\contentsline {section}{\numberline {4.2}\slshape Create Tree}{20}{section.4.2}
-\contentsline {section}{\numberline {4.3}\slshape Convert Tree}{21}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}\rmfamily Presentation MathML}{21}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}\rmfamily Content MathML}{24}{subsection.4.3.2}
-\contentsline {subsection}{\numberline {4.3.3}\rmfamily Operators and Symbols}{25}{subsection.4.3.3}
-\contentsline {subsection}{\numberline {4.3.4}\rmfamily Adding Parentheses}{25}{subsection.4.3.4}
-\contentsline {subsection}{\numberline {4.3.5}\rmfamily Localization}{27}{subsection.4.3.5}
-\contentsline {chapter}{\numberline {5}\bfseries Implementation}{28}{chapter.5}
-\contentsline {section}{\numberline {5.1}\slshape DOM-like Representation of MathML}{29}{section.5.1}
-\contentsline {section}{\numberline {5.2}\slshape Input Processing}{29}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}\rmfamily XML Parser}{29}{subsection.5.2.1}
-\contentsline {section}{\numberline {5.3}\slshape Conversion}{32}{section.5.3}
-\contentsline {chapter}{\numberline {6}\bfseries Results}{35}{chapter.6}
-\contentsline {section}{\numberline {6.1}\slshape Mathematical Retrieval Collection MREC}{35}{section.6.1}
-\contentsline {section}{\numberline {6.2}\slshape Comparing \texttt {XmlParser} Implementations}{35}{section.6.2}
-\contentsline {chapter}{\numberline {7}\bfseries Conclusion}{38}{chapter.7}
-\contentsline {chapter}{\numberline {A}\bfseries Conversion Examples}{41}{appendix.A}
+\contentsline {section}{\numberline {3.6}\slshape Web Browser Support}{15}{section.3.6}
+\contentsline {chapter}{\numberline {4}\bfseries Analysis and Solution Proposal}{17}{chapter.4}
+\contentsline {section}{\numberline {4.1}\slshape Load Document}{20}{section.4.1}
+\contentsline {section}{\numberline {4.2}\slshape Create Tree}{21}{section.4.2}
+\contentsline {section}{\numberline {4.3}\slshape Convert Tree}{22}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}\rmfamily Presentation MathML}{22}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}\rmfamily Content MathML}{25}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}\rmfamily Operators and Symbols}{26}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.4}\rmfamily Adding Parentheses}{26}{subsection.4.3.4}
+\contentsline {subsection}{\numberline {4.3.5}\rmfamily Localization}{28}{subsection.4.3.5}
+\contentsline {chapter}{\numberline {5}\bfseries Implementation}{29}{chapter.5}
+\contentsline {section}{\numberline {5.1}\slshape DOM-like Representation of MathML}{30}{section.5.1}
+\contentsline {section}{\numberline {5.2}\slshape Input Processing}{30}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}\rmfamily XML Parser}{30}{subsection.5.2.1}
+\contentsline {section}{\numberline {5.3}\slshape Conversion}{33}{section.5.3}
+\contentsline {chapter}{\numberline {6}\bfseries Results}{36}{chapter.6}
+\contentsline {section}{\numberline {6.1}\slshape Mathematical Retrieval Collection MREC}{36}{section.6.1}
+\contentsline {section}{\numberline {6.2}\slshape Comparing \texttt {XmlParser} Implementations}{36}{section.6.2}
+\contentsline {section}{\numberline {6.3}\slshape Converting the MREC Corpus}{38}{section.6.3}
+\contentsline {chapter}{\numberline {7}\bfseries Conclusion}{39}{chapter.7}
+\contentsline {chapter}{\numberline {A}\bfseries Conversion Examples}{42}{appendix.A}
