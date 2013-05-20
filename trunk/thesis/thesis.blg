@@ -3,18 +3,20 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: thesis.aux
 The style file: own.bst
 Database file #1: thesis.bib
+Warning--entry type for "Kucbel2011thesis" isn't style-file defined
+--line 14 of file thesis.bib
 You've used 19 entries,
             2118 wiz_defined-function locations,
-            636 strings with 8449 characters,
-and the built_in function-call counts, 7574 in all, are:
-= -- 794
+            635 strings with 8528 characters,
+and the built_in function-call counts, 7583 in all, are:
+= -- 796
 > -- 312
 < -- 12
 + -- 122
 - -- 103
 * -- 478
-:= -- 1191
-add.period$ -- 67
+:= -- 1193
+add.period$ -- 68
 call.type$ -- 19
 change.case$ -- 103
 chr.to.int$ -- 0
@@ -22,17 +24,17 @@ cite$ -- 19
 duplicate$ -- 326
 empty$ -- 587
 format.name$ -- 103
-if$ -- 1667
+if$ -- 1669
 int.to.chr$ -- 0
 int.to.str$ -- 19
 missing$ -- 15
-newline$ -- 100
+newline$ -- 101
 num.names$ -- 42
 pop$ -- 123
 preamble$ -- 1
 purify$ -- 87
 quote$ -- 0
-skip$ -- 250
+skip$ -- 249
 stack$ -- 0
 substring$ -- 506
 swap$ -- 116
@@ -43,4 +45,5 @@ type$ -- 76
 warning$ -- 0
 while$ -- 79
 width$ -- 21
-write$ -- 224
+write$ -- 226
+(There was 1 warning)

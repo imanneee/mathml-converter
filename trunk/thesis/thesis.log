@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/W32TeX) (format=pdflatex 2012.10.7)  20 MAY 2013 01:16
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/W32TeX) (format=pdflatex 2012.10.7)  20 MAY 2013 23:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -529,6 +529,14 @@ LaTeX Info: Redefining \cite on input line 302.
 LaTeX Info: Redefining \nocite on input line 373.
 Package: cite 2010/09/10  v 5.3
 )
+(c:/texlive/2012/texmf-dist/tex/latex/base/makeidx.sty
+Package: makeidx 2000/03/29 v1.0m Standard LaTeX package
+)
+\@indexfile=\write3
+\openout3 = `thesis.idx'.
+
+
+Writing index file thesis.idx
 (c:/texlive/2012/texmf-dist/tex/latex/graphics/color.sty
 Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
 
@@ -537,28 +545,28 @@ File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 130.
 )
-Package color Info: Redefining color cyan on input line 20.
-Package color Info: Redefining color black on input line 22.
+Package color Info: Redefining color cyan on input line 22.
+Package color Info: Redefining color black on input line 24.
  (./thesis.aux)
 \openout1 = `thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Try loading font information for T1+ppl on input line 60.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Try loading font information for T1+ppl on input line 64.
 
 (c:/texlive/2012/texmf-dist/tex/latex/psnfss/t1ppl.fd
 File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
@@ -617,7 +625,7 @@ LaTeX Info: Redefining \selectfont on input line 126.
 )
 \c@lstlisting=\count126
 \AtBeginShipoutBox=\box33
-Package hyperref Info: Link coloring OFF on input line 60.
+Package hyperref Info: Link coloring OFF on input line 64.
 
 (c:/texlive/2012/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/07/31 v2.42 Cross-referencing by name of section
@@ -628,24 +636,24 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 \c@section@level=\count127
 LaTeX Info: Redefining \Ref on input line 503.
 )
-LaTeX Info: Redefining \ref on input line 60.
-LaTeX Info: Redefining \pageref on input line 60.
-LaTeX Info: Redefining \nameref on input line 60.
+LaTeX Info: Redefining \ref on input line 64.
+LaTeX Info: Redefining \pageref on input line 64.
+LaTeX Info: Redefining \nameref on input line 64.
 
 (./thesis.out) (./thesis.out)
-\@outlinefile=\write3
-\openout3 = `thesis.out'.
+\@outlinefile=\write4
+\openout4 = `thesis.out'.
 
-LaTeX Info: Redefining \Ref on input line 60.
+LaTeX Info: Redefining \Ref on input line 64.
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <24.88> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 75.
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 79.
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 75.
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 79.
  [1
 
 {c:/texlive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 79.
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 83.
  [2
 
 ] [3
@@ -670,46 +678,46 @@ LaTeX Font Info:    Try loading font information for T1+pcr on input line 37.
 (c:/texlive/2012/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 ))
-\tf@toc=\write4
-\openout4 = `thesis.toc'.
+\tf@toc=\write5
+\openout5 = `thesis.toc'.
 
  [2]
 Chapter 1.
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <12> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 97.
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 104.
 [3
 
 ]
 Chapter 2.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <9> on input line 110.
+(Font)              <9> on input line 117.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 110.
+(Font)              <5> on input line 117.
 [4
 
 ]
-LaTeX Font Info:    Try loading font information for OMS+ppl on input line 120.
+LaTeX Font Info:    Try loading font information for OMS+ppl on input line 127.
 
  (c:/texlive/2012/texmf-dist/tex/latex/psnfss/omsppl.fd
 File: omsppl.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ppl/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 120.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 127.
  [5] [6]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [7]
 [8]
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <8> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 225.
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 232.
 
-Overfull \vbox (5.03336pt too high) has occurred while \output is active []
+Overfull \vbox (1.22858pt too high) has occurred while \output is active []
 
 
 [9] [10]
-Underfull \hbox (badness 3209) in paragraph at lines 261--262
-\T1/ppl/m/n/10.95 (UMCL) [[]1[]] pro-posed a no-tion of a uni-fied struc-ture -
- Canon-i-cal
+Underfull \hbox (badness 3209) in paragraph at lines 268--269
+\T1/ppl/m/n/10.95 (UMCL[]) [[]1[]] pro-posed a no-tion of a uni-fied struc-ture
+ - Canon-i-cal
  []
 
 [11]
@@ -721,7 +729,7 @@ Overfull \vbox (1.54646pt too high) has occurred while \output is active []
 [12
 
 ]
-Underfull \hbox (badness 4805) in paragraph at lines 282--283
+Underfull \hbox (badness 4805) in paragraph at lines 289--290
 []\T1/ppl/m/n/10.95 Besides dis-play-ing MathML in the browser, Math-Player com
 es
  []
@@ -732,39 +740,39 @@ Overfull \vbox (2.30519pt too high) has occurred while \output is active []
 
 [13] [14] [15] [16]
 Chapter 4.
-<basic_diagram.png, id=423, 276.28218pt x 342.5297pt>
+<basic_diagram.png, id=426, 276.28218pt x 342.5297pt>
 File: basic_diagram.png Graphic file (type png)
  <use basic_diagram.png>
-Package pdftex.def Info: basic_diagram.png used on input line 333.
+Package pdftex.def Info: basic_diagram.png used on input line 340.
 (pdftex.def)             Requested size: 276.2815pt x 342.52885pt.
 
 [17
 
 ] [18 <./basic_diagram.png>]
-<activity_diagram_all.png, id=438, 365.11406pt x 435.87843pt>
+<activity_diagram_all.png, id=441, 365.11406pt x 435.87843pt>
 File: activity_diagram_all.png Graphic file (type png)
 
 <use activity_diagram_all.png>
-Package pdftex.def Info: activity_diagram_all.png used on input line 348.
+Package pdftex.def Info: activity_diagram_all.png used on input line 355.
 (pdftex.def)             Requested size: 361.34999pt x 431.40126pt.
  [19 <./activity_diagram_all.png>] [20]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 485.
+put line 492.
  [21]
-<activity_diagram_tree.png, id=473, 365.86688pt x 429.85594pt>
+<activity_diagram_tree.png, id=476, 365.86688pt x 429.85594pt>
 File: activity_diagram_tree.png Graphic file (type png)
 
 <use activity_diagram_tree.png>
-Package pdftex.def Info: activity_diagram_tree.png used on input line 527.
+Package pdftex.def Info: activity_diagram_tree.png used on input line 534.
 (pdftex.def)             Requested size: 361.34999pt x 424.57483pt.
  [22] [23 <./activity_diagram_tree.png>]
 [24] [25] [26] [27] [28]
 Chapter 5.
-<component_diagram.png, id=567, 403.5075pt x 252.945pt>
+<component_diagram.png, id=570, 403.5075pt x 252.945pt>
 File: component_diagram.png Graphic file (type png)
 
 <use component_diagram.png>
-Package pdftex.def Info: component_diagram.png used on input line 675.
+Package pdftex.def Info: component_diagram.png used on input line 682.
 (pdftex.def)             Requested size: 361.34999pt x 226.52138pt.
 
 (c:/texlive/2012/texmf-dist/tex/latex/listings/lstlang1.sty
@@ -774,17 +782,17 @@ File: lstlang1.sty 2004/09/05 1.3 listings language file
 File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
 )
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 686.
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 693.
  [29
 
  <./component_diagram.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 735--735
+Underfull \hbox (badness 10000) in paragraph at lines 742--742
 [][][][][]$\T1/pcr/m/n/9 http : / / docs . oracle . com / cd / E17802 _ 01 / we
 bservices / webservices /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 756--756
+Underfull \hbox (badness 10000) in paragraph at lines 763--763
 []\T1/ppl/m/n/10.95 Figure 5.3: []Example of meth-ods in \T1/pcr/m/n/10.95 XMLS
 treamReader \T1/ppl/m/n/10.95 and
  []
@@ -794,13 +802,13 @@ treamReader \T1/ppl/m/n/10.95 and
 LaTeX Warning: Text page 31 contains only floats.
 
 [31] [32]
-Underfull \hbox (badness 1412) in paragraph at lines 777--778
+Underfull \hbox (badness 1412) in paragraph at lines 784--785
 []\T1/ppl/m/n/10.95 A thread pool with a user-specified size is ini-tial-ized a
 t the be-
  []
 
 
-Underfull \hbox (badness 2158) in paragraph at lines 777--778
+Underfull \hbox (badness 2158) in paragraph at lines 784--785
 \T1/ppl/m/n/10.95 gin-ning of the con-ver-sion pro-cess, and for ev-ery file fr
 om the in-
  []
@@ -812,9 +820,9 @@ Overfull \vbox (1.54646pt too high) has occurred while \output is active []
 [33] [34] [35]
 Chapter 6.
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <12> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 842.
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 849.
 
-Underfull \hbox (badness 1019) in paragraph at lines 852--853
+Underfull \hbox (badness 1019) in paragraph at lines 859--860
 \T1/ppl/m/n/10.95 8 GB RAM, stan-dard HDD (7200 RPM) with Win-dows 8 64-bit and
 
  []
@@ -831,26 +839,36 @@ Chapter 7.
 ]) [41]
 Appendix A.
 
-LaTeX Warning: Float too large for page by 8.88782pt on input line 1004.
+LaTeX Warning: Float too large for page by 8.88782pt on input line 1011.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1057.
 [42
 
-] [43] [44] [45]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1057.
+] [43] [44] [45] (./thesis.ind
+Underfull \hbox (badness 10000) in paragraph at lines 26--27
+[]\T1/ppl/m/n/10.95 Digital Li-brary of Math-e-mat-i-cal
+ []
+
+[46
+
+
+] [47
+
+])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1068.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1068.
  (./thesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1057.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1057.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1068.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1068.
 
 Package rerunfilecheck Info: File `thesis.out' has not changed.
 (rerunfilecheck)             Checksum: 307D0EDABC7704FE69B1AA09D0357BAA;5705.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1057.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1068.
  ) 
 Here is how much of TeX's memory you used:
- 12806 strings out of 493488
- 176731 string characters out of 3144748
- 461287 words of memory out of 3000000
- 15515 multiletter control sequences out of 15000+200000
+ 12822 strings out of 493488
+ 176966 string characters out of 3144748
+ 461407 words of memory out of 3000000
+ 15521 multiletter control sequences out of 15000+200000
  34189 words of font info for 66 fonts, out of 3000000 for 9000
  963 hyphenation exceptions out of 8191
  29i,9n,49p,1062b,1301s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -867,10 +885,10 @@ ist/fonts/type1/urw/courier/ucrro8a.pfb><c:/texlive/2012/texmf-dist/fonts/type1
 /urw/palatino/uplb8a.pfb><c:/texlive/2012/texmf-dist/fonts/type1/urw/palatino/u
 plr8a.pfb><c:/texlive/2012/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb><c:/t
 exlive/2012/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on thesis.pdf (50 pages, 387950 bytes).
+Output written on thesis.pdf (52 pages, 394068 bytes).
 PDF statistics:
- 1069 PDF objects out of 1200 (max. 8388607)
- 935 compressed objects within 10 object streams
- 427 named destinations out of 1000 (max. 500000)
+ 1179 PDF objects out of 1200 (max. 8388607)
+ 1042 compressed objects within 11 object streams
+ 430 named destinations out of 1000 (max. 500000)
  333 words of extra memory for PDF output out of 10000 (max. 10000000)
 
