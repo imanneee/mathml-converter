@@ -1,0 +1,126 @@
+\begin{theindex}
+
+  \item Aalto, \hyperpage{30}, \hyperpage{36}
+  \item arXiv, \hyperpage{36}
+  \item arXMLiv, \hyperpage{36}
+  \item AsTeR, \hyperpage{13}
+
+  \indexspace
+
+  \item Braille, \hyperpage{3}, \hyperpage{10}, \hyperpage{14}
+
+  \indexspace
+
+  \item Canonical MathML, \hyperpage{11}
+  \item canonicalization, \hyperpage{11}, \hyperpage{17}
+  \item character recognition, \hyperpage{10}
+  \item content dictionary, \hyperpage{7}
+  \item Content MathML, \hyperpage{6}, \hyperpage{25}, \hyperpage{34}
+    \subitem operations, \hyperpage{25}
+  \item conversion, \hyperpage{3}, \hyperpage{17}, \hyperpage{22}, 
+		\hyperpage{33}, \hyperpage{38}
+  \item CSS, \hyperpage{11}
+
+  \indexspace
+
+  \item DAISY, \hyperpage{12}
+  \item Design Science, \hyperpage{13}
+  \item Digital Library of Mathematical Functions, \hyperpage{9}
+  \item DocBook, \hyperpage{10}
+  \item Dolphin EasyReader, \hyperpage{13}
+  \item DOM, \hyperpage{20, 21}, \hyperpage{36}
+
+  \indexspace
+
+  \item FireMath, \hyperpage{15}
+
+  \indexspace
+
+  \item Google Chrome, \hyperpage{15}
+
+  \indexspace
+
+  \item HTML, \hyperpage{4}, \hyperpage{9, 10}
+
+  \indexspace
+
+  \item INFTY, \hyperpage{10}
+  \item Internet Explorer, \hyperpage{13}, \hyperpage{15}
+
+  \indexspace
+
+  \item Java, \hyperpage{29}
+    \subitem callable, \hyperpage{32}
+  \item JDOM, \hyperpage{36}
+
+  \indexspace
+
+  \item Lambda, \hyperpage{14}
+  \item localization, \hyperpage{28}
+
+  \indexspace
+
+  \item Maple, \hyperpage{8}
+  \item Math2Text, \hyperpage{17}
+  \item Mathematica, \hyperpage{8}
+  \item mathematical operations, \hyperpage{26}, \hyperpage{33}
+  \item MathML, \hyperpage{iv}, \hyperpage{4}, \hyperpage{8}, 
+		\hyperpage{21}, \hyperpage{39}
+  \item MathPlayer, \hyperpage{13}, \hyperpage{15}
+  \item MathTalk, \hyperpage{14}
+  \item Matlab, \hyperpage{8}
+  \item MaxTract, \hyperpage{10}
+  \item MIaS, \hyperpage{11}
+  \item Mozilla Firefox, \hyperpage{15}
+  \item MP3, \hyperpage{12}
+  \item MREC, \hyperpage{36, 37}
+  \item MSHTML, \hyperpage{13}
+
+  \indexspace
+
+  \item OCR, \hyperpage{9, 10}
+  \item OpenMath, \hyperpage{7}
+  \item Opera, \hyperpage{15}
+
+  \indexspace
+
+  \item PDF, \hyperpage{9, 10}
+  \item Petr Sojka, \hyperpage{iii}
+  \item Presentation MathML, \hyperpage{5}, \hyperpage{9}, 
+		\hyperpage{11}, \hyperpage{22}, \hyperpage{34}
+    \subitem layout elements, \hyperpage{24}
+    \subitem token elements, \hyperpage{22}
+
+  \indexspace
+
+  \item Safari, \hyperpage{15}
+  \item SAX, \hyperpage{29}
+  \item screen reader, \hyperpage{3}
+  \item Singleton, \hyperpage{18}
+  \item StAX, \hyperpage{30}, \hyperpage{36}, \hyperpage{39}
+  \item Streaming XML, \hyperpage{20}
+  \item Strict Content MathML, \hyperpage{7}
+
+  \indexspace
+
+  \item TEI, \hyperpage{9}
+  \item Tralics, \hyperpage{9}
+  \item TTS, \hyperpage{3}, \hyperpage{14}
+
+  \indexspace
+
+  \item UMCL, \hyperpage{11}
+
+  \indexspace
+
+  \item W3C, \hyperpage{4}
+  \item Wolfram Alpha, \hyperpage{8}
+  \item Woodstox, \hyperpage{30}, \hyperpage{36}
+
+  \indexspace
+
+  \item XML data binding, \hyperpage{20}
+  \item XSL, \hyperpage{20}
+  \item XSLT, \hyperpage{9}, \hyperpage{11}, \hyperpage{17}
+
+\end{theindex}

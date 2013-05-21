@@ -28,13 +28,15 @@
 \contentsline {subsection}{\numberline {4.3.4}\rmfamily Adding Parentheses}{26}{subsection.4.3.4}
 \contentsline {subsection}{\numberline {4.3.5}\rmfamily Localization}{28}{subsection.4.3.5}
 \contentsline {chapter}{\numberline {5}\bfseries Implementation}{29}{chapter.5}
-\contentsline {section}{\numberline {5.1}\slshape DOM-like Representation of MathML}{30}{section.5.1}
-\contentsline {section}{\numberline {5.2}\slshape Input Processing}{30}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}\rmfamily XML Parser}{30}{subsection.5.2.1}
+\contentsline {section}{\numberline {5.1}\slshape DOM-like Representation of MathML}{29}{section.5.1}
+\contentsline {section}{\numberline {5.2}\slshape Input Processing}{29}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}\rmfamily XML Parser}{32}{subsection.5.2.1}
 \contentsline {section}{\numberline {5.3}\slshape Conversion}{33}{section.5.3}
 \contentsline {chapter}{\numberline {6}\bfseries Results}{36}{chapter.6}
 \contentsline {section}{\numberline {6.1}\slshape Mathematical Retrieval Collection MREC}{36}{section.6.1}
 \contentsline {section}{\numberline {6.2}\slshape Comparing \texttt {XmlParser} Implementations}{36}{section.6.2}
 \contentsline {section}{\numberline {6.3}\slshape Converting the MREC Corpus}{38}{section.6.3}
 \contentsline {chapter}{\numberline {7}\bfseries Conclusion}{39}{chapter.7}
-\contentsline {chapter}{\numberline {A}\bfseries Conversion Examples}{42}{appendix.A}
+\contentsline {chapter}{\numberline {A}\bfseries Electronic Attachments}{42}{appendix.A}
+\contentsline {chapter}{\numberline {B}\bfseries Command Line Arguments}{43}{appendix.B}
+\contentsline {chapter}{\numberline {C}\bfseries Conversion Examples}{45}{appendix.C}
