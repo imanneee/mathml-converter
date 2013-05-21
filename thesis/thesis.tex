@@ -108,7 +108,7 @@ A new format was introduced~- MathML. MathML stems from XML and is, therefore, d
 
 Now we can easily include mathematical content in Web pages or any other XML document, and display it to the user. But what happens if the user is dyslexic, blind, or otherwise visually impaired? There are multiple solutions: conversion to \s{Braille}, screen readers\index{screen reader}, or text-to-speech\index{TTS} software. However, with a~few exclusions, their support of mathematics is very slim or nonexistent. Also, search services usually work with plain text only. It is, therefore, desirable to develop a~system that will convert mathematical content inputted in MathML into plain text format. 
 
-This thesis is a~continuation of my Bachelor thesis, \textit{Generování textu~z MathML}~\cite{Kucbel2011thesis}, where a~system for converting MathML data to plain text is created. The goal if the thesis is to significantly improve the developed system. The thesis first looks at the structure of MathML (Chapter~\ref{chapter:mathml}). It then proceeds to list existing accessibility solutions (Chapter~\ref{chapter:statusquo}). Based on the analysis of the problem (Chapter~\ref{chapter:analysis}) an implementation is created (Chapter~\ref{chapter:implementation}). The final chapter provides a~look at results of running the application on real-life data (Chapter~\ref{chapter:results}).
+This thesis is a~continuation of my Bachelor thesis, \textit{Generování textu~z MathML}~\cite{Kucbel2011thesis}, where a~system for converting\index{conversion} MathML data to plain text is created. The goal if the thesis is to significantly improve the developed system. The thesis first looks at the structure of MathML (Chapter~\ref{chapter:mathml}). It then proceeds to list existing accessibility solutions (Chapter~\ref{chapter:statusquo}). Based on the analysis of the problem (Chapter~\ref{chapter:analysis}) an implementation is created (Chapter~\ref{chapter:implementation}). The final chapter provides a~look at results of running the application on real-life data (Chapter~\ref{chapter:results}).
 
 \chapter{Mathematical Markup Language~- MathML}
 \label{chapter:mathml}
@@ -333,7 +333,7 @@ At the time of writing of this thesis, none of the browsers for hand-held device
 
 \chapter{Analysis and Solution Proposal}
 \label{chapter:analysis}
-The goal of this thesis is the development of a~conversion tool that will be able to process an XML document or documents and transform each occurrence of the MathML markup into the appropriate textual representation. For example, $5 \cdot \alpha = x + 3$ should be transformed into "five times alpha equals x plus three". In case of a~visual (not semantic) change of the operator, the tool should produce the same result. In our example $5 \cdot \alpha = x + 3$, $5 * \alpha = x + 3$ and $5\alpha = x + 3$ have the same meaning, so all of them should be transformed into identical strings. For better results, the input can be first canonicalized\index{canonicalization} (as described in Section~\ref{section:canonicalization}). From these requirements we can devise a~basic top-level workflow diagram of the application (Figure~\ref{fig:basicworkflow}). All other data outside \texttt{math} elements contained in input document has to be preserved and copied verbatim to the output.
+The goal of this thesis is the development of a~conversion\index{conversion} tool that will be able to process an XML document or documents and transform each occurrence of the MathML markup into the appropriate textual representation. For example, $5 \cdot \alpha = x + 3$ should be transformed into "five times alpha equals x plus three". In case of a~visual (not semantic) change of the operator, the tool should produce the same result. In our example $5 \cdot \alpha = x + 3$, $5 * \alpha = x + 3$ and $5\alpha = x + 3$ have the same meaning, so all of them should be transformed into identical strings. For better results, the input can be first canonicalized\index{canonicalization} (as described in Section~\ref{section:canonicalization}). From these requirements we can devise a~basic top-level workflow diagram of the application (Figure~\ref{fig:basicworkflow}). All other data outside \texttt{math} elements contained in input document has to be preserved and copied verbatim to the output.
 
 \begin{figure}[!ht]
 \centering
@@ -523,7 +523,7 @@ Besides the type property, our simplified model contains a~list of children, poi
 Our very simple tree has one more advantage besides simplicity~- it allows the application to provide an option to change the method of loading XML documents.
 
 \section{Convert Tree}
-We are starting the conversion process with our tree representation of the MathML markup. At the beginning of the conversion, we need to determine whether the tree consist of only the Presentation markup, Content markup, or both, since each requires a~slightly different approach to the conversion. In most cases, the Presentation MathML resides directly in the \texttt{math} tree (is a~direct descendant of the \texttt{math} element) or in the element \texttt{semantics}, while the Content MathML is often found enclosed in the \texttt{annotation-xml} element with an attribute \texttt{encoding} set to the value \texttt{MathML-Content}. Or, we can simply traverse the tree till we find an element from either the Presentation or Content MathML markup and continue based on our finding.
+We are starting the conversion\index{conversion} process with our tree representation of the MathML markup. At the beginning of the conversion, we need to determine whether the tree consist of only the Presentation markup, Content markup, or both, since each requires a~slightly different approach to the conversion. In most cases, the Presentation MathML resides directly in the \texttt{math} tree (is a~direct descendant of the \texttt{math} element) or in the element \texttt{semantics}, while the Content MathML is often found enclosed in the \texttt{annotation-xml} element with an attribute \texttt{encoding} set to the value \texttt{MathML-Content}. Or, we can simply traverse the tree till we find an element from either the Presentation or Content MathML markup and continue based on our finding.
 
 The conversion process starts at the top level element, \texttt{math}, and then recursively continues to traverse the tree  converting the Presentation and Content elements based on their own specifics. Each converted node is marked as processed in order not to be processed twice. Since in some cases the conversion requires to look ahead and jump out of the recursion pattern to process a~sibling node (or any other node).
 
@@ -675,6 +675,8 @@ This chapter describes various implementation aspects that occurred during the c
 
 The application uses Apache Maven for build automation, distribution management, and dependency management.
 
+The application provides a command line interface and can be customized by setting input parameters (see Appendix~\ref{appendix:commandlinearguments} for the enumeration of arguments).
+
 The structure of the application can be seen on the component diagram~\ref{fig:componentdiagram} below.
 
 \begin{figure}[!ht]
@@ -786,7 +788,7 @@ A thread pool with a~user-specified size is initialized at the beginning of the 
 A JDOM\footnote{\url{http://www.jdom.org}} implementation of the \texttt{XmlParser} is also provided and will be used to compare the performance of StAX implementation in Section~\ref{section:compareparsers}.
 
 \section{Conversion}
-When the parser creates a~complete tree, it immediately initializes the conversion of that tree by calling the \texttt{convert(tree, language)} method of the \texttt{MathMLConverter} class. The converter then decides which element of the input tree will be used as the root element of the conversion. The Presentation MathML markup has precedence over the Content markup, unless the opposite was requested by the user.
+When the parser creates a~complete tree, it immediately initializes the \s{conversion} of that tree by calling the \texttt{convert(tree, language)} method of the \texttt{MathMLConverter} class. The converter then decides which element of the input tree will be used as the root element of the conversion. The Presentation MathML markup has precedence over the Content markup, unless the opposite was requested by the user.
 
 The converter consists of several classes that represent elements of MathML markup~- a~separate class for each element of the Presentation MathML markup and three classes (\texttt{Apply}, \texttt{Cn}, \texttt{Ci}) for the Content MathML markup. Every class has only one static method, \texttt{process(node, settings)} that is called whenever the traversal of the input tree encounters corresponding element. The run through the tree is done via the class \texttt{Node} and its static method \texttt{process(node, settings)}. This method works as a~switch for every type of node and delegates the processing to a~specific class. It also marks each encountered node as processed (see Figure~\ref{fig:converter-node} for illustration). The resulting string is gradually built from partial results of individual nodes.
 
@@ -910,7 +912,7 @@ JDOM & 700 \\ \hline
 \end{table}
 
 \section{Converting the MREC Corpus}
-The conversion was executed on a~fairly weak server. The same sample of 2,000 that was used in comparison of different \texttt{XmlParser} implementations took 37 seconds to complete. After a~preliminary testing, we found an optimal number of threads~- 10. The conversion process was run with the language option set to English, in 10 threads, and using the Woodstox StAX implementation.
+The \s{conversion} was executed on a~fairly weak server. The same sample of 2,000 that was used in comparison of different \texttt{XmlParser} implementations took 37 seconds to complete. After a~preliminary testing, we found an optimal number of threads~- 10. The conversion process was run with the language option set to English, in 10 threads, and using the Woodstox StAX implementation.
 
 \begin{table}[!ht]
 \centering
@@ -949,6 +951,82 @@ For a~future work, a~framework for defining mathematical operations via external
 \bibliography{thesis}
 
 \appendix
+\chapter{Electronic Attachments}
+\noindent
+\begin{tabular}[p]{@{}p{0.30\textwidth} p{0.70\textwidth}}
+\texttt{/examples/} & $\ldots$ MathML files before and after conversion
+\tabularnewline
+\qquad\texttt{MREC/} & $\ldots$A few documents from the MREC corpus
+\tabularnewline
+\tabularnewline
+\texttt{converter.jar} & $\ldots$The developed application with all dependencies 
+\tabularnewline
+\tabularnewline
+\texttt{MathML2Text.zip} & $\ldots$MathML2Text application
+\tabularnewline
+\qquad\texttt{apidocs/} & $\ldots$Javadoc documentation
+\tabularnewline
+\qquad\texttt{src/} & $\ldots$Source code
+\tabularnewline
+\qquad\texttt{target/} & $\ldots$Built jar archives
+\tabularnewline
+\qquad\texttt{pom.xml} & $\ldots$Maven configuration file
+\tabularnewline
+\qquad\texttt{README.txt} & $\ldots$Instructions for running and building the application
+\tabularnewline
+\tabularnewline
+\texttt{thesis.zip} & $\ldots$PDF and source files of the thesis
+\end{tabular}
+
+\chapter{Command Line Arguments}
+\label{appendix:commandlinearguments}
+The application can be run from command line using standard Java invocation: \texttt{java -jar converter [options] <file\ldots>}, where \texttt{<file\ldots>} denotes one or more input documents. \texttt{[options]} is used to set up the application using available options described below.\\
+
+\setlist[itemize,1]{label=,itemindent=0pt,leftmargin=0pt}
+\setlist[itemize,2]{label=$\bullet$,itemindent=10pt}
+
+Options to customize the conversion process:
+\begin{itemize}
+\item \texttt{-h,--help}
+	\begin{itemize}
+	\item print available options
+	\end{itemize}
+\item \texttt{-c,--canonicalize}
+	\begin{itemize}
+	\item every input document will be canonicalized before conversion
+	\end{itemize}
+\item \texttt{-cm,--content-markup}
+	\begin{itemize}
+	\item the Content MathML will be used for conversion if available
+	\end{itemize}
+\item \texttt{-l,--language <LANGUAGE>}
+	\begin{itemize}
+	\item set desired language of conversion; English (\texttt{en}), Slovak (\texttt{sk}), and Czech (\texttt{cs}) are available
+	\end{itemize}
+\item \texttt{-n,--transform-numbers}
+	\begin{itemize}
+	\item all numbers will be transformed into strings
+	\end{itemize}
+\item \texttt{-o,--output <PATH>}
+	\begin{itemize}
+	\item set output directory
+	\end{itemize}
+\item \texttt{-p,--parser <PARSER>}
+	\begin{itemize}
+	\item choose parser implementation that will be used for loading input documents; default Java StAX (\texttt{stax}), Woodstox (\texttt{woodstox}), Aalto (\texttt{aalto)}, and JDOM (\texttt{dom}) are available
+	\end{itemize}
+\item \texttt{-r,--replace-spaces}
+	\begin{itemize}
+	\item all spaces in localization files will be replaced with underscores, i.e., open\_braces 
+	\end{itemize}
+\item \texttt{-t,--threads <NUMBER>}
+	\begin{itemize}
+	\item set desired number of threads the application will use for parallel processing
+	\end{itemize}
+\end{itemize}
+
+A possible application invocation can be: \texttt{java -jar converter -c -l en -p woodstox -r -t 10 inputFile.xml}
+
 \chapter{Conversion Examples}
 \label{appendix:conversionexamples}
 
