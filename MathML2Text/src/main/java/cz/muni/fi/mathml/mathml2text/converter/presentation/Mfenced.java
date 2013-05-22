@@ -13,6 +13,7 @@ import cz.muni.fi.mathml.mathml2text.converter.tree.XmlAttribute;
  * Specific implementation of <code>&lt;mfenced&gt;</code> node.
  * 
  * @author Maros Kucbel
+ * @date 2013-05-04T17:05:40+0100
  */
 public final class Mfenced {
 

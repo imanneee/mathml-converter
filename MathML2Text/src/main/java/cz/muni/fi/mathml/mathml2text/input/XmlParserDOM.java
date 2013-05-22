@@ -49,8 +49,10 @@ import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
 import cz.muni.fi.mathml.mathml2text.converter.tree.XmlAttribute;
 
 /**
- *
+ * An {@link XmlParser} implementation using JDOM2.
+ * 
  * @author Maros Kucbel
+ * @date 2013-05-12T21:53:03+0100
  */
 public final class XmlParserDOM implements XmlParser {
 
@@ -175,7 +177,7 @@ public final class XmlParserDOM implements XmlParser {
         String outputFilePath;
         if (StringUtils.isBlank(ConverterSettings.getInstance().getOutputDirectory())) {
             String filePath = file.getPath();
-            outputFilePath = filePath.substring(0, filePath.lastIndexOf('.')) + "-transformed.xml";
+            outputFilePath = filePath.substring(0, filePath.lastIndexOf('.')) + "-converted.xml";
         } else {
             String suffix = "";
             for (final File f : this.originalInputFiles) {

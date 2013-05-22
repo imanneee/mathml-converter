@@ -4,6 +4,7 @@ package cz.muni.fi.mathml.mathml2text.converter.operation;
  * Type of an operation based on the word order this operation uses.
  * 
  * @author Maros Kucbel
+ * @date 2012-09-16T16:58:40+0100
  */
 public enum OperationType {
     /**

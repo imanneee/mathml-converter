@@ -13,6 +13,7 @@ import cz.muni.fi.mathml.mathml2text.converter.Strings;
 import cz.muni.fi.mathml.mathml2text.converter.operation.Operation;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLElement;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
+import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLType;
 import cz.muni.fi.mathml.mathml2text.numbers.NumberFormat;
 
 /**
@@ -119,16 +120,26 @@ public final class Apply {
                     builder.append(functionName);
                     return builder.toString();
                 }
+                boolean enclose = node.getParent() != null && MathMLType.CONTENT.equals(node.getParent().getType().getType());
+                if (enclose) {
+                    builder.append(settings.getProperty("open_braces"));
+                }
                 builder.append(Node.process(node.getChildren().get(1), settings));
                 int count = node.getChildren().size();
                 for (int index = 2; index < count; ++index) {
                     builder.append(functionName);
                     builder.append(Node.process(node.getChildren().get(index), settings));
                 }
+                if (enclose) {
+                    builder.append(settings.getProperty("close_braces"));
+                }
                 return builder.toString();
             }
             case PREFIX: {
                 builder.append(functionName);
+                if (!functionName.endsWith("of")) {
+                    builder.append(settings.getProperty("of"));
+                }
                 builder.append(Node.process(node.getChildren().get(1), settings));
                 return builder.toString();
             }
@@ -162,11 +173,18 @@ public final class Apply {
                     builder.append(Node.process(node.getChildren().get(1), settings));
                     return builder.toString();
                 } else {
+                    boolean enclose = node.getParent() != null && MathMLType.CONTENT.equals(node.getParent().getType().getType());
+                    if (enclose) {
+                        builder.append(settings.getProperty("open_braces"));
+                    }
                     builder.append(Node.process(node.getChildren().get(1), settings));
                     int count = node.getChildren().size();
                     for (int index = 2; index < count; ++index) {
                         builder.append(functionName);
                         builder.append(Node.process(node.getChildren().get(index), settings));
+                    }
+                    if (enclose) {
+                        builder.append(settings.getProperty("close_braces"));
                     }
                     return builder.toString();
                 }

@@ -6,7 +6,9 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
+import cz.muni.fi.mathml.mathml2text.converter.ConverterSettings;
 import cz.muni.fi.mathml.mathml2text.converter.MathMLConverter;
+import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
 
 /**
  * XML parser implementation is responsible for processing input files (be it a file or a string)
@@ -14,6 +16,7 @@ import cz.muni.fi.mathml.mathml2text.converter.MathMLConverter;
  * from {@link MathMLConverter converter}.
  * 
  * @author Maros Kucbel
+ * @date 2013-05-12T21:53:03+0100
  */
 public interface XmlParser {
     /**
@@ -30,7 +33,7 @@ public interface XmlParser {
      * Concurrently converts all input files.
      * For every file delegates to method {@link #parse(java.io.File, java.util.Locale) }.
      * The number of possible concurrent conversion is determined with parameter
-     * {@link ConverterSettings#getThreadCount()}. 
+     * {@link ConverterSettings#getThreadCount() }. 
      * @param files List of input files.
      * @param language Language of conversion.
      * @return List of converted files.

@@ -8,6 +8,7 @@ import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
  * Specific implementation of <code>&lt;mover&gt;</code> node.
  * 
  * @author Maros Kucbel
+ * @date 2013-05-08T19:35:40+0100
  */
 public final class Mover {
 

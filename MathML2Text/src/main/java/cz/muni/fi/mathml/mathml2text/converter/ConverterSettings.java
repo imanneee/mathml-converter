@@ -129,9 +129,9 @@ public final class ConverterSettings {
     
     /**
      * Sets current number format. Internally calls 
-     * {@link NumberTransformer#setNumberFormat(cz.muni.fi.mathml.mathml2text.transformer.numbers.NumberFormat)  }
+     * {@link NumberTransformer#setNumberFormat(cz.muni.fi.mathml.mathml2text.numbers.NumberFormat) }
      * method.
-     * @param numberFormat New {@link NumberFormat number format}.
+     * @param numberFormat New {@link NumberFormat} instance.
      */
     public void setNumberFormat(final NumberFormat numberFormat) {
         this.getNumberTransformer().setNumberFormat(numberFormat);

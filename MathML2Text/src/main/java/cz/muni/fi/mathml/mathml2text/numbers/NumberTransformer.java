@@ -15,9 +15,8 @@ import cz.muni.fi.mathml.mathml2text.converter.Strings;
  * Transforms all numbers (arabic numerals) in input data to their written form.
  * Takes into consideration inflection, e.g. in square roots, powers, etc.
  * 
- * @todo fix ordinal number transformation
- * 
- * @author Maros Kucbel Sep 13, 2012, 9:54:59 PM
+ * @author Maros Kucbel
+ * @date 2012-09-13T09:54:59+0100
  */
 public final class NumberTransformer {
 
@@ -65,7 +64,7 @@ public final class NumberTransformer {
      * Based on {@link #getNumberFormat() number format} converts to cardinal
      * or ordinal form.
      * @param value
-     * @return 
+     * @return Number converted to string (spoken form).
      */
     public String transform(final String value) {
         switch (this.getNumberFormat()) {
@@ -339,11 +338,11 @@ public final class NumberTransformer {
     }
 
     /**
-     * Transforms given number lower then 10 to string. Used with
+     * Transforms given number lower then 10 to string.
      *
-     * @param number Number lower then 10
-     * @param dva
-     * @return
+     * @param number Number lower then 10.
+     * @param dva Change form of the word dva/dve.
+     * @return Converted number.
      */
     private String addCountDva(int number, boolean dva) {
 
@@ -380,8 +379,8 @@ public final class NumberTransformer {
      * Transforms given long ordinal number to string, as is its written form (1
      * -> first, etc.)
      *
-     * @param number long ordinal number
-     * @return Transformed number
+     * @param inputNumber Long ordinal number.
+     * @return Transformed number.
      */
     public String translateOrdinalNumber(long inputNumber) {
         StringBuilder ret = new StringBuilder("");
