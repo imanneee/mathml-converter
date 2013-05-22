@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
  * Helper class for unzipping files.
  * 
  * @author Maros Kucbel
+ * @date 2013-05-12T20:58:03+0100
  */
 public final class Unzipper {
 

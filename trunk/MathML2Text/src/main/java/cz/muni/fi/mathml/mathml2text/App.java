@@ -27,6 +27,9 @@ import cz.muni.fi.mathml.mathml2text.input.XmlParserStAX;
 
 /**
  * Class containing runnable main method.
+ * 
+ * @author Maros Kucbel
+ * @date 2012-11-03T18:57:09+0100
  */
 public class App {
     /** Logger. */ 
@@ -56,7 +59,7 @@ public class App {
             System.exit(0);
         }
         // default parser implementation
-        String parserImplementation = "dom";
+        String parserImplementation = "woodstox";
         final CommandLineParser commandLineParser = new BasicParser();
         try {
             CommandLine line = commandLineParser.parse(createOptions(), args);
@@ -162,7 +165,7 @@ public class App {
                 .withArgName("PATH")//
                 .create("o"));
         options.addOption(OptionBuilder.withLongOpt("parser")//
-                .withDescription("choose parser implementation [dom|stax|aalto|woodstox], defaults to dom")//
+                .withDescription("choose parser implementation [dom|stax|aalto|woodstox], defaults to woodstox")//
                 .hasArg()//
                 .withArgName("PARSER")//
                 .create("p"));

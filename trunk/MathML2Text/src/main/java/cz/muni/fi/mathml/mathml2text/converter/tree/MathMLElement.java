@@ -3,7 +3,8 @@ package cz.muni.fi.mathml.mathml2text.converter.tree;
 /**
  * Enumeration of MathML elements.
  * 
- * @author Maros Kucbel Sep 16, 2012, 11:58:46 AM
+ * @author Maros Kucbel
+ * @date 2012-09-16T11:58:46+0100
  */
 public enum MathMLElement {
     /************** PRESENTATION MATHML *************/

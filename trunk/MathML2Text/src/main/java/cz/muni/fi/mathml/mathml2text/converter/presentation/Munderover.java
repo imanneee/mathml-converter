@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import cz.muni.fi.mathml.mathml2text.converter.ConverterSettings;
 import cz.muni.fi.mathml.mathml2text.converter.Node;
 import cz.muni.fi.mathml.mathml2text.converter.operation.Operation;
-import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLElement;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
 
 /**
@@ -45,33 +44,21 @@ public final class Munderover {
         } else if (Operation.SUMMATION.getSymbols().contains(possibleOperation)
                 || Operation.PRODUCT.getSymbols().contains(possibleOperation)) {
             builder.append(Node.process(node.getChildren().get(0), settings));
-            MathMLNode identifier = !node.getChildren().get(1).getChildren().isEmpty() 
-                    ? node.getChildren().get(1).getChildren().get(0)
-                    : null;
-            if (identifier != null && MathMLElement.MI.equals(identifier.getType())) {
-                builder.append(settings.getProperty("over"));
-                builder.append(Node.process(identifier, settings));
-                builder.append(settings.getProperty("from"));
-                node.getChildren().get(1).getChildren().get(1).setProcessed();
-                builder.append(Node.process(node.getChildren().get(1), settings));
-                builder.append(settings.getProperty("to"));
-                builder.append(Node.process(node.getChildren().get(2), settings));
-                builder.append(settings.getProperty("of"));
-                MathMLNode firstSibling = findFirstSibling(node);
-                if (firstSibling != null) {
-                    builder.append(Node.process(firstSibling, settings));
-                }
-            } else {
-                builder.append(settings.getProperty("from"));
-                builder.append(Node.process(node.getChildren().get(1), settings));
-                builder.append(settings.getProperty("to"));
-                builder.append(Node.process(node.getChildren().get(2), settings));
-                builder.append(settings.getProperty("of"));
-                MathMLNode firstSibling = findFirstSibling(node);
-                if (firstSibling != null) {
-                    builder.append(Node.process(firstSibling, settings));
-                }
+            builder.append(settings.getProperty("from"));
+            builder.append(Node.process(node.getChildren().get(1), settings));
+            builder.append(settings.getProperty("to"));
+            builder.append(Node.process(node.getChildren().get(2), settings));
+            builder.append(settings.getProperty("of"));
+            MathMLNode firstSibling = findFirstSibling(node);
+            if (firstSibling != null) {
+                builder.append(Node.process(firstSibling, settings));
             }
+        } else {
+            builder.append(Node.process(node.getChildren().get(0), settings));
+            builder.append(settings.getProperty("subscript"));
+            builder.append(Node.process(node.getChildren().get(1), settings));
+            builder.append(settings.getProperty("superscript"));
+            builder.append(Node.process(node.getChildren().get(2), settings));
         }
         return builder.toString();
     }
@@ -87,7 +74,7 @@ public final class Munderover {
             if (node.equals(node.getParent().getChildren().get(index))) {
                 try {
                     firstSibling = node.getParent().getChildren().get(index + 1);
-                } catch (ArrayIndexOutOfBoundsException ex) {
+                } catch (IndexOutOfBoundsException ex) {
                     LoggerFactory.getLogger(Munder.class).warn("No next sibling for [munder].");
                 }
             }

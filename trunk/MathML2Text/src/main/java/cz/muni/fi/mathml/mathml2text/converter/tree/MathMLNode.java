@@ -82,7 +82,7 @@ public final class MathMLNode {
      * Returns a list of child nodes of this node.
      * Never returns <code>null</node>. If there are no children, returns 
      * empty list.
-     * @return 
+     * @return List of child nodes of this node.
      */
     @Nonnull
     public List<MathMLNode> getChildren() {
@@ -110,7 +110,7 @@ public final class MathMLNode {
      * Returns set of attributes of this node.
      * Never returns <code>null</node>. If there are no children, returns 
      * empty set.
-     * @return 
+     * @return Set of attributes of this node.
      */
     @Nonnull
     public Set<XmlAttribute> getAttributes() {

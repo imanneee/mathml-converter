@@ -12,7 +12,8 @@ import com.google.common.collect.ImmutableList;
  * representation in presentation MathML (<code>&lt;mo&gt;</code>, <code>&lt;mi&gt;</code>) 
  * as well as in content MathML (<code>&lt;csymbol&gt;</code>, <code>&lt;ci&gt;</code>).
  * 
- * @author Maros Kucbel Sep 16, 2012, 4:54:09 PM
+ * @author Maros Kucbel
+ * @date 2012-09-16T16:54:09+0100
  */
 public enum Operation {
     /**
@@ -263,7 +264,7 @@ public enum Operation {
     /**
      * Absolute value.
      */
-    ABSOLUTE_VALUE("abs", OperationType.PREFIX, "abs"),
+    ABSOLUTE_VALUE("abs", OperationType.PREFIX, "abs", "|"),
     /**
      * Function that rounds down to the nearest integer.
      */
@@ -459,7 +460,7 @@ public enum Operation {
     /**
      * Factorial.
      */
-    FACTORIAL("factorial", OperationType.PREFIX, "factorial"),
+    FACTORIAL("factorial", OperationType.PREFIX, "factorial", "!"),
     /**
      * Minimum.
      */
@@ -491,7 +492,7 @@ public enum Operation {
     /**
      * Divides.
      */
-    DIVIDES("divides", OperationType.INFIX, "&#8739;", "&#x2223;", "∣", "|"),
+    DIVIDES("divides", OperationType.INFIX, "&#8739;", "&#x2223;", "∣"),
     /**
      * Tensor product.
      */

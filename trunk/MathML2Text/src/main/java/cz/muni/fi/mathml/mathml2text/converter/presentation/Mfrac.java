@@ -33,8 +33,9 @@ public final class Mfrac {
         }
         if (isFraction) {
             builder.append(settings.getProperty("fraction"));
+            builder.append(settings.getProperty("fraction_numerator"));
             builder.append(Node.process(node.getChildren().get(0), settings));
-            builder.append(settings.getProperty("divided_by"));
+            builder.append(settings.getProperty("fraction_denominator"));
             builder.append(Node.process(node.getChildren().get(1), settings));
             builder.append(settings.getProperty("end_fraction"));
         } else {

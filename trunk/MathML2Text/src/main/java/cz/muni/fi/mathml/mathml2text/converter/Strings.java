@@ -6,8 +6,9 @@ import java.util.Set;
 /**
  * String constants. For better readability of code.
  * 
- * @author Maros Kucbel Sep 16, 2012, 4:40:40 PM
- */
+ * @author Maros Kucbel
+ * @date 2012-09-16T16:40:40+0100 
+*/
 public final class Strings {
     /**
      * Space.

@@ -71,9 +71,8 @@ import cz.muni.fi.mir.mathmlcanonicalization.modules.OperatorNormalizer;
  *  </li>
  * </ul>
  * 
- * @todo extract interface
- * 
  * @author Maros Kucbel Oct 31, 2012, 19:07:12 PM
+ * @date 2012-10-31T19:07:12+0100
  */
 public final class XmlParserStAX implements XmlParser {
 
@@ -355,7 +354,7 @@ public final class XmlParserStAX implements XmlParser {
         String outputFilePath;
         if (StringUtils.isBlank(ConverterSettings.getInstance().getOutputDirectory())) {
             String filePath = file.getPath();
-            outputFilePath = filePath.substring(0, filePath.lastIndexOf('.')) + "-transformed.xml";
+            outputFilePath = filePath.substring(0, filePath.lastIndexOf('.')) + "-converted.xml";
         } else {
             String suffix = "";
             for (final File f : this.originalInputFiles) {

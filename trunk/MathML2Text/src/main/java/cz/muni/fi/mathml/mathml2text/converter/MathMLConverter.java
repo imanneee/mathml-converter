@@ -20,7 +20,6 @@ import cz.muni.fi.mathml.mathml2text.numbers.NumberTransformer;
 
 /**
  * Transformer of {@link MathMLNode} trees into string representations.
- * @todo extract interface
  * 
  * @author Maros Kucbel
  * @date 2012-11-03T18:55:09+0100
@@ -92,13 +91,13 @@ public class MathMLConverter {
         if (result == null) {
             result = Strings.EMPTY;
         }
-        return result;
+        return result.trim();
     }
     
     /**
      * Returns a node that will be converted based on some input parameters.
-     * @param node
-     * @return 
+     * @param node Root node.
+     * @return A node that will be converted based on some input parameters.
      */
     private MathMLNode getNodeForProcessing(final MathMLNode node) {
         final boolean useContentMarkup = ConverterSettings.getInstance().isUseContentMarkup();

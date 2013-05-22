@@ -15,6 +15,7 @@ import cz.muni.fi.mathml.mathml2text.converter.presentation.Msub;
 import cz.muni.fi.mathml.mathml2text.converter.presentation.Msup;
 import cz.muni.fi.mathml.mathml2text.converter.presentation.Munder;
 import cz.muni.fi.mathml.mathml2text.converter.presentation.Munderover;
+import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLElement;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLNode;
 import cz.muni.fi.mathml.mathml2text.converter.tree.MathMLType;
 
@@ -49,8 +50,16 @@ public final class Node {
                 break;
             }
             case ANNOTATION_XML: {
-                // if we encounter annotation-xml element, then we are processing
-                // Presentation MathML and it is time to stop
+                if (!settings.isUseContentMarkup()
+                        && node.getParent() != null 
+                        && MathMLType.PRESENTATION.equals(node.getParent().getChildren().get(0).getType().getType())) {
+                    // we are processing
+                    // Presentation MathML and it is time to stop                    
+                } else {
+                    for (final MathMLNode child : node.getChildren()) {
+                        builder.append(Node.process(child, settings));
+                    }
+                }
                 break;
             }
             case MROW: {
@@ -58,6 +67,8 @@ public final class Node {
                 //@todo Make some kind of mark to divide long formulae.
                 final boolean enclose = node.getChildren().size() > 1 
                         && node.getParent() != null 
+                        && !MathMLElement.MATH.equals(node.getParent().getType())
+                        && !MathMLElement.MFENCED.equals(node.getParent().getType())
                         && MathMLType.PRESENTATION.equals(node.getParent().getType().getType());
                 if (enclose) {
                     builder.append(settings.getProperty("open_braces"));

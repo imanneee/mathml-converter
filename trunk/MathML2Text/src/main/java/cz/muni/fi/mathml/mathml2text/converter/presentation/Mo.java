@@ -33,6 +33,21 @@ public final class Mo {
         final String op = StringEscapeUtils.escapeHtml4(node.getValue());
         final Operation operator = Operation.forSymbol(op);
         if (operator != null) {
+            if (Operation.ABSOLUTE_VALUE.equals(operator)) {
+                int absCounter = 0;
+                for (MathMLNode child : node.getParent().getChildren()) {
+                    if (child.equals(node)) {
+                        break;
+                    }
+                    if (Operation.ABSOLUTE_VALUE.getSymbols().contains(child.getValue())) {
+                        absCounter++;
+                    }
+                }
+                if (absCounter % 2 == 1) {
+                    return settings.getProperty("abs_close");
+                }
+            }
+            
             return settings.getProperty(operator.getKey());
         } else {
             final String htmlEntity = InputValueUtils.buildHtmlEntityCode(node.getValue());

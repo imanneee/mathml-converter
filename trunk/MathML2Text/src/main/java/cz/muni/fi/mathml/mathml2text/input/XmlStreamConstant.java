@@ -7,6 +7,7 @@ import javax.xml.stream.XMLStreamConstants;
  * Makes working with XML stream events more understandable and readable.
  * 
  * @author Maros Kucbel Sep 15, 2012, 10:21:50 PM
+ * @date 2012-09-15T10:21:50+0100
  */
 public enum XmlStreamConstant {
     /**
